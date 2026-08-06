@@ -19,6 +19,8 @@
       --ci-green-soft: rgba(0, 154, 68, 0.08);
       --ci-blue: #2563EB;
       --ci-blue-soft: rgba(37, 99, 235, 0.08);
+      --ci-red: #EF4444;
+      --ci-red-soft: rgba(239, 68, 68, 0.08);
       
       --slate-900: #0F172A;
       --slate-800: #1E293B;
@@ -27,8 +29,8 @@
       --slate-100: #F1F5F9;
       --bg-canvas: #F8FAFC;
       
-      --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
-      --card-shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+      --card-shadow-hover: 0 12px 28px -5px rgba(15, 23, 42, 0.12);
       --radius-xl: 20px;
       --radius-lg: 16px;
       --radius-sm: 8px;
@@ -50,7 +52,7 @@
     }
 
     .app-shell {
-      max-width: 1000px;
+      max-width: 860px;
       width: 100%;
       background: #FFFFFF;
       border-radius: var(--radius-xl);
@@ -63,15 +65,13 @@
     .app-shell::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; height: 4px;
+      top: 0; left: 0; right: 0; height: 5px;
       background: linear-gradient(90deg, var(--ci-orange) 0%, var(--ci-orange) 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, var(--ci-green) 66.6%, var(--ci-green) 100%);
       z-index: 10;
     }
 
     /* --- LOGIN OVERLAY --- */
-    #login-section {
-      padding: 50px 20px; text-align: center;
-    }
+    #login-section { padding: 50px 20px; text-align: center; }
     .login-wrapper { max-width: 360px; margin: 0 auto; }
     .brand-icon {
       width: 64px; height: 64px;
@@ -99,109 +99,103 @@
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255, 130, 0, 0.3); }
     .error-msg { color: #E11D48; margin-top: 10px; font-size: 12px; font-weight: 600; }
 
-    /* --- DASHBOARD TOPBAR --- */
-    .dashboard-topbar {
-      padding: 20px 24px 16px; border-bottom: 1px solid var(--slate-100);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .user-profile { display: flex; align-items: center; gap: 12px; }
-    .avatar {
-      width: 44px; height: 44px; border-radius: 14px;
-      background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
-      color: white; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 16px;
-    }
-    .user-info h3 { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2; }
-    .user-info span { font-size: 11px; font-weight: 700; color: var(--ci-green); text-transform: uppercase; letter-spacing: 0.5px; }
+    /* --- DASHBOARD CONTAINER & SECTIONS --- */
+    .dashboard-container { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
 
-    /* --- GRID DE 2 COLONNES CÔTE À CÔTE --- */
-    .dashboard-container { padding: 20px 24px; }
+    .section-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .section-centered { display: flex; justify-content: center; }
+    .section-centered .premium-card { width: 50%; }
 
-    .grid-2-col {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+    @media (max-width: 640px) {
+      .section-row-2 { grid-template-columns: 1fr; }
+      .section-centered .premium-card { width: 100%; }
     }
 
-    @media (max-width: 680px) {
-      .grid-2-col { grid-template-columns: 1fr; }
-    }
-
-    /* --- STYLE DES CARTES PREMIUM --- */
+    /* --- CARTES PREMIUM --- */
     .premium-card {
       background: #FFFFFF;
-      border: 1px solid rgba(226, 232, 240, 0.85);
+      border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-lg);
-      padding: 18px;
+      padding: 18px 20px;
       box-shadow: var(--card-shadow);
       transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      cursor: pointer;
       position: relative;
-      overflow: hidden;
     }
-    .premium-card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow-hover); }
+    .premium-card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow-hover); border-color: #CBD5E1; }
 
-    /* Variantes visuelles par carte */
-    .card-t1 { border-top: 4px solid var(--ci-orange); }
-    .card-t2 { border-top: 4px solid var(--ci-green); }
-    .card-t3 { border-top: 4px solid var(--ci-blue); }
+    .card-t1 { border-top: 4px solid var(--ci-blue); }
+    .card-t2 { border-top: 4px solid var(--ci-orange); }
+    .card-t3 { border-top: 4px solid var(--ci-green); }
+
     .card-annual {
       background: linear-gradient(135deg, #FFF9F2 0%, #F0FDF4 100%);
       border: 1.5px solid var(--ci-orange);
+      cursor: default;
     }
-    .card-hero-dark {
-      background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%);
-      color: white; border: none;
+    
+    .card-interactive {
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    /* Header de carte */
     .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .card-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--slate-600); }
-    .card-icon {
-      width: 32px; height: 32px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center; font-size: 15px;
-    }
-
-    /* Valeurs et textes */
-    .card-val { font-size: 26px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; margin: 4px 0 2px; }
+    .card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--slate-600); }
+    .card-val { font-size: 26px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; margin: 2px 0; }
     .card-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; }
 
-    /* Bouton d'action dans carte */
-    .btn-card-action {
-      margin-top: 12px; width: 100%; padding: 8px;
-      background: var(--slate-100); border: none; border-radius: var(--radius-sm);
-      font-size: 12px; font-weight: 700; color: var(--slate-800); cursor: pointer;
-      transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px;
+    /* CIRCLE & BAR PROGRESSION */
+    .progress-wrapper {
+      display: flex; align-items: center; gap: 24px; margin-top: 10px;
     }
-    .btn-card-action:hover { background: var(--ci-orange-soft); color: var(--ci-orange-dark); }
-
-    /* Cercle de progression */
-    .progress-box-flex { display: flex; align-items: center; gap: 16px; margin-top: 4px; }
-    .circle-mini-container { position: relative; width: 70px; height: 70px; flex-shrink: 0; }
-    .circle-mini-container svg { width: 70px; height: 70px; transform: rotate(-90deg); }
-    .circle-bg { fill: none; stroke: rgba(255, 255, 255, 0.12); stroke-width: 8; }
+    .circle-mini-container { position: relative; width: 84px; height: 84px; flex-shrink: 0; }
+    .circle-mini-container svg { width: 84px; height: 84px; transform: rotate(-90deg); }
+    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 8; }
     .circle-progress {
-      fill: none; stroke: var(--ci-orange); stroke-width: 8;
-      stroke-dasharray: 220; stroke-dashoffset: 220;
-      transition: stroke-dashoffset 0.8s ease-in-out; stroke-linecap: round;
+      fill: none; stroke: var(--ci-red); stroke-width: 8;
+      stroke-dasharray: 232; stroke-dashoffset: 232;
+      transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease; stroke-linecap: round;
     }
     .circle-mini-text {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 15px; font-weight: 800; color: #FFF;
+      font-size: 16px; font-weight: 800; color: var(--slate-900);
     }
 
-    /* Barre d'objectif */
-    .target-bar-bg { width: 100%; height: 8px; background: var(--slate-100); border-radius: 4px; overflow: hidden; margin: 8px 0; }
-    .target-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ci-orange), var(--ci-green)); transition: width 0.8s ease; }
+    .progress-info { flex: 1; }
+    .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 5px; overflow: hidden; margin: 8px 0; }
+    .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 0.8s ease, background-color 0.4s ease; }
 
-    /* Listes d'analyses */
-    .insight-list { list-style: none; font-size: 12px; color: var(--slate-600); margin-top: 6px; }
-    .insight-list li { margin-bottom: 4px; padding-left: 14px; position: relative; line-height: 1.4; font-weight: 500; }
-    .insight-list li::before { content: "•"; position: absolute; left: 0; color: var(--ci-orange); font-weight: 900; font-size: 14px; }
+    /* OBJECTIF PASSAGE */
+    .objective-card {
+      background: #FFFFFF; border: 1.5px solid var(--ci-green);
+      border-radius: var(--radius-lg); padding: 20px; cursor: default;
+    }
+    .objective-content { margin-top: 10px; font-size: 13px; color: var(--slate-800); line-height: 1.5; }
+    .highlight-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 20px;
+      font-weight: 800; font-size: 12px; margin-bottom: 6px;
+    }
 
-    /* --- PAGE DE SAISIE DES NOTES --- */
+    /* --- FENÊTRE MODALE DÉTAILS --- */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
+      z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-card {
+      background: #FFF; width: 100%; max-width: 480px; border-radius: var(--radius-xl);
+      padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid #E2E8F0;
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .modal-title { font-size: 16px; font-weight: 800; color: var(--slate-900); }
+    .btn-close { background: var(--slate-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: 800; cursor: pointer; }
+    .modal-list { list-style: none; max-height: 260px; overflow-y: auto; }
+    .modal-list li {
+      padding: 10px 12px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    /* --- PAGE DE SAISIE --- */
     #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
     .trim-header {
       padding: 16px 24px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
@@ -213,13 +207,6 @@
       cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px;
     }
     .btn-secondary:hover { background: var(--slate-100); }
-
-    .btn-print-pro {
-      background: linear-gradient(135deg, var(--ci-green), var(--ci-green-dark));
-      color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm);
-      font-size: 12px; font-weight: 700; cursor: pointer; transition: var(--transition);
-      box-shadow: 0 4px 10px rgba(0, 154, 68, 0.2); display: inline-flex; align-items: center; gap: 6px;
-    }
 
     .table-scroll-area { padding: 20px 24px; overflow-x: auto; }
     .styled-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #E2E8F0; }
@@ -237,16 +224,6 @@
     input.coef-input { width: 55px; background: #FFF; }
     input.note-input { width: 65px; background: #F8FAFC; }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
-
-    @media print {
-      body { background: white; padding: 0; }
-      .app-shell { box-shadow: none; border: none; }
-      .dashboard-topbar, .btn-secondary, .btn-print-pro, #login-section, #dashboard-section { display: none !important; }
-      #trimestre-page { display: block !important; }
-      .table-scroll-area { padding: 0; }
-      .styled-table { border: 1px solid #000; }
-      .styled-table th, .styled-table td { border: 1px solid #000 !important; }
-    }
   </style>
 </head>
 <body>
@@ -279,147 +256,137 @@
       </div>
     </div>
 
-    <!-- ================= 🏠 TABLEAU DE BORD (GRID 2 COLONNES) ================= -->
+    <!-- ================= 🏠 TABLEAU DE BORD (CONFORME AU PLAN DESSINÉ) ================= -->
     <div id="dashboard-section" style="display:none;">
       
-      <div class="dashboard-topbar">
-        <div class="user-profile">
-          <div class="avatar">NZ</div>
-          <div class="user-info">
-            <h3>NIAMPA Zakaria</h3>
-            <span>Élève d'Excellence • Côte d'Ivoire</span>
-          </div>
-        </div>
-      </div>
-
       <div class="dashboard-container">
-        <div class="grid-2-col">
-          
-          <!-- RANGÉE 1 : 1ER TRIMESTRE & 2E TRIMESTRE -->
-          <div class="premium-card card-t1">
+        
+        <!-- SECTION 1 : CARTES TRIMESTRIELLES -->
+        <div class="section-row-2">
+          <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
             <div class="card-header-flex">
-              <span class="card-title">1er Trimestre</span>
-              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange);">🟧</div>
+              <span class="card-title">📘 1er Trimestre</span>
+              <span style="font-size:12px; color:var(--ci-blue); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t1">-</div>
-            <div class="card-sub">Page de saisie dédiée</div>
-            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(1)">Saisir les notes ➔</button>
+            <div class="card-sub">Moyenne trimestrielle</div>
           </div>
 
-          <div class="premium-card card-t2">
+          <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
             <div class="card-header-flex">
-              <span class="card-title">2ᵉ Trimestre</span>
-              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🟩</div>
+              <span class="card-title">📙 2ᵉ Trimestre</span>
+              <span style="font-size:12px; color:var(--ci-orange); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t2">-</div>
-            <div class="card-sub">Page de saisie dédiée</div>
-            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(2)">Saisir les notes ➔</button>
+            <div class="card-sub">Moyenne trimestrielle</div>
           </div>
+        </div>
 
-          <!-- RANGÉE 2 : 3E TRIMESTRE & MOYENNE ANNUELLE -->
-          <div class="premium-card card-t3">
+        <div class="section-centered">
+          <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
             <div class="card-header-flex">
-              <span class="card-title">3ᵉ Trimestre</span>
-              <div class="card-icon" style="background:var(--ci-blue-soft); color:var(--ci-blue);">🟦</div>
+              <span class="card-title">📗 3ᵉ Trimestre</span>
+              <span style="font-size:12px; color:var(--ci-green); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t3">-</div>
-            <div class="card-sub">Page de saisie dédiée</div>
-            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(3)">Saisir les notes ➔</button>
+            <div class="card-sub">Moyenne trimestrielle</div>
           </div>
-
-          <div class="premium-card card-annual">
-            <div class="card-header-flex">
-              <span class="card-title" style="color:var(--ci-orange-dark);">Moyenne Annuelle</span>
-              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange-dark);">🏆</div>
-            </div>
-            <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark);">-</div>
-            <div class="card-sub" id="dash-mention">Mention : En attente</div>
-          </div>
-
-          <!-- RANGÉE 3 : PROGRESSION & CLASSEMENT -->
-          <div class="premium-card card-hero-dark">
-            <div class="card-title" style="color:var(--slate-400);">📊 Progression globale</div>
-            <div class="progress-box-flex">
-              <div class="circle-mini-container">
-                <svg>
-                  <circle class="circle-bg" cx="35" cy="35" r="30"></circle>
-                  <circle class="circle-progress" id="circle-bar" cx="35" cy="35" r="30"></circle>
-                </svg>
-                <div class="circle-mini-text" id="circle-val">0%</div>
-              </div>
-              <div>
-                <div style="font-size:13px; font-weight:800;" id="dash-perf-status">Niveau d'acquisition</div>
-                <div style="font-size:11px; color:var(--slate-400); margin-top:2px;">Calculé en temps réel</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="premium-card">
-            <div class="card-header-flex">
-              <span class="card-title">🏆 Classement & Rang</span>
-              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🏅</div>
-            </div>
-            <div class="card-val" id="student-rank" style="font-size:20px; color:var(--ci-green-dark);">En attente</div>
-            <div class="card-sub">Rang calculé sur l'établissement</div>
-          </div>
-
-          <!-- RANGÉE 4 : MATIÈRES À RENFORCER & POINTS FORTS -->
-          <div class="premium-card">
-            <div class="card-header-flex">
-              <span class="card-title">📚 Matières à renforcer</span>
-              <div class="card-icon" style="background:#FFF1F2; color:#E11D48;">⚠️</div>
-            </div>
-            <ul class="insight-list" id="analysis-weak">
-              <li>Saisissez vos notes pour obtenir le diagnostic.</li>
-            </ul>
-          </div>
-
-          <div class="premium-card">
-            <div class="card-header-flex">
-              <span class="card-title">⭐ Points forts</span>
-              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🌟</div>
-            </div>
-            <ul class="insight-list" id="analysis-best">
-              <li>Vos meilleures matières s'afficheront ici.</li>
-            </ul>
-          </div>
-
-          <!-- RANGÉE 5 : CONSEILS PERSONNALISÉS & OBJECTIF DE PROGRESSION -->
-          <div class="premium-card">
-            <div class="card-header-flex">
-              <span class="card-title">💡 Conseils personnalisés</span>
-              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange);">🧠</div>
-            </div>
-            <ul class="insight-list" id="analysis-advices">
-              <li>Recommandations automatiques d'apprentissage.</li>
-            </ul>
-          </div>
-
-          <div class="premium-card">
-            <div class="card-header-flex">
-              <span class="card-title">🎯 Objectif à atteindre</span>
-              <span id="target-percent" style="font-size:11px; font-weight:800; color:var(--ci-green);">0%</span>
-            </div>
-            <div style="font-size:12px; font-weight:700; color:var(--slate-800); margin-top:4px;">Cible : 16.00 / 20</div>
-            <div class="target-bar-bg">
-              <div class="target-bar-fill" id="target-bar-fill"></div>
-            </div>
-            <div id="target-motivation-text" class="card-sub" style="font-weight:600; line-height:1.3;">
-              Progression dynamique vers la mention d'excellence.
-            </div>
-          </div>
-
         </div>
+
+        <!-- SECTION 2 : MOYENNE ANNUELLE & MENTION (PLEINE LARGEUR) -->
+        <div class="premium-card card-annual">
+          <div class="card-header-flex">
+            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
+            <span style="font-size:18px;">🏅</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark); font-size:32px;">-</div>
+              <div class="card-sub" id="dash-mention" style="font-size:14px; font-weight:700;">Mention : En attente</div>
+            </div>
+            <div id="annual-badge" style="background:var(--slate-100); color:var(--slate-600); padding:6px 14px; border-radius:20px; font-weight:800; font-size:12px;">
+              Statut : Non évalué
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 : PROGRESSION GÉNÉRALE (INDICATEUR CIRCULAIRE & BARRE AVEC SEUILS DE COULEURS) -->
+        <div class="premium-card" style="cursor:default;">
+          <div class="card-title">📊 Progression Générale</div>
+          
+          <div class="progress-wrapper">
+            <div class="circle-mini-container">
+              <svg>
+                <circle class="circle-bg" cx="42" cy="42" r="37"></circle>
+                <circle class="circle-progress" id="circle-bar" cx="42" cy="42" r="37"></circle>
+              </svg>
+              <div class="circle-mini-text" id="circle-val">0%</div>
+            </div>
+
+            <div class="progress-info">
+              <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+                <span id="progress-status-text">Évaluation globale</span>
+                <span id="progress-percentage-label">0 / 20</span>
+              </div>
+              <div class="target-bar-bg">
+                <div class="target-bar-fill" id="target-bar-fill"></div>
+              </div>
+              <div class="card-sub" id="progress-feedback-text">Completez la saisie des trimestres pour activer le calcul.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 : MATIÈRES À REVOIR & POINTS FORTS (INTERACTIVES -> MODALE) -->
+        <div class="section-row-2">
+          <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
+            <div>
+              <div class="card-title" style="color:#E11D48;">📚 Matières à revoir</div>
+              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher la liste</div>
+            </div>
+            <span style="font-size:22px;">⚠️</span>
+          </div>
+
+          <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('best')">
+            <div>
+              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points forts</div>
+              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher la liste</div>
+            </div>
+            <span style="font-size:22px;">🌟</span>
+          </div>
+        </div>
+
+        <!-- SECTION 5 : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE (AUTOMATIQUE) -->
+        <div class="objective-card">
+          <div class="card-header-flex">
+            <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
+            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Seuil : 10.00 / 20</span>
+          </div>
+          <div class="objective-content" id="objective-dynamic-text">
+            Saisissez les notes de vos trimestres pour générer le bilan d'admission automatique et les recommandations ciblées.
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- ================= 📝 PAGES DE SAISIE SEPARÉES ================= -->
+    <!-- ================= 🪟 FENÊTRE MODALE DÉTAILS ================= -->
+    <div class="modal-overlay" id="details-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title" id="modal-title-text">Détails</div>
+          <button class="btn-close" onclick="fermerModale()">✕</button>
+        </div>
+        <ul class="modal-list" id="modal-list-content">
+          <!-- Injecté dynamiquement -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- ================= 📝 PAGE DE SAISIE PAR TRIMESTRE ================= -->
     <div id="trimestre-page" style="display:none;">
-      
       <div class="trim-header">
-        <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Tableau de bord</button>
-        <h3 id="trimestre-page-title" style="font-weight:800; font-size:16px;">Saisie des Notes - 1er Trimestre</h3>
-        <button class="btn-print-pro" onclick="imprimerBulletin()">🖨️ Imprimer le bulletin</button>
+        <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Retour au tableau de bord</button>
+        <h3 id="trimestre-page-title" style="font-weight:800; font-size:16px;">Notes du 1er Trimestre</h3>
       </div>
 
       <div class="table-scroll-area">
@@ -464,7 +431,7 @@
           </tbody>
         </table>
 
-        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:20px; padding:14px;">✅ Enregistrer et revenir au tableau de bord</button>
+        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:20px; padding:14px;">✅ Valider et revenir au tableau de bord</button>
       </div>
     </div>
 
@@ -573,9 +540,16 @@
       document.getElementById("dash-annual").innerText = moyAnnuelle ? moyAnnuelle + " / 20" : "-";
 
       const mentionEl = document.getElementById("dash-mention");
-      const rankEl = document.getElementById("student-rank");
+      const annualBadge = document.getElementById("annual-badge");
+      const circleBar = document.getElementById("circle-bar");
+      const targetFill = document.getElementById("target-bar-fill");
+      const circleVal = document.getElementById("circle-val");
+      const progressStatus = document.getElementById("progress-status-text");
+      const progressLabel = document.getElementById("progress-percentage-label");
+      const progressFeedback = document.getElementById("progress-feedback-text");
+      const objText = document.getElementById("objective-dynamic-text");
 
-      if (moyAnnuelle) {
+      if (moyAnnuelle !== null) {
         const mA = parseFloat(moyAnnuelle);
         let mention = "Passable";
         if (mA >= 16) mention = "Très Bien";
@@ -584,78 +558,107 @@
         else if (mA < 10) mention = "Ajourné";
 
         mentionEl.innerText = "Mention : " + mention;
-        rankEl.innerText = mA >= 14 ? "1er / 45" : (mA >= 10 ? "5e / 45" : "18e / 45");
+        annualBadge.innerText = mA >= 10 ? "Admis(e)" : "Résultat Fragile";
+        annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
+        annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
 
-        // Cercle (220 max dashoffset)
-        const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
-        document.getElementById("circle-val").innerText = Math.round(percent) + "%";
-        const offset = 220 - (220 * percent / 100);
-        document.getElementById("circle-bar").style.strokeDashoffset = offset;
-        document.getElementById("dash-perf-status").innerText = mA >= 14 ? "Niveau Excellent" : (mA >= 10 ? "Niveau Satisfaisant" : "Niveau Fragile");
-
-        // Objectif de progression
-        const targetPercent = Math.min(100, Math.round((mA / 16) * 100));
-        document.getElementById("target-percent").innerText = targetPercent + "% accompli";
-        document.getElementById("target-bar-fill").style.width = targetPercent + "%";
-
-        if (mA >= 16) {
-          document.getElementById("target-motivation-text").innerText = "🏆 Objectif d'Excellence atteint ! Maintenez votre régularité.";
-        } else {
-          const pointGap = (16 - mA).toFixed(2);
-          document.getElementById("target-motivation-text").innerText = `⚡ Enore ${pointGap} pt(s) pour décrocher la Mention Très Bien.`;
+        // COULEURS DYNAMIQUES DU SEUIL (0-10: Rouge, 10-11.99: Orange, 12+: Vert)
+        let activeColor = "var(--ci-red)";
+        let statusTitle = "Niveau insuffisant";
+        
+        if (mA >= 12) {
+          activeColor = "var(--ci-green)";
+          statusTitle = "Bonnes performances";
+        } else if (mA >= 10) {
+          activeColor = "var(--ci-orange)";
+          statusTitle = "Encore des progrès à faire";
         }
+
+        circleBar.style.stroke = activeColor;
+        targetFill.style.backgroundColor = activeColor;
+
+        const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
+        circleVal.innerText = Math.round(percent) + "%";
+        progressLabel.innerText = mA.toFixed(2) + " / 20";
+        progressStatus.innerText = statusTitle;
+        progressFeedback.innerText = `Moyenne globale actualisée basée sur vos notes trimestrielles.`;
+
+        // Cercle (stroke-dasharray = 232)
+        const offset = 232 - (232 * percent / 100);
+        circleBar.style.strokeDashoffset = offset;
+        targetFill.style.width = percent + "%";
+
+        // CALCUL ET RECOMANDATIONS ET OBJECTIF PASSAGE (SECTION 5)
+        const passageTarget = 10.00;
+        let toutesLesNotes = [];
+        Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
+        
+        // Trouver matières sous la moyenne
+        let matieresAAmeliorer = toutesLesNotes.filter(n => n.note < 10).map(n => n.subject);
+        let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
+        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos matières principales";
+
+        if (mA >= passageTarget) {
+          objText.innerHTML = `<strong>Félicitations !</strong> Votre moyenne actuelle (${mA.toFixed(2)}/20) dépasse le seuil minimal de passage (${passageTarget.toFixed(2)}/20). Continuez ainsi pour obtenir la meilleure mention en classe supérieure !`;
+        } else {
+          const ecart = (passageTarget - mA).toFixed(2);
+          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de passage. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez considérablement vos chances d'être admis(e) en classe supérieure.`;
+        }
+
       } else {
         mentionEl.innerText = "Mention : En attente";
-        rankEl.innerText = "En attente";
-        document.getElementById("circle-val").innerText = "0%";
-        document.getElementById("circle-bar").style.strokeDashoffset = 220;
-        document.getElementById("target-bar-fill").style.width = "0%";
+        annualBadge.innerText = "Statut : Non évalué";
+        circleVal.innerText = "0%";
+        circleBar.style.strokeDashoffset = 232;
+        targetFill.style.width = "0%";
+        progressLabel.innerText = "0 / 20";
       }
-
-      let toutesLesNotes = [];
-      Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
-      genererAnalysesGlobales(toutesLesNotes, moyAnnuelle);
     }
 
-    function genererAnalysesGlobales(notes, moyA) {
-      const bestEl = document.getElementById("analysis-best");
-      const weakEl = document.getElementById("analysis-weak");
-      const advEl = document.getElementById("analysis-advices");
+    // MODALE DES MATIÈRES
+    function ouvrirModaleDetails(type) {
+      let toutesLesNotes = [];
+      Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
 
-      if (notes.length === 0) {
-        bestEl.innerHTML = "<li>Saisissez vos notes trimestrielles.</li>";
-        weakEl.innerHTML = "<li>Saisissez vos notes trimestrielles.</li>";
-        advEl.innerHTML = "<li>Recommandations en attente.</li>";
-        return;
+      const modal = document.getElementById("details-modal");
+      const title = document.getElementById("modal-title-text");
+      const list = document.getElementById("modal-list-content");
+
+      list.innerHTML = "";
+
+      if (toutesLesNotes.length === 0) {
+        list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Veuillez d'abord saisir vos notes.</li>`;
+      } else if (type === 'weak') {
+        title.innerText = "📚 Matières à revoir (< 10/20)";
+        const faibles = toutesLesNotes.filter(n => n.note < 10);
+        if (faibles.length === 0) {
+          list.innerHTML = `<li style="justify-content:center; color:var(--ci-green-dark);">Bravo ! Aucune matière en dessous de la moyenne.</li>`;
+        } else {
+          faibles.forEach(item => {
+            list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-red); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
+          });
+        }
+      } else if (type === 'best') {
+        title.innerText = "⭐ Points forts (≥ 12/20)";
+        const fortes = toutesLesNotes.filter(n => n.note >= 12);
+        if (fortes.length === 0) {
+          list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Aucune note supérieure ou égale à 12/20 pour le moment.</li>`;
+        } else {
+          fortes.forEach(item => {
+            list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-green-dark); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
+          });
+        }
       }
 
-      const fortes = notes.filter(n => n.note >= 14);
-      const faibles = notes.filter(n => n.note < 10);
+      modal.style.display = "flex";
+    }
 
-      bestEl.innerHTML = fortes.length > 0
-        ? [...new Set(fortes.map(f => f.subject))].slice(0, 2).map(s => `<li>${s}</li>`).join("")
-        : "<li>Aucune matière > 14/20.</li>";
-
-      weakEl.innerHTML = faibles.length > 0
-        ? [...new Set(faibles.map(f => f.subject))].slice(0, 2).map(s => `<li>${s}</li>`).join("")
-        : "<li>Aucune matière sous la moyenne.</li>";
-
-      let conseils = [];
-      if (moyA) {
-        const m = parseFloat(moyA);
-        if (m >= 15) conseils.push("Résultats d'élite. Maintenez ce rythme d'étude.");
-        else if (m >= 12) conseils.push("Bonne dynamique. Concentrez vos efforts sur les matières à forts coefficients.");
-        else conseils.push("Consolidez votre méthode de révision quotidienne.");
-      }
-      advEl.innerHTML = conseils.map(c => `<li>${c}</li>`).join("");
+    function fermerModale() {
+      document.getElementById("details-modal").style.display = "none";
     }
 
     notesInputs.forEach(input => input.addEventListener("input", calculer));
     coefInputs.forEach(input => input.addEventListener("input", calculer));
-
-    function imprimerBulletin() {
-      window.print();
-    }
   </script>
 </body>
 </html>
