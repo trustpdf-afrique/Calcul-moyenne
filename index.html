@@ -17,6 +17,8 @@
       --ci-green: #009A44;
       --ci-green-dark: #007A36;
       --ci-green-soft: rgba(0, 154, 68, 0.08);
+      --ci-blue: #2563EB;
+      --ci-blue-soft: rgba(37, 99, 235, 0.08);
       
       --slate-900: #0F172A;
       --slate-800: #1E293B;
@@ -25,10 +27,10 @@
       --slate-100: #F1F5F9;
       --bg-canvas: #F8FAFC;
       
-      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
-      --card-shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
-      --radius-xl: 18px;
-      --radius-lg: 12px;
+      --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+      --card-shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+      --radius-xl: 20px;
+      --radius-lg: 16px;
       --radius-sm: 8px;
       --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -41,24 +43,21 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 16px;
+      align-items: flex-start;
+      padding: 24px 16px;
       color: var(--slate-900);
       -webkit-font-smoothing: antialiased;
     }
 
     .app-shell {
-      max-width: 1280px;
+      max-width: 1000px;
       width: 100%;
-      height: min(920px, 96vh);
       background: #FFFFFF;
       border-radius: var(--radius-xl);
-      box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08);
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(226, 232, 240, 0.9);
-      display: flex;
-      flex-direction: column;
     }
 
     .app-shell::before {
@@ -71,10 +70,9 @@
 
     /* --- LOGIN OVERLAY --- */
     #login-section {
-      position: absolute; inset: 0; background: #FFF; z-index: 100;
-      display: flex; align-items: center; justify-content: center; padding: 20px;
+      padding: 50px 20px; text-align: center;
     }
-    .login-wrapper { max-width: 360px; width: 100%; text-align: center; }
+    .login-wrapper { max-width: 360px; margin: 0 auto; }
     .brand-icon {
       width: 64px; height: 64px;
       background: linear-gradient(135deg, var(--ci-orange-soft), var(--ci-green-soft));
@@ -83,7 +81,7 @@
     }
     .brand-icon svg { width: 32px; height: 32px; fill: var(--ci-orange); }
     .login-wrapper h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-    .login-wrapper p { color: var(--slate-600); font-size: 13px; margin-bottom: 20px; }
+    .login-wrapper p { color: var(--slate-600); font-size: 13px; margin-bottom: 24px; }
     
     .field-group { position: relative; margin-bottom: 12px; text-align: left; }
     .field-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400); width: 18px; height: 18px; }
@@ -94,85 +92,95 @@
     }
     .field-group input:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
     .btn-primary {
-      width: 100%; padding: 12px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
+      width: 100%; padding: 13px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
       color: white; font-weight: 700; border: none; border-radius: var(--radius-lg);
       cursor: pointer; font-size: 14px; transition: var(--transition); box-shadow: 0 4px 12px rgba(255, 130, 0, 0.25);
     }
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255, 130, 0, 0.3); }
     .error-msg { color: #E11D48; margin-top: 10px; font-size: 12px; font-weight: 600; }
 
-    /* --- DASHBOARD LAYOUT COMPACT (ZERO SCROLL) --- */
-    #dashboard-section { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
-
+    /* --- DASHBOARD TOPBAR --- */
     .dashboard-topbar {
-      padding: 14px 24px; border-bottom: 1px solid var(--slate-100);
-      display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+      padding: 20px 24px 16px; border-bottom: 1px solid var(--slate-100);
+      display: flex; justify-content: space-between; align-items: center;
     }
     .user-profile { display: flex; align-items: center; gap: 12px; }
     .avatar {
-      width: 40px; height: 40px; border-radius: 12px;
+      width: 44px; height: 44px; border-radius: 14px;
       background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
       color: white; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 15px;
+      font-weight: 800; font-size: 16px;
     }
-    .user-info h3 { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.1; }
+    .user-info h3 { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2; }
     .user-info span { font-size: 11px; font-weight: 700; color: var(--ci-green); text-transform: uppercase; letter-spacing: 0.5px; }
 
-    .dashboard-grid {
-      flex: 1; padding: 18px 24px; display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto auto 1fr;
-      gap: 14px; overflow-y: auto;
+    /* --- GRID DE 2 COLONNES CÔTE À CÔTE --- */
+    .dashboard-container { padding: 20px 24px; }
+
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
 
-    /* TYPOGRAPHIE COMPACTE */
-    .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--slate-600); }
-    .card-val { font-size: 22px; font-weight: 800; color: var(--slate-900); margin: 4px 0 2px; }
-    .card-sub { font-size: 11px; color: var(--slate-600); font-weight: 600; }
-
-    /* CARTES DU DASHBOARD */
-    .compact-card {
-      background: #FFFFFF; border: 1px solid rgba(226, 232, 240, 0.8);
-      border-radius: var(--radius-lg); padding: 14px;
-      box-shadow: var(--card-shadow); transition: var(--transition);
-      display: flex; flex-direction: column; justify-content: space-between; position: relative;
+    @media (max-width: 680px) {
+      .grid-2-col { grid-template-columns: 1fr; }
     }
-    .compact-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); }
-    
-    .compact-card.orange-top { border-top: 3px solid var(--ci-orange); }
-    .compact-card.gray-top { border-top: 3px solid var(--slate-400); }
-    .compact-card.green-top { border-top: 3px solid var(--ci-green); }
-    .compact-card.annual-hero {
+
+    /* --- STYLE DES CARTES PREMIUM --- */
+    .premium-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .premium-card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow-hover); }
+
+    /* Variantes visuelles par carte */
+    .card-t1 { border-top: 4px solid var(--ci-orange); }
+    .card-t2 { border-top: 4px solid var(--ci-green); }
+    .card-t3 { border-top: 4px solid var(--ci-blue); }
+    .card-annual {
       background: linear-gradient(135deg, #FFF9F2 0%, #F0FDF4 100%);
       border: 1.5px solid var(--ci-orange);
     }
-
-    /* ALIGNEMENT GRID INTELLIGENT */
-    .col-3 { grid-column: span 3; }
-    .col-4 { grid-column: span 4; }
-    .col-5 { grid-column: span 5; }
-    .col-7 { grid-column: span 7; }
-
-    @media (max-width: 960px) {
-      .col-3, .col-4, .col-5, .col-7 { grid-column: span 12; }
+    .card-hero-dark {
+      background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%);
+      color: white; border: none;
     }
 
+    /* Header de carte */
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .card-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--slate-600); }
+    .card-icon {
+      width: 32px; height: 32px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+    }
+
+    /* Valeurs et textes */
+    .card-val { font-size: 26px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; margin: 4px 0 2px; }
+    .card-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; }
+
+    /* Bouton d'action dans carte */
     .btn-card-action {
-      margin-top: 8px; width: 100%; padding: 6px 10px;
+      margin-top: 12px; width: 100%; padding: 8px;
       background: var(--slate-100); border: none; border-radius: var(--radius-sm);
-      font-size: 11px; font-weight: 700; color: var(--slate-800); cursor: pointer;
-      transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 4px;
+      font-size: 12px; font-weight: 700; color: var(--slate-800); cursor: pointer;
+      transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     .btn-card-action:hover { background: var(--ci-orange-soft); color: var(--ci-orange-dark); }
 
-    /* ROW 2: PROGRESSION & OBJECTIF */
-    .hero-progress-box {
-      background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%);
-      border-radius: var(--radius-lg); padding: 16px; color: white;
-      display: flex; align-items: center; gap: 20px;
-    }
-    .circle-mini-container { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
-    .circle-mini-container svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+    /* Cercle de progression */
+    .progress-box-flex { display: flex; align-items: center; gap: 16px; margin-top: 4px; }
+    .circle-mini-container { position: relative; width: 70px; height: 70px; flex-shrink: 0; }
+    .circle-mini-container svg { width: 70px; height: 70px; transform: rotate(-90deg); }
     .circle-bg { fill: none; stroke: rgba(255, 255, 255, 0.12); stroke-width: 8; }
     .circle-progress {
       fill: none; stroke: var(--ci-orange); stroke-width: 8;
@@ -181,59 +189,58 @@
     }
     .circle-mini-text {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 16px; font-weight: 800; color: #FFF;
+      font-size: 15px; font-weight: 800; color: #FFF;
     }
 
+    /* Barre d'objectif */
     .target-bar-bg { width: 100%; height: 8px; background: var(--slate-100); border-radius: 4px; overflow: hidden; margin: 8px 0; }
     .target-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ci-orange), var(--ci-green)); transition: width 0.8s ease; }
 
-    /* ROW 3: INSIGHTS */
-    .insight-box { display: flex; flex-direction: column; justify-content: flex-start; }
-    .insight-box h4 { font-size: 12px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .insight-list { list-style: none; font-size: 12px; color: var(--slate-600); }
-    .insight-list li { margin-bottom: 4px; padding-left: 12px; position: relative; line-height: 1.3; font-weight: 500; }
-    .insight-list li::before { content: "•"; position: absolute; left: 0; color: var(--ci-orange); font-weight: 900; }
+    /* Listes d'analyses */
+    .insight-list { list-style: none; font-size: 12px; color: var(--slate-600); margin-top: 6px; }
+    .insight-list li { margin-bottom: 4px; padding-left: 14px; position: relative; line-height: 1.4; font-weight: 500; }
+    .insight-list li::before { content: "•"; position: absolute; left: 0; color: var(--ci-orange); font-weight: 900; font-size: 14px; }
 
-    /* --- PAGE DE SAISIE PAR TRIMESTRE --- */
-    #trimestre-page { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+    /* --- PAGE DE SAISIE DES NOTES --- */
+    #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
     .trim-header {
-      padding: 14px 24px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
-      display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+      padding: 16px 24px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
     .btn-secondary {
       background: #FFF; border: 1.5px solid var(--slate-400); color: var(--slate-800);
-      padding: 6px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
+      padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
       cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px;
     }
     .btn-secondary:hover { background: var(--slate-100); }
 
     .btn-print-pro {
       background: linear-gradient(135deg, var(--ci-green), var(--ci-green-dark));
-      color: white; border: none; padding: 6px 14px; border-radius: var(--radius-sm);
+      color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm);
       font-size: 12px; font-weight: 700; cursor: pointer; transition: var(--transition);
       box-shadow: 0 4px 10px rgba(0, 154, 68, 0.2); display: inline-flex; align-items: center; gap: 6px;
     }
 
-    .table-scroll-area { flex: 1; padding: 16px 24px; overflow-y: auto; }
+    .table-scroll-area { padding: 20px 24px; overflow-x: auto; }
     .styled-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #E2E8F0; }
-    .styled-table th, .styled-table td { padding: 8px 12px; border-bottom: 1px solid #E2E8F0; font-size: 12px; }
-    .styled-table th { background: #F8FAFC; color: var(--slate-600); font-size: 10px; text-transform: uppercase; font-weight: 800; }
+    .styled-table th, .styled-table td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 13px; }
+    .styled-table th { background: #F8FAFC; color: var(--slate-600); font-size: 11px; text-transform: uppercase; font-weight: 800; }
     .styled-table th:nth-child(n+2), .styled-table td:nth-child(n+2) { text-align: center; }
     
     tr.category-row td { background: var(--ci-orange-soft); color: var(--ci-orange-dark); font-weight: 800; font-size: 11px; text-transform: uppercase; }
     
     input.coef-input, input.note-input {
-      padding: 4px 6px; text-align: center; border: 1.5px solid #E2E8F0;
+      padding: 6px; text-align: center; border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-sm); font-weight: 700; outline: none; transition: var(--transition);
-      font-family: inherit; font-size: 12px;
+      font-family: inherit; font-size: 13px;
     }
-    input.coef-input { width: 50px; background: #FFF; }
-    input.note-input { width: 60px; background: #F8FAFC; }
+    input.coef-input { width: 55px; background: #FFF; }
+    input.note-input { width: 65px; background: #F8FAFC; }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
 
     @media print {
       body { background: white; padding: 0; }
-      .app-shell { height: auto; box-shadow: none; border: none; }
+      .app-shell { box-shadow: none; border: none; }
       .dashboard-topbar, .btn-secondary, .btn-print-pro, #login-section, #dashboard-section { display: none !important; }
       #trimestre-page { display: block !important; }
       .table-scroll-area { padding: 0; }
@@ -272,7 +279,7 @@
       </div>
     </div>
 
-    <!-- ================= 🏠 DASHBOARD "ZERO SCROLL" ================= -->
+    <!-- ================= 🏠 TABLEAU DE BORD (GRID 2 COLONNES) ================= -->
     <div id="dashboard-section" style="display:none;">
       
       <div class="dashboard-topbar">
@@ -285,104 +292,133 @@
         </div>
       </div>
 
-      <div class="dashboard-grid">
-        
-        <!-- ROW 1 : LES 4 MOYENNES (4 COLONNES DE 3) -->
-        <div class="compact-card orange-top col-3">
-          <div class="card-label">1er Trimestre</div>
-          <div class="card-val" id="dash-t1">-</div>
-          <div class="card-sub">Consulter / Modifier</div>
-          <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(1)">Saisie notes ➔</button>
-        </div>
-
-        <div class="compact-card gray-top col-3">
-          <div class="card-label">2ᵉ Trimestre</div>
-          <div class="card-val" id="dash-t2">-</div>
-          <div class="card-sub">Consulter / Modifier</div>
-          <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(2)">Saisie notes ➔</button>
-        </div>
-
-        <div class="compact-card green-top col-3">
-          <div class="card-label">3ᵉ Trimestre</div>
-          <div class="card-val" id="dash-t3">-</div>
-          <div class="card-sub">Consulter / Modifier</div>
-          <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(3)">Saisie notes ➔</button>
-        </div>
-
-        <div class="compact-card annual-hero col-3">
-          <div class="card-label" style="color:var(--ci-orange-dark);">Moyenne Annuelle</div>
-          <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark);">-</div>
-          <div class="card-sub" id="dash-mention">Mention : En attente</div>
-        </div>
-
-        <!-- ROW 2 : CERCLE DE PROGRESSION + RANG & OBJECTIF DE PROGRESSION -->
-        <div class="hero-progress-box col-5">
-          <div class="circle-mini-container">
-            <svg>
-              <circle class="circle-bg" cx="40" cy="40" r="35"></circle>
-              <circle class="circle-progress" id="circle-bar" cx="40" cy="40" r="35"></circle>
-            </svg>
-            <div class="circle-mini-text" id="circle-val">0%</div>
-          </div>
-          <div>
-            <div style="font-size:11px; text-transform:uppercase; font-weight:800; color:var(--slate-400);">Performance globale</div>
-            <div style="font-size:14px; font-weight:800; margin-top:2px;" id="dash-perf-status">Niveau d'acquisition</div>
-            <div style="font-size:11px; color:var(--slate-400); margin-top:4px;">Calculé sur l'ensemble des matières saisies</div>
-          </div>
-        </div>
-
-        <div class="compact-card col-7">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div class="card-label">🎯 Objectif de Progression & Rang</div>
-            <span id="student-rank" style="background:var(--ci-green-soft); color:var(--ci-green-dark); padding:2px 8px; border-radius:12px; font-size:11px; font-weight:800;">Rang : En attente</span>
-          </div>
+      <div class="dashboard-container">
+        <div class="grid-2-col">
           
-          <div style="margin-top:6px;">
-            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700;">
-              <span>Cible : 16.00 / 20</span>
-              <span id="target-percent">0% accompli</span>
+          <!-- RANGÉE 1 : 1ER TRIMESTRE & 2E TRIMESTRE -->
+          <div class="premium-card card-t1">
+            <div class="card-header-flex">
+              <span class="card-title">1er Trimestre</span>
+              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange);">🟧</div>
             </div>
+            <div class="card-val" id="dash-t1">-</div>
+            <div class="card-sub">Page de saisie dédiée</div>
+            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(1)">Saisir les notes ➔</button>
+          </div>
+
+          <div class="premium-card card-t2">
+            <div class="card-header-flex">
+              <span class="card-title">2ᵉ Trimestre</span>
+              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🟩</div>
+            </div>
+            <div class="card-val" id="dash-t2">-</div>
+            <div class="card-sub">Page de saisie dédiée</div>
+            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(2)">Saisir les notes ➔</button>
+          </div>
+
+          <!-- RANGÉE 2 : 3E TRIMESTRE & MOYENNE ANNUELLE -->
+          <div class="premium-card card-t3">
+            <div class="card-header-flex">
+              <span class="card-title">3ᵉ Trimestre</span>
+              <div class="card-icon" style="background:var(--ci-blue-soft); color:var(--ci-blue);">🟦</div>
+            </div>
+            <div class="card-val" id="dash-t3">-</div>
+            <div class="card-sub">Page de saisie dédiée</div>
+            <button class="btn-card-action" onclick="ouvrirSaisieTrimestre(3)">Saisir les notes ➔</button>
+          </div>
+
+          <div class="premium-card card-annual">
+            <div class="card-header-flex">
+              <span class="card-title" style="color:var(--ci-orange-dark);">Moyenne Annuelle</span>
+              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange-dark);">🏆</div>
+            </div>
+            <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark);">-</div>
+            <div class="card-sub" id="dash-mention">Mention : En attente</div>
+          </div>
+
+          <!-- RANGÉE 3 : PROGRESSION & CLASSEMENT -->
+          <div class="premium-card card-hero-dark">
+            <div class="card-title" style="color:var(--slate-400);">📊 Progression globale</div>
+            <div class="progress-box-flex">
+              <div class="circle-mini-container">
+                <svg>
+                  <circle class="circle-bg" cx="35" cy="35" r="30"></circle>
+                  <circle class="circle-progress" id="circle-bar" cx="35" cy="35" r="30"></circle>
+                </svg>
+                <div class="circle-mini-text" id="circle-val">0%</div>
+              </div>
+              <div>
+                <div style="font-size:13px; font-weight:800;" id="dash-perf-status">Niveau d'acquisition</div>
+                <div style="font-size:11px; color:var(--slate-400); margin-top:2px;">Calculé en temps réel</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="premium-card">
+            <div class="card-header-flex">
+              <span class="card-title">🏆 Classement & Rang</span>
+              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🏅</div>
+            </div>
+            <div class="card-val" id="student-rank" style="font-size:20px; color:var(--ci-green-dark);">En attente</div>
+            <div class="card-sub">Rang calculé sur l'établissement</div>
+          </div>
+
+          <!-- RANGÉE 4 : MATIÈRES À RENFORCER & POINTS FORTS -->
+          <div class="premium-card">
+            <div class="card-header-flex">
+              <span class="card-title">📚 Matières à renforcer</span>
+              <div class="card-icon" style="background:#FFF1F2; color:#E11D48;">⚠️</div>
+            </div>
+            <ul class="insight-list" id="analysis-weak">
+              <li>Saisissez vos notes pour obtenir le diagnostic.</li>
+            </ul>
+          </div>
+
+          <div class="premium-card">
+            <div class="card-header-flex">
+              <span class="card-title">⭐ Points forts</span>
+              <div class="card-icon" style="background:var(--ci-green-soft); color:var(--ci-green);">🌟</div>
+            </div>
+            <ul class="insight-list" id="analysis-best">
+              <li>Vos meilleures matières s'afficheront ici.</li>
+            </ul>
+          </div>
+
+          <!-- RANGÉE 5 : CONSEILS PERSONNALISÉS & OBJECTIF DE PROGRESSION -->
+          <div class="premium-card">
+            <div class="card-header-flex">
+              <span class="card-title">💡 Conseils personnalisés</span>
+              <div class="card-icon" style="background:var(--ci-orange-soft); color:var(--ci-orange);">🧠</div>
+            </div>
+            <ul class="insight-list" id="analysis-advices">
+              <li>Recommandations automatiques d'apprentissage.</li>
+            </ul>
+          </div>
+
+          <div class="premium-card">
+            <div class="card-header-flex">
+              <span class="card-title">🎯 Objectif à atteindre</span>
+              <span id="target-percent" style="font-size:11px; font-weight:800; color:var(--ci-green);">0%</span>
+            </div>
+            <div style="font-size:12px; font-weight:700; color:var(--slate-800); margin-top:4px;">Cible : 16.00 / 20</div>
             <div class="target-bar-bg">
               <div class="target-bar-fill" id="target-bar-fill"></div>
             </div>
+            <div id="target-motivation-text" class="card-sub" style="font-weight:600; line-height:1.3;">
+              Progression dynamique vers la mention d'excellence.
+            </div>
           </div>
 
-          <div id="target-motivation-text" class="card-sub" style="font-weight:600; color:var(--slate-600);">
-            Saisissez vos notes pour afficher l'analyse dynamique d'amélioration.
-          </div>
         </div>
-
-        <!-- ROW 3 : LES 3 CARTES D'ANALYSES INTEL -->
-        <div class="compact-card insight-box col-4">
-          <h4>🌟 Points forts</h4>
-          <ul class="insight-list" id="analysis-best">
-            <li>Vos meilleures matières apparaîtront ici.</li>
-          </ul>
-        </div>
-
-        <div class="compact-card insight-box col-4">
-          <h4>📚 À renforcer</h4>
-          <ul class="insight-list" id="analysis-weak">
-            <li>Matières nécessitant une attention.</li>
-          </ul>
-        </div>
-
-        <div class="compact-card insight-box col-4">
-          <h4>💡 Conseils personnalisés</h4>
-          <ul class="insight-list" id="analysis-advices">
-            <li>Recommandations automatiques.</li>
-          </ul>
-        </div>
-
       </div>
     </div>
 
-    <!-- ================= 📝 PAGES DE SAISIE PAR TRIMESTRE ================= -->
+    <!-- ================= 📝 PAGES DE SAISIE SEPARÉES ================= -->
     <div id="trimestre-page" style="display:none;">
       
       <div class="trim-header">
         <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Tableau de bord</button>
-        <h3 id="trimestre-page-title" style="font-weight:800; font-size:15px;">Notes du 1er Trimestre</h3>
+        <h3 id="trimestre-page-title" style="font-weight:800; font-size:16px;">Saisie des Notes - 1er Trimestre</h3>
         <button class="btn-print-pro" onclick="imprimerBulletin()">🖨️ Imprimer le bulletin</button>
       </div>
 
@@ -421,14 +457,14 @@
               <td id="total-coefs">-</td>
               <td id="total-points">-</td>
             </tr>
-            <tr style="background:#E6F5EC; font-weight:800; font-size:14px;">
+            <tr style="background:#E6F5EC; font-weight:800; font-size:15px;">
               <td colspan="3">🎯 Moyenne du Trimestre</td>
               <td id="moyenne-generale" style="color:var(--ci-green-dark);">-</td>
             </tr>
           </tbody>
         </table>
 
-        <button class="btn-secondary" onclick="retourTableauDeBord()" style="width:100%; justify-content:center; margin-top:16px; padding:10px;">⬅️ Valider et revenir au tableau de bord</button>
+        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:20px; padding:14px;">✅ Enregistrer et revenir au tableau de bord</button>
       </div>
     </div>
 
@@ -448,7 +484,7 @@
       if (user === "Niampa" && pass === "23214622C" && idcode === "55") {
         errorDiv.innerText = "";
         document.getElementById("login-section").style.display = "none";
-        document.getElementById("dashboard-section").style.display = "flex";
+        document.getElementById("dashboard-section").style.display = "block";
       } else {
         errorDiv.innerText = "⛔ Identifiants incorrects. Veuillez réessayer.";
       }
@@ -457,10 +493,10 @@
     function ouvrirSaisieTrimestre(num) {
       trimestreActif = num;
       const noms = ["1er Trimestre", "2ᵉ Trimestre", "3ᵉ Trimestre"];
-      document.getElementById("trimestre-page-title").innerText = "Fiche des Notes - " + noms[num - 1];
+      document.getElementById("trimestre-page-title").innerText = "Saisie des Notes - " + noms[num - 1];
       
       document.getElementById("dashboard-section").style.display = "none";
-      document.getElementById("trimestre-page").style.display = "flex";
+      document.getElementById("trimestre-page").style.display = "block";
 
       restaurerSaisie(num);
       calculer();
@@ -468,7 +504,7 @@
 
     function retourTableauDeBord() {
       document.getElementById("trimestre-page").style.display = "none";
-      document.getElementById("dashboard-section").style.display = "flex";
+      document.getElementById("dashboard-section").style.display = "block";
       misesAJourDashboard();
     }
 
@@ -548,7 +584,7 @@
         else if (mA < 10) mention = "Ajourné";
 
         mentionEl.innerText = "Mention : " + mention;
-        rankEl.innerText = mA >= 14 ? "Rang : 1er / 45" : (mA >= 10 ? "Rang : 5e / 45" : "Rang : 18e / 45");
+        rankEl.innerText = mA >= 14 ? "1er / 45" : (mA >= 10 ? "5e / 45" : "18e / 45");
 
         // Cercle (220 max dashoffset)
         const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
@@ -566,11 +602,11 @@
           document.getElementById("target-motivation-text").innerText = "🏆 Objectif d'Excellence atteint ! Maintenez votre régularité.";
         } else {
           const pointGap = (16 - mA).toFixed(2);
-          document.getElementById("target-motivation-text").innerText = `⚡ Il manque encore ${pointGap} pt(s) pour la Mention Très Bien.`;
+          document.getElementById("target-motivation-text").innerText = `⚡ Enore ${pointGap} pt(s) pour décrocher la Mention Très Bien.`;
         }
       } else {
         mentionEl.innerText = "Mention : En attente";
-        rankEl.innerText = "Rang : En attente";
+        rankEl.innerText = "En attente";
         document.getElementById("circle-val").innerText = "0%";
         document.getElementById("circle-bar").style.strokeDashoffset = 220;
         document.getElementById("target-bar-fill").style.width = "0%";
@@ -587,9 +623,9 @@
       const advEl = document.getElementById("analysis-advices");
 
       if (notes.length === 0) {
-        bestEl.innerHTML = "<li>Abonnez vos notes trimestrielles.</li>";
-        weakEl.innerHTML = "<li>Abonnez vos notes trimestrielles.</li>";
-        advEl.innerHTML = "<li>Analyse automatique en attente.</li>";
+        bestEl.innerHTML = "<li>Saisissez vos notes trimestrielles.</li>";
+        weakEl.innerHTML = "<li>Saisissez vos notes trimestrielles.</li>";
+        advEl.innerHTML = "<li>Recommandations en attente.</li>";
         return;
       }
 
@@ -607,9 +643,9 @@
       let conseils = [];
       if (moyA) {
         const m = parseFloat(moyA);
-        if (m >= 15) conseils.push("Résultats d'élite. Maintenez ce rythme.");
-        else if (m >= 12) conseils.push("Bonne dynamique. Visez les matières à coef.");
-        else conseils.push("Renforcez la méthode de travail.");
+        if (m >= 15) conseils.push("Résultats d'élite. Maintenez ce rythme d'étude.");
+        else if (m >= 12) conseils.push("Bonne dynamique. Concentrez vos efforts sur les matières à forts coefficients.");
+        else conseils.push("Consolidez votre méthode de révision quotidienne.");
       }
       advEl.innerHTML = conseils.map(c => `<li>${c}</li>`).join("");
     }
