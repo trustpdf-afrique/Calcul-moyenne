@@ -99,6 +99,44 @@
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255, 130, 0, 0.3); }
     .error-msg { color: #E11D48; margin-top: 10px; font-size: 12px; font-weight: 600; }
 
+    /* --- 1. HEADER (EN-TÊTE PREMIUM) --- */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--slate-100);
+      background: #FFFFFF;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #FFF; font-weight: 800; font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .logo-text-title { font-size: 15px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.3px; }
+    .logo-text-sub { font-size: 11px; color: var(--slate-600); font-weight: 600; }
+    
+    .profile-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px; background: var(--slate-100);
+      border-radius: 30px; font-size: 12px; font-weight: 700; color: var(--slate-800);
+      border: 1px solid #E2E8F0;
+    }
+    .profile-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--ci-orange); color: #FFF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800;
+    }
+
     /* --- DASHBOARD CONTAINER & SECTIONS --- */
     .dashboard-container { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
 
@@ -143,9 +181,9 @@
     .card-val { font-size: 26px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; margin: 2px 0; }
     .card-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; }
 
-    /* CIRCLE & BAR PROGRESSION */
+    /* PROGRESSION GÉNÉRALE */
     .progress-wrapper {
-      display: flex; align-items: center; gap: 24px; margin-top: 10px;
+      display: flex; align-items: center; gap: 24px; margin-top: 6px;
     }
     .circle-mini-container { position: relative; width: 84px; height: 84px; flex-shrink: 0; }
     .circle-mini-container svg { width: 84px; height: 84px; transform: rotate(-90deg); }
@@ -168,11 +206,12 @@
     .objective-card {
       background: #FFFFFF; border: 1.5px solid var(--ci-green);
       border-radius: var(--radius-lg); padding: 20px; cursor: default;
+      box-shadow: var(--card-shadow);
     }
-    .objective-content { margin-top: 10px; font-size: 13px; color: var(--slate-800); line-height: 1.5; }
+    .objective-content { margin-top: 10px; font-size: 13px; color: var(--slate-800); line-height: 1.6; }
     .highlight-badge {
       display: inline-block; padding: 4px 10px; border-radius: 20px;
-      font-weight: 800; font-size: 12px; margin-bottom: 6px;
+      font-weight: 800; font-size: 12px;
     }
 
     /* --- FENÊTRE MODALE DÉTAILS --- */
@@ -256,32 +295,50 @@
       </div>
     </div>
 
-    <!-- ================= 🏠 TABLEAU DE BORD (CONFORME AU PLAN DESSINÉ) ================= -->
+    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION STRICTE) ================= -->
     <div id="dashboard-section" style="display:none;">
       
+      <!-- 1. EN-TÊTE (LOGO GAUCHE + PROFIL DROITE) -->
+      <header class="app-header">
+        <div class="header-logo">
+          <div class="logo-badge">🎓</div>
+          <div>
+            <div class="logo-text-title">Portail Zakaria</div>
+            <div class="logo-text-sub">République de Côte d'Ivoire</div>
+          </div>
+        </div>
+        <div class="profile-pill">
+          <div class="profile-avatar">E</div>
+          <span>Élève / Parent</span>
+        </div>
+      </header>
+
       <div class="dashboard-container">
         
-        <!-- SECTION 1 : CARTES TRIMESTRIELLES -->
+        <!-- 2. PREMIÈRE SECTION : TRIMESTRES (DISPOSITION EXACTE) -->
         <div class="section-row-2">
+          <!-- 📘 En haut à gauche : 1er Trimestre -->
           <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
             <div class="card-header-flex">
               <span class="card-title">📘 1er Trimestre</span>
               <span style="font-size:12px; color:var(--ci-blue); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t1">-</div>
-            <div class="card-sub">Moyenne trimestrielle</div>
+            <div class="card-sub">Moyenne du trimestre</div>
           </div>
 
+          <!-- 📙 En haut à droite : 2ᵉ Trimestre -->
           <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
             <div class="card-header-flex">
               <span class="card-title">📙 2ᵉ Trimestre</span>
               <span style="font-size:12px; color:var(--ci-orange); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t2">-</div>
-            <div class="card-sub">Moyenne trimestrielle</div>
+            <div class="card-sub">Moyenne du trimestre</div>
           </div>
         </div>
 
+        <!-- 📗 Juste en dessous, centré : 3ᵉ Trimestre -->
         <div class="section-centered">
           <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
             <div class="card-header-flex">
@@ -289,15 +346,15 @@
               <span style="font-size:12px; color:var(--ci-green); font-weight:700;">Saisir ➔</span>
             </div>
             <div class="card-val" id="dash-t3">-</div>
-            <div class="card-sub">Moyenne trimestrielle</div>
+            <div class="card-sub">Moyenne du trimestre</div>
           </div>
         </div>
 
-        <!-- SECTION 2 : MOYENNE ANNUELLE & MENTION (PLEINE LARGEUR) -->
+        <!-- 3. DEUXIÈME SECTION : MOYENNE ANNUELLE (CARTE HORIZONTALE) -->
         <div class="premium-card card-annual">
           <div class="card-header-flex">
             <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
-            <span style="font-size:18px;">🏅</span>
+            <span style="font-size:20px;">🏅</span>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:flex-end;">
             <div>
@@ -310,11 +367,10 @@
           </div>
         </div>
 
-        <!-- SECTION 3 : PROGRESSION GÉNÉRALE (INDICATEUR CIRCULAIRE & BARRE AVEC SEUILS DE COULEURS) -->
+        <!-- 4. TROISIÈME SECTION : PROGRESSION GÉNÉRALE (CIRCULAIRE GAUCHE + TEXTE DROITE) -->
         <div class="premium-card" style="cursor:default;">
-          <div class="card-title">📊 Progression Générale</div>
-          
           <div class="progress-wrapper">
+            <!-- Cercle % à gauche -->
             <div class="circle-mini-container">
               <svg>
                 <circle class="circle-bg" cx="42" cy="42" r="37"></circle>
@@ -323,25 +379,27 @@
               <div class="circle-mini-text" id="circle-val">0%</div>
             </div>
 
+            <!-- Texte à droite -->
             <div class="progress-info">
-              <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+              <div class="card-title" style="margin-bottom:2px;">📊 Progression Générale</div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800; margin-top:4px;">
                 <span id="progress-status-text">Évaluation globale</span>
                 <span id="progress-percentage-label">0 / 20</span>
               </div>
               <div class="target-bar-bg">
                 <div class="target-bar-fill" id="target-bar-fill"></div>
               </div>
-              <div class="card-sub" id="progress-feedback-text">Completez la saisie des trimestres pour activer le calcul.</div>
+              <div class="card-sub" id="progress-feedback-text">Moyenne calculée automatiquement sur les 3 trimestres.</div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 4 : MATIÈRES À REVOIR & POINTS FORTS (INTERACTIVES -> MODALE) -->
+        <!-- 5. QUATRIÈME SECTION : CARTES D'ANALYSE CÔTE À CÔTE -->
         <div class="section-row-2">
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
             <div>
               <div class="card-title" style="color:#E11D48;">📚 Matières à revoir</div>
-              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher la liste</div>
+              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher les détails</div>
             </div>
             <span style="font-size:22px;">⚠️</span>
           </div>
@@ -349,20 +407,20 @@
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('best')">
             <div>
               <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points forts</div>
-              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher la liste</div>
+              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher les détails</div>
             </div>
             <span style="font-size:22px;">🌟</span>
           </div>
         </div>
 
-        <!-- SECTION 5 : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE (AUTOMATIQUE) -->
+        <!-- 6. CINQUIÈME SECTION : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE -->
         <div class="objective-card">
           <div class="card-header-flex">
             <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
-            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Seuil : 10.00 / 20</span>
+            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Moyenne minimale : 10.00 / 20</span>
           </div>
           <div class="objective-content" id="objective-dynamic-text">
-            Saisissez les notes de vos trimestres pour générer le bilan d'admission automatique et les recommandations ciblées.
+            Saisissez les notes de vos trimestres pour activer le calcul de votre objectif d'admission ainsi que vos recommandations d'études personnalisées.
           </div>
         </div>
 
@@ -562,13 +620,13 @@
         annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
         annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
 
-        // COULEURS DYNAMIQUES DU SEUIL (0-10: Rouge, 10-11.99: Orange, 12+: Vert)
+        // COULEURS DE PROGRESSION DYNAMIQUES (Rouge: <10, Orange: 10-11.99, Vert: >=12)
         let activeColor = "var(--ci-red)";
-        let statusTitle = "Niveau insuffisant";
+        let statusTitle = "Insuffisant";
         
         if (mA >= 12) {
           activeColor = "var(--ci-green)";
-          statusTitle = "Bonnes performances";
+          statusTitle = "Bonne performance";
         } else if (mA >= 10) {
           activeColor = "var(--ci-orange)";
           statusTitle = "Encore des progrès à faire";
@@ -581,28 +639,28 @@
         circleVal.innerText = Math.round(percent) + "%";
         progressLabel.innerText = mA.toFixed(2) + " / 20";
         progressStatus.innerText = statusTitle;
-        progressFeedback.innerText = `Moyenne globale actualisée basée sur vos notes trimestrielles.`;
+        progressFeedback.innerText = `Moyenne globale actualisée sur l'ensemble des trimestres.`;
 
         // Cercle (stroke-dasharray = 232)
         const offset = 232 - (232 * percent / 100);
         circleBar.style.strokeDashoffset = offset;
         targetFill.style.width = percent + "%";
 
-        // CALCUL ET RECOMANDATIONS ET OBJECTIF PASSAGE (SECTION 5)
+        // CALCULS AUTOMATIQUES OBJECTIF D'ADMISSION (SECTION 6)
         const passageTarget = 10.00;
         let toutesLesNotes = [];
         Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
         
-        // Trouver matières sous la moyenne
+        // Matières sous la moyenne
         let matieresAAmeliorer = toutesLesNotes.filter(n => n.note < 10).map(n => n.subject);
         let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
-        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos matières principales";
+        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos disciplines de base";
 
         if (mA >= passageTarget) {
-          objText.innerHTML = `<strong>Félicitations !</strong> Votre moyenne actuelle (${mA.toFixed(2)}/20) dépasse le seuil minimal de passage (${passageTarget.toFixed(2)}/20). Continuez ainsi pour obtenir la meilleure mention en classe supérieure !`;
+          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne actuelle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts pour viser une mention encore plus élevée.`;
         } else {
           const ecart = (passageTarget - mA).toFixed(2);
-          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de passage. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez considérablement vos chances d'être admis(e) en classe supérieure.`;
+          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de <strong>10,00/20</strong> requis pour passer en classe supérieure. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez fortement vos chances d'admission. Continuez vos efforts, vous êtes sur la bonne voie !`;
         }
 
       } else {
@@ -627,12 +685,12 @@
       list.innerHTML = "";
 
       if (toutesLesNotes.length === 0) {
-        list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Veuillez d'abord saisir vos notes.</li>`;
+        list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Veuillez d'abord saisir des notes dans un trimestre.</li>`;
       } else if (type === 'weak') {
         title.innerText = "📚 Matières à revoir (< 10/20)";
         const faibles = toutesLesNotes.filter(n => n.note < 10);
         if (faibles.length === 0) {
-          list.innerHTML = `<li style="justify-content:center; color:var(--ci-green-dark);">Bravo ! Aucune matière en dessous de la moyenne.</li>`;
+          list.innerHTML = `<li style="justify-content:center; color:var(--ci-green-dark);">Félicitations ! Aucune matière sous la moyenne.</li>`;
         } else {
           faibles.forEach(item => {
             list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-red); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
@@ -642,7 +700,7 @@
         title.innerText = "⭐ Points forts (≥ 12/20)";
         const fortes = toutesLesNotes.filter(n => n.note >= 12);
         if (fortes.length === 0) {
-          list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Aucune note supérieure ou égale à 12/20 pour le moment.</li>`;
+          list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Aucune note ≥ 12/20 enregistrée.</li>`;
         } else {
           fortes.forEach(item => {
             list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-green-dark); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
