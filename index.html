@@ -11,128 +11,185 @@
 
   <style>
     :root {
+      /* Couleurs Nationales Côte d'Ivoire */
       --ci-orange: #FF8200;
-      --ci-orange-dark: #E07000;
+      --ci-orange-dark: #D96B00;
       --ci-orange-soft: rgba(255, 130, 0, 0.08);
+      --ci-orange-border: rgba(255, 130, 0, 0.25);
+      
       --ci-green: #009A44;
       --ci-green-dark: #007A36;
       --ci-green-soft: rgba(0, 154, 68, 0.08);
+      --ci-green-border: rgba(0, 154, 68, 0.25);
+      
       --ci-blue: #2563EB;
+      --ci-blue-dark: #1D4ED8;
       --ci-blue-soft: rgba(37, 99, 235, 0.08);
+      --ci-blue-border: rgba(37, 99, 235, 0.25);
+      
       --ci-red: #EF4444;
       --ci-red-soft: rgba(239, 68, 68, 0.08);
-      
+
       --slate-900: #0F172A;
       --slate-800: #1E293B;
+      --slate-700: #334155;
       --slate-600: #475569;
       --slate-400: #94A3B8;
       --slate-100: #F1F5F9;
-      --bg-canvas: #F8FAFC;
-      
-      --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.02);
-      --card-shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
-      --radius-xl: 20px;
-      --radius-lg: 16px;
+      --slate-50:  #F8FAFC;
+
+      /* Design Tokens */
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
       --radius-sm: 8px;
-      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 16px 32px -8px rgba(15, 23, 42, 0.1), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+      
+      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg-canvas);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F1F5F9;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 130, 0, 0.03) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 154, 68, 0.03) 0px, transparent 50%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 20px 14px;
+      padding: 32px 16px;
       color: var(--slate-900);
       -webkit-font-smoothing: antialiased;
     }
 
+    /* CONTENEUR PRINCIPAL APPLICATIF */
     .app-shell {
-      max-width: 800px;
+      max-width: 880px;
       width: 100%;
       background: #FFFFFF;
       border-radius: var(--radius-xl);
-      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08);
+      box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(226, 232, 240, 0.9);
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
+    /* Bandeau supérieur aux couleurs du Drapeau Ivoirien */
     .app-shell::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; height: 5px;
+      top: 0; left: 0; right: 0; height: 6px;
       background: linear-gradient(90deg, var(--ci-orange) 0%, var(--ci-orange) 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, var(--ci-green) 66.6%, var(--ci-green) 100%);
-      z-index: 10;
+      z-index: 20;
     }
 
-    /* --- LOGIN OVERLAY --- */
-    #login-section { padding: 40px 20px; text-align: center; }
-    .login-wrapper { max-width: 360px; margin: 0 auto; }
+    /* --- 🔑 LOGIN OVERLAY --- */
+    #login-section { padding: 60px 24px; text-align: center; }
+    .login-wrapper { max-width: 380px; margin: 0 auto; }
     .brand-icon {
-      width: 60px; height: 60px;
+      width: 72px; height: 72px;
       background: linear-gradient(135deg, var(--ci-orange-soft), var(--ci-green-soft));
       border: 2px solid var(--ci-orange); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
-      font-size: 26px;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+      box-shadow: 0 8px 20px rgba(255, 130, 0, 0.15);
     }
-    .login-wrapper h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-    .login-wrapper p { color: var(--slate-600); font-size: 13px; margin-bottom: 24px; }
+    .brand-icon svg { width: 36px; height: 36px; fill: var(--ci-orange); }
+    .login-wrapper h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); }
+    .login-wrapper p { color: var(--slate-600); font-size: 14px; margin-top: 4px; margin-bottom: 28px; font-weight: 500; }
     
-    .field-group { position: relative; margin-bottom: 12px; text-align: left; }
-    .field-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400); width: 18px; height: 18px; }
+    .field-group { position: relative; margin-bottom: 16px; text-align: left; }
+    .field-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--slate-400); width: 20px; height: 20px; }
     .field-group input {
-      width: 100%; padding: 12px 14px 12px 42px; border: 1.5px solid #E2E8F0;
-      border-radius: var(--radius-lg); font-size: 13px; outline: none; background: #F8FAFC;
-      transition: var(--transition); font-weight: 500;
+      width: 100%; padding: 14px 16px 14px 48px; border: 1.5px solid #E2E8F0;
+      border-radius: var(--radius-lg); font-size: 14px; outline: none; background: var(--slate-50);
+      transition: var(--transition); font-weight: 600; color: var(--slate-900);
     }
-    .field-group input:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
+    .field-group input:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 4px rgba(255, 130, 0, 0.12); }
+    
     .btn-primary {
-      width: 100%; padding: 13px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
+      width: 100%; padding: 15px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
       color: white; font-weight: 700; border: none; border-radius: var(--radius-lg);
-      cursor: pointer; font-size: 14px; transition: var(--transition); box-shadow: 0 4px 12px rgba(255, 130, 0, 0.25);
+      cursor: pointer; font-size: 15px; transition: var(--transition);
+      box-shadow: 0 6px 18px rgba(255, 130, 0, 0.28);
     }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255, 130, 0, 0.3); }
-    .error-msg { color: #E11D48; margin-top: 10px; font-size: 12px; font-weight: 600; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 130, 0, 0.35); }
+    .btn-primary:active { transform: translateY(0); }
+    .error-msg { color: #E11D48; margin-top: 14px; font-size: 13px; font-weight: 700; }
 
-    /* --- LOGO CENTRÉ EN HAUT --- */
-    .top-logo-container {
-      text-align: center;
-      padding: 20px 20px 10px 20px;
-    }
-    .logo-centered {
-      display: inline-flex;
+    /* --- 1. EN-TÊTE PREMIUM --- */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      padding: 8px 18px;
+      padding: 22px 32px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
       background: #FFFFFF;
-      border-radius: 30px;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
+    .header-logo { display: flex; align-items: center; gap: 14px; }
     .logo-badge {
-      width: 32px; height: 32px;
+      width: 44px; height: 44px;
       background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
-      border-radius: 50%;
+      border-radius: var(--radius-md);
       display: flex; align-items: center; justify-content: center;
-      color: #FFF; font-size: 16px;
+      color: #FFF; font-size: 20px;
+      box-shadow: 0 6px 14px rgba(0, 154, 68, 0.2);
     }
-    .logo-text { font-size: 14px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.2px; }
+    .logo-text-title { font-size: 17px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.4px; }
+    .logo-text-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; margin-top: 1px; }
+    
+    .profile-pill {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 16px; background: var(--slate-50);
+      border-radius: 40px; font-size: 13px; font-weight: 700; color: var(--slate-800);
+      border: 1px solid #E2E8F0; transition: var(--transition);
+    }
+    .profile-pill:hover { background: #FFF; border-color: var(--slate-400); }
+    .profile-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
+      color: #FFF; display: flex; align-items: center; justify-content: justify;
+      justify-content: center; font-size: 11px; font-weight: 800;
+    }
 
-    /* --- DASHBOARD CONTAINER & LAYOUT --- */
-    .dashboard-container { padding: 10px 20px 24px 20px; display: flex; flex-direction: column; gap: 16px; }
+    /* --- DASHBOARD LAYOUT & ESPACEMENT --- */
+    .dashboard-container {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px; /* Espacement vertical généreux et uniforme */
+    }
 
-    .section-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .section-centered { display: flex; justify-content: center; }
-    .section-centered .premium-card { width: 50%; }
+    /* 2. DISPOSITION PARFAITE DES TRIMESTRES */
+    .trimestres-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
 
-    @media (max-width: 600px) {
-      .section-row-2 { grid-template-columns: 1fr; }
-      .section-centered .premium-card { width: 100%; }
+    .trimestres-centered-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* La carte centrée a exactement la même largeur que celles du haut */
+    .trimestres-centered-row .premium-card {
+      width: calc(50% - 10px);
+    }
+
+    /* Responsive Smartphone */
+    @media (max-width: 680px) {
+      .dashboard-container { padding: 20px 16px; gap: 18px; }
+      .app-header { padding: 16px 20px; }
+      .trimestres-grid { grid-template-columns: 1fr; gap: 16px; }
+      .trimestres-centered-row .premium-card { width: 100%; }
     }
 
     /* --- CARTES PREMIUM --- */
@@ -140,116 +197,154 @@
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-lg);
-      padding: 16px 18px;
-      box-shadow: var(--card-shadow);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-md);
       transition: var(--transition);
       cursor: pointer;
       position: relative;
+      overflow: hidden;
     }
-    .premium-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: #CBD5E1; }
 
+    .premium-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: #CBD5E1;
+    }
+
+    /* Thèmes spécifiques des cartes trimestres */
     .card-t1 { border-top: 4px solid var(--ci-blue); }
-    .card-t2 { border-top: 4px solid var(--ci-orange); }
-    .card-t3 { border-top: 4px solid var(--ci-green); }
+    .card-t1:hover { border-color: var(--ci-blue-border); border-top-color: var(--ci-blue); }
 
+    .card-t2 { border-top: 4px solid var(--ci-orange); }
+    .card-t2:hover { border-color: var(--ci-orange-border); border-top-color: var(--ci-orange); }
+
+    .card-t3 { border-top: 4px solid var(--ci-green); }
+    .card-t3:hover { border-color: var(--ci-green-border); border-top-color: var(--ci-green); }
+
+    /* Carte Annuelle */
     .card-annual {
-      background: linear-gradient(135deg, #FFFDF9 0%, #F4FBF7 100%);
-      border: 1.5px solid var(--ci-orange);
+      background: linear-gradient(135deg, #FFFBF5 0%, #F0FDF4 100%);
+      border: 1.5px solid rgba(255, 130, 0, 0.3);
       cursor: default;
     }
-    
+    .card-annual:hover { transform: none; box-shadow: var(--shadow-md); }
+
     .card-interactive {
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--slate-600); }
-    .card-val { font-size: 24px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; }
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--slate-600); }
+    .card-val { font-size: 30px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.8px; line-height: 1.1; }
+    .card-sub { font-size: 13px; color: var(--slate-600); font-weight: 600; margin-top: 4px; }
 
-    /* PROGRESSION GÉNÉRALE */
+    /* 4. PROGRESSION GÉNÉRALE */
     .progress-wrapper {
-      display: flex; align-items: center; gap: 20px;
+      display: flex; align-items: center; gap: 28px;
     }
-    .circle-mini-container { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
-    .circle-mini-container svg { width: 72px; height: 72px; transform: rotate(-90deg); }
-    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 7; }
+    .circle-mini-container { position: relative; width: 92px; height: 92px; flex-shrink: 0; }
+    .circle-mini-container svg { width: 92px; height: 92px; transform: rotate(-90deg); }
+    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 9; }
     .circle-progress {
-      fill: none; stroke: var(--ci-red); stroke-width: 7;
-      stroke-dasharray: 200; stroke-dashoffset: 200;
-      transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease; stroke-linecap: round;
+      fill: none; stroke: var(--ci-red); stroke-width: 9;
+      stroke-dasharray: 251; stroke-dashoffset: 251;
+      transition: stroke-dashoffset 1s ease, stroke 0.4s ease; stroke-linecap: round;
     }
     .circle-mini-text {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 14px; font-weight: 800; color: var(--slate-900);
+      font-size: 18px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px;
     }
 
     .progress-info { flex: 1; }
-    .target-bar-bg { width: 100%; height: 8px; background: var(--slate-100); border-radius: 4px; overflow: hidden; margin-top: 6px; }
-    .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 0.8s ease, background-color 0.4s ease; }
+    .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; margin: 10px 0; }
+    .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 1s ease, background-color 0.4s ease; }
 
-    /* OBJECTIF PASSAGE (SECTION LISTE) */
+    /* 5. CARTES D'ANALYSE (CÔTE À CÔTE) */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 680px) {
+      .analysis-grid { grid-template-columns: 1fr; }
+    }
+
+    /* 6. OBJECTIF PASSAGE */
     .objective-card {
-      background: #FFFFFF; border: 1.5px solid var(--ci-green);
-      border-radius: var(--radius-lg); padding: 18px; cursor: default;
-      box-shadow: var(--card-shadow);
+      background: #FFFFFF;
+      border: 1.5px solid rgba(0, 154, 68, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+      position: relative;
     }
-    .obj-list { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .obj-list li {
-      font-size: 13px; color: var(--slate-800); font-weight: 600;
-      display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
+    .objective-content {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--slate-700);
+      line-height: 1.65;
+      font-weight: 500;
     }
-    .obj-list li::before {
-      content: "•"; color: var(--ci-green); font-size: 18px; line-height: 1; font-weight: bold;
+    .highlight-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 30px;
+      font-weight: 800; font-size: 12px;
     }
 
     /* --- FENÊTRE MODALE DÉTAILS --- */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
-      z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(6px);
+      z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .modal-card {
-      background: #FFF; width: 100%; max-width: 440px; border-radius: var(--radius-xl);
-      padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid #E2E8F0;
-      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      background: #FFF; width: 100%; max-width: 500px; border-radius: var(--radius-xl);
+      padding: 28px; box-shadow: var(--shadow-lg); border: 1px solid #E2E8F0;
+      animation: modalPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes modalPop { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .modal-title { font-size: 15px; font-weight: 800; color: var(--slate-900); }
-    .btn-close { background: var(--slate-100); border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; }
-    .modal-list { list-style: none; max-height: 240px; overflow-y: auto; }
+    @keyframes modalPop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--slate-900); }
+    .btn-close {
+      background: var(--slate-100); border: none; width: 36px; height: 36px;
+      border-radius: 50%; font-weight: 800; cursor: pointer; color: var(--slate-600);
+      transition: var(--transition);
+    }
+    .btn-close:hover { background: var(--slate-200); color: var(--slate-900); }
+    .modal-list { list-style: none; max-height: 280px; overflow-y: auto; }
     .modal-list li {
-      padding: 9px 12px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 600;
+      padding: 12px 16px; border-bottom: 1px solid var(--slate-100); font-size: 14px; font-weight: 600;
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    /* --- PAGE DE SAISIE --- */
+    /* --- PAGE DE SAISIE PAR TRIMESTRE --- */
     #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
     .trim-header {
-      padding: 16px 20px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+      padding: 20px 32px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
     }
     .btn-secondary {
-      background: #FFF; border: 1.5px solid var(--slate-400); color: var(--slate-800);
-      padding: 8px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
-      cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px;
+      background: #FFF; border: 1.5px solid #CBD5E1; color: var(--slate-800);
+      padding: 10px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: var(--shadow-sm);
     }
-    .btn-secondary:hover { background: var(--slate-100); }
+    .btn-secondary:hover { background: var(--slate-100); border-color: var(--slate-400); }
 
-    .table-scroll-area { padding: 16px 20px; overflow-x: auto; }
+    .table-scroll-area { padding: 28px 32px; overflow-x: auto; }
     .styled-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #E2E8F0; }
-    .styled-table th, .styled-table td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; font-size: 13px; }
-    .styled-table th { background: #F8FAFC; color: var(--slate-600); font-size: 11px; text-transform: uppercase; font-weight: 800; }
+    .styled-table th, .styled-table td { padding: 12px 16px; border-bottom: 1px solid #E2E8F0; font-size: 13.5px; }
+    .styled-table th { background: var(--slate-50); color: var(--slate-600); font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
     .styled-table th:nth-child(n+2), .styled-table td:nth-child(n+2) { text-align: center; }
     
-    tr.category-row td { background: var(--ci-orange-soft); color: var(--ci-orange-dark); font-weight: 800; font-size: 11px; text-transform: uppercase; }
+    tr.category-row td { background: var(--ci-orange-soft); color: var(--ci-orange-dark); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
     
     input.coef-input, input.note-input {
-      padding: 5px; text-align: center; border: 1.5px solid #E2E8F0;
+      padding: 8px; text-align: center; border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-sm); font-weight: 700; outline: none; transition: var(--transition);
-      font-family: inherit; font-size: 13px;
+      font-family: inherit; font-size: 14px;
     }
-    input.coef-input { width: 50px; background: #FFF; }
-    input.note-input { width: 60px; background: #F8FAFC; }
+    input.coef-input { width: 55px; background: #FFF; }
+    input.note-input { width: 70px; background: var(--slate-50); }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
   </style>
 </head>
@@ -260,9 +355,11 @@
     <!-- ================= 🔐 CONNEXION ================= -->
     <div id="login-section">
       <div class="login-wrapper">
-        <div class="brand-icon">🎓</div>
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
         <h2>Portail Zakaria</h2>
-        <p>Ministère de l'Éducation Nationale</p>
+        <p>Système National d'Évaluation Scolaire</p>
         
         <div class="field-group">
           <input type="text" id="username" placeholder="Identifiant" autocomplete="username" />
@@ -281,126 +378,139 @@
       </div>
     </div>
 
-    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION EXACTE) ================= -->
+    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION PARFAITE) ================= -->
     <div id="dashboard-section" style="display:none;">
       
-      <!-- LOGO CENTRÉ EN HAUT DE LA PAGE -->
-      <div class="top-logo-container">
-        <div class="logo-centered">
+      <!-- 1. EN-TÊTE PREMIUM (LOGO GAUCHE + PROFIL DROITE) -->
+      <header class="app-header">
+        <div class="header-logo">
           <div class="logo-badge">🎓</div>
-          <span class="logo-text">Portail Zakaria</span>
+          <div>
+            <div class="logo-text-title">Portail Zakaria</div>
+            <div class="logo-text-sub">République de Côte d'Ivoire</div>
+          </div>
         </div>
-      </div>
+        <div class="profile-pill">
+          <div class="profile-avatar">E</div>
+          <span>Élève / Parent</span>
+        </div>
+      </header>
 
       <div class="dashboard-container">
         
-        <!-- SECTION TRIMESTRES (DISPOSITION SCHÉMATIQUE) -->
-        <!-- Ligne 1 : 1er et 2e Trimestre -->
-        <div class="section-row-2">
-          <!-- 📘 1er Trimestre -->
-          <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
-            <div class="card-header-flex">
-              <span class="card-title">📘 1er Trimestre</span>
-              <span style="font-size:11px; color:var(--ci-blue); font-weight:700;">Saisir ➔</span>
+        <!-- 2. PREMIÈRE SECTION : TRIMESTRES (GRILLE PARFAITEMENT ÉQUILIBRÉE) -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          
+          <!-- Ligne du haut : 1er et 2ᵉ Trimestre côte à côte -->
+          <div class="trimestres-grid">
+            <!-- 📘 En haut à gauche : 1er Trimestre -->
+            <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
+              <div class="card-header-flex">
+                <span class="card-title">📘 1er Trimestre</span>
+                <span style="font-size:12px; color:var(--ci-blue-dark); font-weight:800;">Saisir ➔</span>
+              </div>
+              <div class="card-val" id="dash-t1">-</div>
+              <div class="card-sub">Moyenne du trimestre</div>
             </div>
-            <div class="card-val">Moyenne : <span id="dash-t1">-</span></div>
+
+            <!-- 📙 En haut à droite : 2ᵉ Trimestre -->
+            <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
+              <div class="card-header-flex">
+                <span class="card-title">📙 2ᵉ Trimestre</span>
+                <span style="font-size:12px; color:var(--ci-orange-dark); font-weight:800;">Saisir ➔</span>
+              </div>
+              <div class="card-val" id="dash-t2">-</div>
+              <div class="card-sub">Moyenne du trimestre</div>
+            </div>
           </div>
 
-          <!-- 📙 2e Trimestre -->
-          <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
-            <div class="card-header-flex">
-              <span class="card-title">📙 2ᵉ Trimestre</span>
-              <span style="font-size:11px; color:var(--ci-orange); font-weight:700;">Saisir ➔</span>
+          <!-- Ligne du bas : 3ᵉ Trimestre parfaitement centré -->
+          <div class="trimestres-centered-row">
+            <!-- 📗 Centré juste en dessous -->
+            <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
+              <div class="card-header-flex">
+                <span class="card-title">📗 3ᵉ Trimestre</span>
+                <span style="font-size:12px; color:var(--ci-green-dark); font-weight:800;">Saisir ➔</span>
+              </div>
+              <div class="card-val" id="dash-t3">-</div>
+              <div class="card-sub">Moyenne du trimestre</div>
             </div>
-            <div class="card-val">Moyenne : <span id="dash-t2">-</span></div>
           </div>
+
         </div>
 
-        <!-- Ligne 2 : 3e Trimestre Centré juste en dessous -->
-        <div class="section-centered">
-          <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
-            <div class="card-header-flex">
-              <span class="card-title">📗 3ᵉ Trimestre</span>
-              <span style="font-size:11px; color:var(--ci-green); font-weight:700;">Saisir ➔</span>
-            </div>
-            <div class="card-val">Moyenne : <span id="dash-t3">-</span></div>
-          </div>
-        </div>
-
-        <!-- SECTION MOYENNE ANNUELLE -->
+        <!-- 3. DEUXIÈME SECTION : MOYENNE ANNUELLE (GRANDE CARTE HORIZONTALE) -->
         <div class="premium-card card-annual">
           <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle</span>
-            <span style="font-size:18px;">🏅</span>
+            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
+            <span style="font-size:22px;">🏅</span>
           </div>
-          <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
-            <div style="font-size:16px; font-weight:800; color:var(--slate-900);">
-              Moyenne : <span id="dash-annual" style="color:var(--ci-orange-dark);">--/20</span>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark); font-size:36px;">-</div>
+              <div class="card-sub" id="dash-mention" style="font-size:14px; font-weight:700;">Mention : En attente</div>
             </div>
-            <div style="font-size:13px; font-weight:700; color:var(--slate-700);" id="dash-mention">
-              🏅 Mention : --------
-            </div>
-            <div style="font-size:13px; font-weight:700;" id="dash-decision">
-              ✅ Décision : En attente
+            <div id="annual-badge" style="background:var(--slate-100); color:var(--slate-600); padding:8px 16px; border-radius:30px; font-weight:800; font-size:12px;">
+              Statut : Non évalué
             </div>
           </div>
         </div>
 
-        <!-- SECTION PROGRESSION GÉNÉRALE -->
+        <!-- 4. TROISIÈME SECTION : PROGRESSION GÉNÉRALE (CIRCULAIRE GAUCHE + TEXTE DROITE) -->
         <div class="premium-card" style="cursor:default;">
           <div class="progress-wrapper">
             <!-- Cercle % à gauche -->
             <div class="circle-mini-container">
               <svg>
-                <circle class="circle-bg" cx="36" cy="36" r="32"></circle>
-                <circle class="circle-progress" id="circle-bar" cx="36" cy="36" r="32"></circle>
+                <circle class="circle-bg" cx="46" cy="46" r="40"></circle>
+                <circle class="circle-progress" id="circle-bar" cx="46" cy="46" r="40"></circle>
               </svg>
               <div class="circle-mini-text" id="circle-val">0%</div>
             </div>
 
-            <!-- Texte & Barre à droite -->
+            <!-- Texte à droite -->
             <div class="progress-info">
-              <div class="card-title">📊 Progression Générale</div>
-              <div style="font-size:12px; font-weight:700; color:var(--slate-600); margin-top:2px;" id="progress-status-text">
-                Barre de progression Premium
+              <div class="card-title" style="margin-bottom:4px;">📊 Progression Générale</div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; margin-top:2px;">
+                <span id="progress-status-text">Évaluation globale</span>
+                <span id="progress-percentage-label">0 / 20</span>
               </div>
               <div class="target-bar-bg">
                 <div class="target-bar-fill" id="target-bar-fill"></div>
               </div>
+              <div class="card-sub" id="progress-feedback-text">Moyenne calculée automatiquement sur les 3 trimestres.</div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION CARTES D'ANALYSE CÔTE À CÔTE -->
-        <div class="section-row-2">
+        <!-- 5. QUATRIÈME SECTION : CARTES D'ANALYSE CÔTE À CÔTE -->
+        <div class="analysis-grid">
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
             <div>
-              <div class="card-title" style="color:#E11D48;">📚 Matières</div>
-              <div style="font-size:14px; font-weight:800; color:var(--slate-800);">à revoir</div>
+              <div class="card-title" style="color:#E11D48;">📚 Matières à revoir</div>
+              <div class="card-sub" style="margin-top:6px;">Cliquer pour afficher les détails</div>
             </div>
-            <span style="font-size:20px;">⚠️</span>
+            <span style="font-size:24px;">⚠️</span>
           </div>
 
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('best')">
             <div>
-              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points</div>
-              <div style="font-size:14px; font-weight:800; color:var(--slate-800);">forts</div>
+              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points forts</div>
+              <div class="card-sub" style="margin-top:6px;">Cliquer pour afficher les détails</div>
             </div>
-            <span style="font-size:20px;">🌟</span>
+            <span style="font-size:24px;">🌟</span>
           </div>
         </div>
 
-        <!-- SECTION OBJECTIF PASSAGE EN CLASSE SUPÉRIEURE -->
+        <!-- 6. CINQUIÈME SECTION : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE -->
         <div class="objective-card">
-          <div class="card-title" style="color:var(--ci-green-dark); margin-bottom:8px;">
-            🎯 Objectif pour passer en classe supérieure
+          <div class="card-header-flex">
+            <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
+            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Moyenne minimale : 10.00 / 20</span>
           </div>
-          <ul class="obj-list">
-            <li id="obj-min">Moyenne minimale à atteindre : <strong>10,00 / 20</strong></li>
-            <li id="obj-restant">Points restants : <strong>Saisissez vos notes pour calculer</strong></li>
-            <li id="obj-matieres">Matières prioritaires : <strong>Séquence en attente</strong></li>
-            <li id="obj-conseils">Conseils automatiques : <strong>Consultez régulièrement vos progrès.</strong></li>
-          </ul>
+          <div class="objective-content" id="objective-dynamic-text">
+            Saisissez les notes de vos trimestres pour activer le calcul de votre objectif d'admission ainsi que vos recommandations d'études personnalisées.
+          </div>
         </div>
 
       </div>
@@ -414,7 +524,7 @@
           <button class="btn-close" onclick="fermerModale()">✕</button>
         </div>
         <ul class="modal-list" id="modal-list-content">
-          <!-- Injecté dynamiquement -->
+          <!-- Contenu injecté dynamiquement -->
         </ul>
       </div>
     </div>
@@ -423,7 +533,7 @@
     <div id="trimestre-page" style="display:none;">
       <div class="trim-header">
         <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Retour au tableau de bord</button>
-        <h3 id="trimestre-page-title" style="font-weight:800; font-size:15px;">Notes du 1er Trimestre</h3>
+        <h3 id="trimestre-page-title" style="font-weight:800; font-size:17px; color:var(--slate-900);">Notes du 1er Trimestre</h3>
       </div>
 
       <div class="table-scroll-area">
@@ -461,14 +571,14 @@
               <td id="total-coefs">-</td>
               <td id="total-points">-</td>
             </tr>
-            <tr style="background:#E6F5EC; font-weight:800; font-size:14px;">
+            <tr style="background:#E6F5EC; font-weight:800; font-size:15px;">
               <td colspan="3">🎯 Moyenne du Trimestre</td>
               <td id="moyenne-generale" style="color:var(--ci-green-dark);">-</td>
             </tr>
           </tbody>
         </table>
 
-        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:16px; padding:12px;">Enregistrer et revenir au tableau de bord</button>
+        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:24px; padding:16px;">✅ Valider et revenir au tableau de bord</button>
       </div>
     </div>
 
@@ -574,48 +684,41 @@
 
       let moysAnnuelles = Object.values(moyennesTrimestres).filter(m => m !== null);
       let moyAnnuelle = moysAnnuelles.length > 0 ? (moysAnnuelles.reduce((a, b) => a + b, 0) / moysAnnuelles.length).toFixed(2) : null;
-      
-      const dashAnnual = document.getElementById("dash-annual");
-      const mentionEl = document.getElementById("dash-mention");
-      const decisionEl = document.getElementById("dash-decision");
+      document.getElementById("dash-annual").innerText = moyAnnuelle ? moyAnnuelle + " / 20" : "-";
 
+      const mentionEl = document.getElementById("dash-mention");
+      const annualBadge = document.getElementById("annual-badge");
       const circleBar = document.getElementById("circle-bar");
       const targetFill = document.getElementById("target-bar-fill");
       const circleVal = document.getElementById("circle-val");
       const progressStatus = document.getElementById("progress-status-text");
-
-      const objRestant = document.getElementById("obj-restant");
-      const objMatieres = document.getElementById("obj-matieres");
-      const objConseils = document.getElementById("obj-conseils");
+      const progressLabel = document.getElementById("progress-percentage-label");
+      const progressFeedback = document.getElementById("progress-feedback-text");
+      const objText = document.getElementById("objective-dynamic-text");
 
       if (moyAnnuelle !== null) {
         const mA = parseFloat(moyAnnuelle);
-        dashAnnual.innerText = mA.toFixed(2) + " / 20";
-
         let mention = "Passable";
         if (mA >= 16) mention = "Très Bien";
         else if (mA >= 14) mention = "Bien";
         else if (mA >= 12) mention = "Assez Bien";
         else if (mA < 10) mention = "Ajourné";
 
-        mentionEl.innerHTML = `🏅 Mention : <strong>${mention}</strong>`;
-        
-        if (mA >= 10) {
-          decisionEl.innerHTML = `✅ Décision : <span style="color:var(--ci-green-dark); font-weight:800;">Admis(e)</span>`;
-        } else {
-          decisionEl.innerHTML = `✅ Décision : <span style="color:var(--ci-red); font-weight:800;">Non admis(e)</span>`;
-        }
+        mentionEl.innerText = "Mention : " + mention;
+        annualBadge.innerText = mA >= 10 ? "Admis(e)" : "Résultat Fragile";
+        annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
+        annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
 
-        // COULEURS PROGRESSION
+        // COULEURS DYNAMIQUES DE PROGRESSION (<10 Rouge, 10-11.99 Orange, >=12 Vert)
         let activeColor = "var(--ci-red)";
-        let statusTitle = "Niveau insuffisant";
+        let statusTitle = "Insuffisant";
         
         if (mA >= 12) {
           activeColor = "var(--ci-green)";
-          statusTitle = "Excellente progression";
+          statusTitle = "Bonne performance";
         } else if (mA >= 10) {
           activeColor = "var(--ci-orange)";
-          statusTitle = "Progression satisfaisante";
+          statusTitle = "Encore des progrès à faire";
         }
 
         circleBar.style.stroke = activeColor;
@@ -623,10 +726,12 @@
 
         const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
         circleVal.innerText = Math.round(percent) + "%";
-        progressStatus.innerText = `${statusTitle} (${mA.toFixed(2)}/20)`;
+        progressLabel.innerText = mA.toFixed(2) + " / 20";
+        progressStatus.innerText = statusTitle;
+        progressFeedback.innerText = `Moyenne globale actualisée sur l'ensemble des trimestres.`;
 
-        // Cercle Dash offset (200px est le stroke-dasharray)
-        const offset = 200 - (200 * percent / 100);
+        // Périmètre Cercle (r=40 -> 2 * PI * 40 ≈ 251.3)
+        const offset = 251.3 - (251.3 * percent / 100);
         circleBar.style.strokeDashoffset = offset;
         targetFill.style.width = percent + "%";
 
@@ -637,30 +742,25 @@
         
         let matieresAAmeliorer = toutesLesNotes.filter(n => n.note < 10).map(n => n.subject);
         let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
-        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "Aucune matière critique";
+        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos disciplines fondamentales";
 
         if (mA >= passageTarget) {
-          objRestant.innerHTML = `Points restants : <strong>0,00 point (Objectif déjà atteint !)</strong>`;
-          objMatieres.innerHTML = `Matières prioritaires : <strong>Maintien des acquis (${matieresStr})</strong>`;
-          objConseils.innerHTML = `Conseils automatiques : <strong>Félicitations, vous êtes en position d'admission. Continuez ainsi !</strong>`;
+          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne actuelle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts pour viser une mention encore plus élevée.`;
         } else {
           const ecart = (passageTarget - mA).toFixed(2);
-          objRestant.innerHTML = `Points restants : <strong>${ecart} point(s) pour atteindre 10/20</strong>`;
-          objMatieres.innerHTML = `Matières prioritaires : <strong>${matieresStr}</strong>`;
-          objConseils.innerHTML = `Conseils automatiques : <strong>Concentrez vos révisions sur les matières ci-dessus pour passer en classe supérieure.</strong>`;
+          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de <strong>10,00/20</strong> requis pour passer en classe supérieure. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez fortement vos chances d'admission. Continuez vos efforts, vous êtes sur la bonne voie !`;
         }
 
       } else {
-        dashAnnual.innerText = "--/20";
-        mentionEl.innerHTML = `🏅 Mention : --------`;
-        decisionEl.innerHTML = `✅ Décision : Admis(e) / Non admis`;
+        mentionEl.innerText = "Mention : En attente";
+        annualBadge.innerText = "Statut : Non évalué";
         circleVal.innerText = "0%";
-        circleBar.style.strokeDashoffset = 200;
+        circleBar.style.strokeDashoffset = 251.3;
         targetFill.style.width = "0%";
+        progressLabel.innerText = "0 / 20";
       }
     }
 
-    // FENÊTRE MODALE DÉTAILS
     function ouvrirModaleDetails(type) {
       let toutesLesNotes = [];
       Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
