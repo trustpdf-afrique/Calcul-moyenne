@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -45,7 +45,7 @@
       color: var(--white);
     }
 
-    /* CHÂSSIS APPLICATION MOBILE AVEC FOND CÔTE D'IVOIRE SUBTIL */
+    /* CHÂSSIS APPLICATION MOBILE */
     .app-frame {
       width: 100%;
       max-width: 430px;
@@ -61,7 +61,6 @@
       border-radius: 0px;
     }
 
-    /* Motif de Fond Côte d'Ivoire (Orange / Blanc / Vert) Très Atténué */
     .app-frame::before {
       content: "";
       position: absolute;
@@ -241,6 +240,26 @@
     .form-input:focus { border-color: var(--orange-ztv); box-shadow: 0 0 12px rgba(255, 140, 0, 0.25); }
     select.form-input { appearance: none; cursor: pointer; }
 
+    /* BOUTON SELECTION PHOTO GALERIE */
+    .btn-photo-gallery {
+      width: 100%;
+      background: linear-gradient(135deg, #1F293D 0%, #111827 100%);
+      border: 1.5px dashed var(--orange-ztv);
+      color: #FFF;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .btn-photo-gallery:hover { background: rgba(255, 140, 0, 0.1); }
+
     /* BOUTON PRINCIPAL VERT */
     .btn-main-green {
       background: var(--green-ztv);
@@ -353,7 +372,7 @@
     }
     .objective-banner:active { transform: scale(0.98); }
 
-    /* REDESIGN : BOUTONS PASTILLES PREMIUM DU BAS */
+    /* BOUTONS PASTILLES PREMIUM DU BAS */
     .bottom-dual-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-bottom: 20px; }
     
     .btn-pill-premium {
@@ -442,7 +461,7 @@
     .profile-field-label { font-size: 11px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; }
     .profile-field-value { font-size: 13px; color: #FFF; font-weight: 800; }
 
-    /* ================= 1 & 2. NOUVEAU CERTIFICAT EN PAYSAGE / HORIZONTAL ================= */
+    /* ================= TABLEAU D'HONNEUR - DESIGN DIPLÔME PAYSAGE PREMIUM ================= */
     .certif-selector-bar {
       display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 16px;
       scrollbar-width: none;
@@ -450,114 +469,179 @@
     .certif-selector-bar::-webkit-scrollbar { display: none; }
     .certif-tab-btn {
       background: var(--bg-card); border: 1px solid var(--border-light);
-      color: var(--white); padding: 8px 14px; border-radius: var(--radius-pill);
-      font-size: 11px; font-weight: 700; whitespace: nowrap; cursor: pointer; transition: var(--transition);
+      color: var(--white); padding: 10px 16px; border-radius: var(--radius-pill);
+      font-size: 11px; font-weight: 800; whitespace: nowrap; cursor: pointer; transition: var(--transition);
     }
     .certif-tab-btn.active {
       background: var(--orange-ztv); color: #000; border-color: #FFF; box-shadow: var(--glow-orange);
     }
 
     .landscape-cert-wrapper {
-      padding: 0 16px;
+      padding: 0 12px;
       width: 100%;
     }
 
-    /* CADRE LANDSCAPE DU DIPLÔME */
+    /* BORDURE LUXUEUSE OFFICIELLE DIPLÔME */
     .certificate-landscape-frame {
-      background: #FFFDF5;
-      border: 10px double #B45309;
-      border-radius: 20px;
-      padding: 24px 28px;
+      background: #FFFDF8;
+      border: 8px double #92400E;
+      outline: 2px solid #D97706;
+      outline-offset: -5px;
+      border-radius: 12px;
+      padding: 20px;
       color: #1E293B;
       text-align: center;
       position: relative;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7);
       width: 100%;
       box-sizing: border-box;
       margin: 0 auto;
+      background-image: radial-gradient(#F59E0B 0.5px, transparent 0.5px);
+      background-size: 16px 16px;
     }
 
-    .cert-top-header {
+    .cert-inner-border {
+      border: 1px solid rgba(180, 83, 9, 0.3);
+      padding: 16px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .cert-header-flex {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 2px solid #D97706;
+      padding-bottom: 10px;
       margin-bottom: 12px;
     }
 
     .cert-header-logo {
-      height: 48px;
+      height: 42px;
       width: auto;
       object-fit: contain;
     }
 
-    .cert-trophy-large {
-      font-size: 42px;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    .cert-header-title-box {
+      text-align: center;
     }
 
     .cert-title-landscape {
       font-family: 'Playfair Display', serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 900;
       color: #78350F;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      margin-top: 4px;
+      margin-bottom: 2px;
     }
 
     .cert-subtitle-gold {
-      font-size: 12px;
-      color: #D97706;
+      font-size: 11px;
+      color: #09A63D;
       font-weight: 800;
-      letter-spacing: 2px;
-      margin-top: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .cert-student-name {
+    /* DISPOSITION DES INFORMATIONS DE L'ÉLÈVE EN LANDSCAPE */
+    .cert-body-grid {
+      display: grid;
+      grid-template-columns: 85px 1fr;
+      gap: 14px;
+      align-items: center;
+      text-align: left;
+      margin: 12px 0;
+    }
+
+    .cert-student-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #D97706;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      background: #FFF;
+    }
+
+    .cert-student-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cert-student-fullname {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #0F172A;
+      text-transform: uppercase;
+    }
+
+    .cert-detail-line {
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    /* BADGE MOYENNE ET MENTION */
+    .cert-badge-box {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 1.5px solid #F59E0B;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 12px 0;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.8);
+    }
+
+    .cert-badge-item {
+      text-align: center;
+    }
+
+    .cert-badge-lbl {
+      font-size: 9px;
+      font-weight: 800;
+      color: #92400E;
+      text-transform: uppercase;
+    }
+
+    .cert-badge-val {
+      font-size: 18px;
+      font-weight: 900;
+      color: #78350F;
+    }
+
+    .cert-badge-mention {
+      font-size: 15px;
       font-weight: 900;
       color: var(--green-ztv);
-      margin: 14px 0 4px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
-    .cert-details-txt {
-      font-size: 13px;
-      font-weight: 700;
-      color: #334155;
+    /* CERTIFICAT NON OBTENU (< 14/20) */
+    .cert-locked-box {
+      padding: 30px 15px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
     }
 
-    .cert-moyenne-highlight {
-      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-      border: 2px solid #F59E0B;
-      border-radius: var(--radius-md);
-      padding: 10px 20px;
-      display: inline-block;
-      margin: 14px 0;
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
-    }
-
-    .cert-moyenne-val {
-      font-size: 26px;
-      font-weight: 900;
-      color: #92400E;
-    }
-
-    /* FOOTER DIPLÔME : SIGNATURE & LOGO */
+    /* FOOTER DIPLÔME : SIGNATURE & LOGO BAS */
     .cert-footer-landscape {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 18px;
-      padding-top: 12px;
-      border-top: 1px solid #E2E8F0;
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px dashed #CBD5E1;
     }
 
-    .cert-footer-brand {
+    .cert-footer-brand-bottom {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-align: left;
     }
 
@@ -566,7 +650,7 @@
     }
 
     .cert-signature-title {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
       color: #64748B;
       text-transform: uppercase;
@@ -574,13 +658,13 @@
 
     .cert-signature-font {
       font-family: 'Great Vibes', cursive;
-      font-size: 28px;
+      font-size: 26px;
       color: #0F172A;
       font-weight: bold;
-      margin-top: -4px;
+      margin-top: -2px;
     }
 
-    /* 3. BOUTON D'IMPRESSION PREMIUM */
+    /* BOUTON D'IMPRESSION PREMIUM */
     .btn-print-cert {
       background: linear-gradient(135deg, var(--orange-ztv), #D96B00);
       color: #FFF;
@@ -601,18 +685,50 @@
     }
     .btn-print-cert:active { transform: scale(0.96); }
 
-    /* RÈGLES SPÉCIALES IMPRESSION IMPRIMANTE (LANDSCAPE) */
+    /* RÈGLES SPÉCIALES D'IMPRESSION (PAYSAGE PARFAIT) */
     @media print {
-      body * { visibility: hidden; }
-      .landscape-cert-wrapper, .landscape-cert-wrapper * { visibility: visible; }
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+      body {
+        background: #FFF !important;
+        display: block !important;
+      }
+      .app-frame {
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: #FFF !important;
+      }
+      .page-view {
+        display: none !important;
+      }
+      #view-certif {
+        display: block !important;
+        padding: 0 !important;
+      }
+      .certif-selector-bar, .btn-print-cert, .btn-back-link, .dash-header, .whatsapp-float-btn {
+        display: none !important;
+      }
       .landscape-cert-wrapper {
-        position: absolute; left: 0; top: 0; width: 100%; padding: 0;
+        padding: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       .certificate-landscape-frame {
-        border-width: 6px; box-shadow: none; page-break-inside: avoid;
+        width: 95% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        border-width: 10px !important;
+        page-break-inside: avoid;
       }
-      .btn-print-cert, .btn-back-link, .certif-selector-bar { display: none !important; }
-      @page { size: landscape; margin: 1cm; }
     }
 
     /* MODALE POPUP ELEGANTE */
@@ -740,8 +856,13 @@
             <input type="tel" class="form-input" id="reg-whatsapp" placeholder="Numéro WhatsApp" />
           </div>
 
+          <!-- BOUTON CHOIX PHOTO DEPUIS LA GALERIE (REMPLACE L'URL) -->
           <div class="form-group">
-            <input type="url" class="form-input" id="reg-avatar-url" placeholder="Lien (URL) de la photo de profil (facultatif)" />
+            <label for="reg-photo-file" class="btn-photo-gallery">
+              <span>📷 Choisir une photo depuis la galerie</span>
+            </label>
+            <input type="file" id="reg-photo-file" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)" />
+            <div id="photo-preview-msg" style="font-size:11px; color:var(--green-ztv); margin-top:6px; text-align:center; font-weight:700;"></div>
           </div>
 
           <div class="form-group">
@@ -757,7 +878,7 @@
 
     </div>
 
-    <!-- ================= 2. TABLEAU DE BORD (DASHBOARD) - REMIS À ZÉRO ================= -->
+    <!-- ================= 2. TABLEAU DE BORD (DASHBOARD) ================= -->
     <div id="view-dashboard" class="page-view">
       <div class="dash-header">
         <div class="user-profile-info">
@@ -854,7 +975,7 @@
         <div style="font-size:14px;">➔</div>
       </div>
 
-      <!-- 5. REDESIGN BOUTONS PASTILLES PREMIUM -->
+      <!-- BOUTONS PASTILLES PREMIUM -->
       <div class="bottom-dual-btns">
         <div class="btn-pill-premium" onclick="switchPage('view-certif')">
           <div class="pill-icon-circle">🏆</div>
@@ -1065,14 +1186,14 @@
       </div>
     </div>
 
-    <!-- ================= 5. CERTIFICATS TABLEAU D'HONNEUR (LANDSCAPE & MULTI-TRIMESTRES) ================= -->
+    <!-- ================= 5. NOUVEAU CERTIFICAT TABLEAU D'HONNEUR (OFFICIEL PAYSAGE) ================= -->
     <div id="view-certif" class="page-view">
       <div style="padding:16px; display:flex; justify-content:space-between; align-items:center;">
         <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
-        <span style="font-size:12px; font-weight:800; color:var(--orange-ztv);">🎓 CERTIFICAT OFFICIEL</span>
+        <span style="font-size:12px; font-weight:800; color:var(--orange-ztv);">🎓 DIPLÔME D'EXCELLENCE</span>
       </div>
 
-      <!-- 4. BARRE DE SÉLECTION DU TABLEAU D'HONNEUR PAR TRIMESTRE / ANNUEL -->
+      <!-- ONGLETS DE SÉLECTION DU CERTIFICAT -->
       <div class="certif-selector-bar">
         <button class="certif-tab-btn active" onclick="changeCertifPeriod('annuel', this)">🏆 Annuel</button>
         <button class="certif-tab-btn" onclick="changeCertifPeriod('t1', this)">🥇 1er Trimestre</button>
@@ -1080,62 +1201,83 @@
         <button class="certif-tab-btn" onclick="changeCertifPeriod('t3', this)">🥉 3ᵉ Trimestre</button>
       </div>
 
-      <!-- VUE DIPLÔME PAYSAGE -->
+      <!-- VUE CERTIFICAT PAYSAGE PREMIUM -->
       <div class="landscape-cert-wrapper">
         <div class="certificate-landscape-frame" id="cert-landscape-card">
-          
-          <div class="cert-top-header">
-            <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" class="cert-header-logo" alt="ZTV Logo" />
-            <div class="cert-trophy-large">🏆</div>
-            <div style="text-align:right;">
-              <span style="font-size:9px; font-weight:900; color:#B45309; text-transform:uppercase; letter-spacing:1px; display:block;">EXCELLENCE SCOLAIRE</span>
-              <span style="font-size:10px; font-weight:700; color:#64748B;">ZTV CONCOURS</span>
+          <div class="cert-inner-border" id="cert-content-area">
+            
+            <!-- EN-TÊTE : LOGO, TITRE ET SOUS-TITRE OFFICIEL -->
+            <div class="cert-header-flex">
+              <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" class="cert-header-logo" alt="Logo ZTV" />
+              <div class="cert-header-title-box">
+                <div class="cert-title-landscape">🏆 TABLEAU D'HONNEUR</div>
+                <div class="cert-subtitle-gold">Plateforme Éducative ZTV – Côte d'Ivoire</div>
+              </div>
+              <div style="font-size:32px;">🎖️</div>
             </div>
-          </div>
 
-          <div class="cert-title-landscape" id="cert-title-text">TABLEAU D'HONNEUR</div>
-          <div class="cert-subtitle-gold" id="cert-period-subtitle">ANNEÉ ACADÉMIQUE</div>
+            <!-- CONTENU SI NON ÉLIGIBLE (< 14/20) -->
+            <div id="cert-unlocked-content">
+              <!-- INFORMATIONS DE L'ÉLÈVE ET PHOTO -->
+              <div class="cert-body-grid">
+                <img src="https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png" class="cert-student-photo" id="cert-photo-img" alt="Photo Élève" />
+                <div class="cert-student-info">
+                  <div style="font-size:9px; font-weight:800; color:#D97706; text-transform:uppercase;">Décerné avec les félicitations à :</div>
+                  <div class="cert-student-fullname" id="cert-fullname">Nom & Prénom de l'Élève</div>
+                  <div class="cert-detail-line">Établissement : <strong id="cert-school-name" style="color:#0F172A;">--</strong></div>
+                  <div class="cert-detail-line">Classe : <strong id="cert-classe" style="color:#0F172A;">--</strong> | Période : <strong id="cert-period-lbl" style="color:#09A63D;">Annuel</strong></div>
+                </div>
+              </div>
 
-          <p style="font-size:11px; color:#475569; margin-top:10px; font-weight:600;">DÉCERNÉ AVEC LES FÉLICITATIONS À</p>
+              <!-- MOYENNE & MENTION MISE EN VALEUR -->
+              <div class="cert-badge-box">
+                <div class="cert-badge-item">
+                  <div class="cert-badge-lbl">Moyenne Obtenue</div>
+                  <div class="cert-badge-val" id="cert-annual-val">-- / 20</div>
+                </div>
+                <div style="height:30px; width:1px; background:#F59E0B;"></div>
+                <div class="cert-badge-item">
+                  <div class="cert-badge-lbl">Mention Obtenue</div>
+                  <div class="cert-badge-mention" id="cert-mention-lbl">--</div>
+                </div>
+              </div>
 
-          <div class="cert-student-name" id="cert-fullname">Nom de l'Élève</div>
-          
-          <div class="cert-details-txt">
-            Élève en classe de <span id="cert-classe" style="color:#000; font-weight:800;">--</span>
-          </div>
-          <div style="font-size:11px; color:#64748B;" id="cert-school-name">Établissement Scolaire</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; font-size:9px; color:#64748B; font-weight:700;">
+                <div>Généré automatiquement le : <span id="cert-date-disp">07/08/2026</span></div>
+                <div>Mérite & Excellence Scolaire</div>
+              </div>
 
-          <!-- MOYENNE MISE EN VALEUR -->
-          <div class="cert-moyenne-highlight">
-            <div style="font-size:10px; color:#92400E; font-weight:800; text-transform:uppercase;">MOYENNE OBTENUE</div>
-            <div class="cert-moyenne-val" id="cert-annual-val">-- / 20</div>
-            <div style="font-size:11px; font-weight:800; color:var(--green-ztv);" id="cert-mention-lbl">MENTION : --</div>
-          </div>
+              <!-- FOOTER : SIGNATURE ET LOGO BAS -->
+              <div class="cert-footer-landscape">
+                <div class="cert-footer-brand-bottom">
+                  <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" style="height:24px;" alt="ZTV Logo" />
+                  <span style="font-size:9px; font-weight:800; color:#0F172A;">ZTV Excellence</span>
+                </div>
 
-          <p style="font-size:10px; color:#475569; line-height:1.4; max-width:90%; margin: 0 auto;">
-            En reconnaissance de ses efforts continus, de son assiduité et de ses résultats remarquables au cours de la période académique.
-          </p>
-
-          <!-- 2. FOOTER : LOGO ET SIGNATURE ZAKARIA NIAMPA -->
-          <div class="cert-footer-landscape">
-            <div class="cert-footer-brand">
-              <span style="font-size:22px;">🎖️</span>
-              <div>
-                <div style="font-size:9px; font-weight:900; color:#0F172A;">ZTV CONCOURS</div>
-                <div style="font-size:8px; color:#64748B;">République de Côte d'Ivoire 🇨🇮</div>
+                <div class="cert-signature-box">
+                  <div class="cert-signature-title">Le Fondateur ZTV</div>
+                  <div class="cert-signature-font">Zakaria Niampa</div>
+                </div>
               </div>
             </div>
 
-            <div class="cert-signature-box">
-              <div class="cert-signature-title">Le Fondateur ZTV</div>
-              <div class="cert-signature-font">Zakaria Niampa</div>
+            <!-- CONTENU SI MOYENNE < 14/20 -->
+            <div id="cert-locked-content" class="cert-locked-box" style="display:none;">
+              <div style="font-size:36px; margin-bottom:8px;">🔒</div>
+              <h3 style="font-size:15px; font-weight:800; color:#78350F; margin-bottom:4px;">Tableau d'Honneur Non Atteint</h3>
+              <p style="font-size:11px; color:#64748B; line-height:1.4;">
+                Le Tableau d'honneur est généré automatiquement uniquement si la moyenne est supérieure ou égale à <strong>14.00 / 20</strong>.
+              </p>
+              <div style="font-size:12px; font-weight:800; color:var(--orange-ztv); margin-top:8px;" id="cert-locked-current-score">
+                Votre moyenne actuelle : -- / 20
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
 
-      <!-- 3. BOUTON D'IMPRESSION -->
+      <!-- BOUTON D'IMPRESSION PREMIUM -->
       <button class="btn-print-cert" onclick="window.print()">
         <span>🖨️ Imprimer le Tableau d'honneur</span>
       </button>
@@ -1167,12 +1309,19 @@
   <script>
     let activeTrimestre = 1;
     let selectedCertifPeriod = 'annuel';
+    let selectedStudentPhoto = "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png";
 
-    /* 6. DONNÉES ENTIÈREMENT RÉINITIALISÉES À ZÉRO AU DÉMARRAGE */
     let trimestresData = {
       1: { points: 0, coefs: 0, moyenne: 0 },
       2: { points: 0, coefs: 0, moyenne: 0 },
       3: { points: 0, coefs: 0, moyenne: 0 }
+    };
+
+    window.onload = function() {
+      // Date du jour automatique au format français
+      const d = new Date();
+      const dateStr = d.toLocaleDateString('fr-FR');
+      document.getElementById('cert-date-disp').innerText = dateStr;
     };
 
     function switchPage(pageId) {
@@ -1193,6 +1342,26 @@
         regBtn.classList.add('active'); loginBtn.classList.remove('active');
         loginForm.style.display = 'none'; regForm.style.display = 'block';
       }
+    }
+
+    /* GESTION DU CHOIX DE LA PHOTO DEPUIS LA GALERIE */
+    function handlePhotoSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          selectedStudentPhoto = e.target.result;
+          document.getElementById('photo-preview-msg').innerText = "✓ Photo sélectionnée : " + file.name;
+          updateAppPhotos();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateAppPhotos() {
+      document.getElementById('dash-avatar-img').src = selectedStudentPhoto;
+      document.getElementById('profile-avatar-img').src = selectedStudentPhoto;
+      document.getElementById('cert-photo-img').src = selectedStudentPhoto;
     }
 
     function actionLogin() {
@@ -1218,7 +1387,6 @@
       const classe = document.getElementById('reg-classe').value.trim();
       const whatsapp = document.getElementById('reg-whatsapp').value.trim();
       const pays = document.getElementById('reg-pays').value;
-      const avatarUrl = document.getElementById('reg-avatar-url').value.trim();
 
       if(nom || prenom) {
         let full = (nom + " " + prenom).trim();
@@ -1240,10 +1408,7 @@
       if(whatsapp) document.getElementById('prof-whatsapp').innerText = whatsapp;
       if(pays) document.getElementById('prof-pays').innerText = pays;
 
-      if(avatarUrl) {
-        document.getElementById('dash-avatar-img').src = avatarUrl;
-        document.getElementById('profile-avatar-img').src = avatarUrl;
-      }
+      updateAppPhotos();
 
       switchPage('view-dashboard');
       actualiserMoyennesGlobales();
@@ -1260,7 +1425,6 @@
       document.getElementById('modal-container').classList.remove('active');
     }
 
-    /* 6. MATIÈRES À REVOIR - ADAPTIF */
     function openModalMatieresAvoir() {
       const tableRows = document.querySelectorAll('#bulletin tbody tr');
       let html = "";
@@ -1295,7 +1459,6 @@
       openModal("📖 Matières à revoir", html);
     }
 
-    /* 6. POINTS FORTS - ADAPTIF */
     function openModalPointsForts() {
       const tableRows = document.querySelectorAll('#bulletin tbody tr');
       let html = "";
@@ -1411,7 +1574,6 @@
       switchPage('view-dashboard');
     }
 
-    /* 6. ACTUALISATION ET CALCUL DES MENTION / DÉCISION / PROGRESSION */
     function actualiserMoyennesGlobales() {
       const t1 = trimestresData[1];
       const t2 = trimestresData[2];
@@ -1452,7 +1614,7 @@
       updateCertifDisplay();
     }
 
-    /* 4. CHANGER LA PÉRIODE DU TABLEAU D'HONNEUR (GÉNÉRATION AUTOMATIQUE SI MOYENNE >= 14) */
+    /* GESTION ET AFFICHAGE AUTOMATIQUE DU DIPLÔME PAYSAGE */
     function changeCertifPeriod(period, btn) {
       selectedCertifPeriod = period;
       document.querySelectorAll('.certif-tab-btn').forEach(b => b.classList.remove('active'));
@@ -1462,8 +1624,7 @@
 
     function updateCertifDisplay() {
       let targetMoyenne = 0;
-      let periodTitle = "TABLEAU D'HONNEUR";
-      let periodSubtitle = "ANNÉE ACADÉMIQUE";
+      let periodLabel = "Annuel";
 
       const t1 = trimestresData[1].moyenne;
       const t2 = trimestresData[2].moyenne;
@@ -1474,33 +1635,36 @@
 
       if(selectedCertifPeriod === 't1') {
         targetMoyenne = t1;
-        periodTitle = "TABLEAU D'HONNEUR - 1er TRIMESTRE";
-        periodSubtitle = "BUREAU D'EXCELLENCE SCOLAIRE";
+        periodLabel = "1er Trimestre";
       } else if(selectedCertifPeriod === 't2') {
         targetMoyenne = t2;
-        periodTitle = "TABLEAU D'HONNEUR - 2ᵉ TRIMESTRE";
-        periodSubtitle = "BUREAU D'EXCELLENCE SCOLAIRE";
+        periodLabel = "2ᵉ Trimestre";
       } else if(selectedCertifPeriod === 't3') {
         targetMoyenne = t3;
-        periodTitle = "TABLEAU D'HONNEUR - 3ᵉ TRIMESTRE";
-        periodSubtitle = "BUREAU D'EXCELLENCE SCOLAIRE";
+        periodLabel = "3ᵉ Trimestre";
       } else {
         targetMoyenne = moyAnnuelle;
-        periodTitle = "TABLEAU D'HONNEUR ANNUEL";
-        periodSubtitle = "EXCELLENCE ACADÉMIQUE GLOBALE";
+        periodLabel = "Annuel";
       }
 
-      document.getElementById('cert-title-text').innerText = periodTitle;
-      document.getElementById('cert-period-subtitle').innerText = periodSubtitle;
+      document.getElementById('cert-period-lbl').innerText = periodLabel;
+
+      // Condition d'obtention : Moyenne >= 14/20
+      const unlockedView = document.getElementById('cert-unlocked-content');
+      const lockedView = document.getElementById('cert-locked-content');
 
       if(targetMoyenne >= 14) {
+        unlockedView.style.display = "block";
+        lockedView.style.display = "none";
+
         document.getElementById('cert-annual-val').innerText = targetMoyenne.toFixed(2).replace('.', ',') + " / 20";
-        let m = "MENTION : BIEN";
-        if(targetMoyenne >= 16) m = "MENTION : TRÈS BIEN";
-        document.getElementById('cert-mention-lbl').innerText = m;
+        let mention = "BIEN";
+        if(targetMoyenne >= 16) mention = "TRÈS BIEN";
+        document.getElementById('cert-mention-lbl').innerText = mention;
       } else {
-        document.getElementById('cert-annual-val').innerText = targetMoyenne > 0 ? targetMoyenne.toFixed(2).replace('.', ',') + " / 20" : "Non atteinte";
-        document.getElementById('cert-mention-lbl').innerText = "Moyenne < 14/20 (Requis pour l'Honneur)";
+        unlockedView.style.display = "none";
+        lockedView.style.display = "block";
+        document.getElementById('cert-locked-current-score').innerText = "Moyenne actuelle : " + (targetMoyenne > 0 ? targetMoyenne.toFixed(2).replace('.', ',') + " / 20" : "-- / 20");
       }
     }
   </script>
