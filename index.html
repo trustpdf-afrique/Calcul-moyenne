@@ -29,12 +29,12 @@
       --slate-100: #F1F5F9;
       --bg-canvas: #F8FAFC;
       
-      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
-      --card-shadow-hover: 0 12px 28px -5px rgba(15, 23, 42, 0.12);
+      --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.02);
+      --card-shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
       --radius-xl: 20px;
       --radius-lg: 16px;
       --radius-sm: 8px;
-      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,13 +46,13 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 24px 16px;
+      padding: 20px 14px;
       color: var(--slate-900);
       -webkit-font-smoothing: antialiased;
     }
 
     .app-shell {
-      max-width: 860px;
+      max-width: 800px;
       width: 100%;
       background: #FFFFFF;
       border-radius: var(--radius-xl);
@@ -71,15 +71,15 @@
     }
 
     /* --- LOGIN OVERLAY --- */
-    #login-section { padding: 50px 20px; text-align: center; }
+    #login-section { padding: 40px 20px; text-align: center; }
     .login-wrapper { max-width: 360px; margin: 0 auto; }
     .brand-icon {
-      width: 64px; height: 64px;
+      width: 60px; height: 60px;
       background: linear-gradient(135deg, var(--ci-orange-soft), var(--ci-green-soft));
       border: 2px solid var(--ci-orange); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+      font-size: 26px;
     }
-    .brand-icon svg { width: 32px; height: 32px; fill: var(--ci-orange); }
     .login-wrapper h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
     .login-wrapper p { color: var(--slate-600); font-size: 13px; margin-bottom: 24px; }
     
@@ -99,52 +99,38 @@
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255, 130, 0, 0.3); }
     .error-msg { color: #E11D48; margin-top: 10px; font-size: 12px; font-weight: 600; }
 
-    /* --- 1. HEADER (EN-TÊTE PREMIUM) --- */
-    .app-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--slate-100);
-      background: #FFFFFF;
+    /* --- LOGO CENTRÉ EN HAUT --- */
+    .top-logo-container {
+      text-align: center;
+      padding: 20px 20px 10px 20px;
     }
-    .header-logo {
-      display: flex;
+    .logo-centered {
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      padding: 8px 18px;
+      background: #FFFFFF;
+      border-radius: 30px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .logo-badge {
-      width: 40px; height: 40px;
+      width: 32px; height: 32px;
       background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
-      border-radius: 12px;
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: #FFF; font-weight: 800; font-size: 18px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      color: #FFF; font-size: 16px;
     }
-    .logo-text-title { font-size: 15px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.3px; }
-    .logo-text-sub { font-size: 11px; color: var(--slate-600); font-weight: 600; }
-    
-    .profile-pill {
-      display: flex; align-items: center; gap: 8px;
-      padding: 6px 12px; background: var(--slate-100);
-      border-radius: 30px; font-size: 12px; font-weight: 700; color: var(--slate-800);
-      border: 1px solid #E2E8F0;
-    }
-    .profile-avatar {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--ci-orange); color: #FFF;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 800;
-    }
+    .logo-text { font-size: 14px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.2px; }
 
-    /* --- DASHBOARD CONTAINER & SECTIONS --- */
-    .dashboard-container { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    /* --- DASHBOARD CONTAINER & LAYOUT --- */
+    .dashboard-container { padding: 10px 20px 24px 20px; display: flex; flex-direction: column; gap: 16px; }
 
-    .section-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .section-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .section-centered { display: flex; justify-content: center; }
     .section-centered .premium-card { width: 50%; }
 
-    @media (max-width: 640px) {
+    @media (max-width: 600px) {
       .section-row-2 { grid-template-columns: 1fr; }
       .section-centered .premium-card { width: 100%; }
     }
@@ -154,20 +140,20 @@
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-lg);
-      padding: 18px 20px;
+      padding: 16px 18px;
       box-shadow: var(--card-shadow);
       transition: var(--transition);
       cursor: pointer;
       position: relative;
     }
-    .premium-card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow-hover); border-color: #CBD5E1; }
+    .premium-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: #CBD5E1; }
 
     .card-t1 { border-top: 4px solid var(--ci-blue); }
     .card-t2 { border-top: 4px solid var(--ci-orange); }
     .card-t3 { border-top: 4px solid var(--ci-green); }
 
     .card-annual {
-      background: linear-gradient(135deg, #FFF9F2 0%, #F0FDF4 100%);
+      background: linear-gradient(135deg, #FFFDF9 0%, #F4FBF7 100%);
       border: 1.5px solid var(--ci-orange);
       cursor: default;
     }
@@ -176,42 +162,44 @@
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--slate-600); }
-    .card-val { font-size: 26px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; margin: 2px 0; }
-    .card-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; }
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--slate-600); }
+    .card-val { font-size: 24px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; }
 
     /* PROGRESSION GÉNÉRALE */
     .progress-wrapper {
-      display: flex; align-items: center; gap: 24px; margin-top: 6px;
+      display: flex; align-items: center; gap: 20px;
     }
-    .circle-mini-container { position: relative; width: 84px; height: 84px; flex-shrink: 0; }
-    .circle-mini-container svg { width: 84px; height: 84px; transform: rotate(-90deg); }
-    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 8; }
+    .circle-mini-container { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
+    .circle-mini-container svg { width: 72px; height: 72px; transform: rotate(-90deg); }
+    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 7; }
     .circle-progress {
-      fill: none; stroke: var(--ci-red); stroke-width: 8;
-      stroke-dasharray: 232; stroke-dashoffset: 232;
+      fill: none; stroke: var(--ci-red); stroke-width: 7;
+      stroke-dasharray: 200; stroke-dashoffset: 200;
       transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease; stroke-linecap: round;
     }
     .circle-mini-text {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 16px; font-weight: 800; color: var(--slate-900);
+      font-size: 14px; font-weight: 800; color: var(--slate-900);
     }
 
     .progress-info { flex: 1; }
-    .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 5px; overflow: hidden; margin: 8px 0; }
+    .target-bar-bg { width: 100%; height: 8px; background: var(--slate-100); border-radius: 4px; overflow: hidden; margin-top: 6px; }
     .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 0.8s ease, background-color 0.4s ease; }
 
-    /* OBJECTIF PASSAGE */
+    /* OBJECTIF PASSAGE (SECTION LISTE) */
     .objective-card {
       background: #FFFFFF; border: 1.5px solid var(--ci-green);
-      border-radius: var(--radius-lg); padding: 20px; cursor: default;
+      border-radius: var(--radius-lg); padding: 18px; cursor: default;
       box-shadow: var(--card-shadow);
     }
-    .objective-content { margin-top: 10px; font-size: 13px; color: var(--slate-800); line-height: 1.6; }
-    .highlight-badge {
-      display: inline-block; padding: 4px 10px; border-radius: 20px;
-      font-weight: 800; font-size: 12px;
+    .obj-list { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .obj-list li {
+      font-size: 13px; color: var(--slate-800); font-weight: 600;
+      display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
+    }
+    .obj-list li::before {
+      content: "•"; color: var(--ci-green); font-size: 18px; line-height: 1; font-weight: bold;
     }
 
     /* --- FENÊTRE MODALE DÉTAILS --- */
@@ -220,48 +208,48 @@
       z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-card {
-      background: #FFF; width: 100%; max-width: 480px; border-radius: var(--radius-xl);
-      padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid #E2E8F0;
-      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      background: #FFF; width: 100%; max-width: 440px; border-radius: var(--radius-xl);
+      padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid #E2E8F0;
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes modalPop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .modal-title { font-size: 16px; font-weight: 800; color: var(--slate-900); }
-    .btn-close { background: var(--slate-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: 800; cursor: pointer; }
-    .modal-list { list-style: none; max-height: 260px; overflow-y: auto; }
+    @keyframes modalPop { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .modal-title { font-size: 15px; font-weight: 800; color: var(--slate-900); }
+    .btn-close { background: var(--slate-100); border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; }
+    .modal-list { list-style: none; max-height: 240px; overflow-y: auto; }
     .modal-list li {
-      padding: 10px 12px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 600;
+      padding: 9px 12px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 600;
       display: flex; justify-content: space-between; align-items: center;
     }
 
     /* --- PAGE DE SAISIE --- */
     #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
     .trim-header {
-      padding: 16px 24px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
+      padding: 16px 20px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
     .btn-secondary {
       background: #FFF; border: 1.5px solid var(--slate-400); color: var(--slate-800);
-      padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
+      padding: 8px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
       cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px;
     }
     .btn-secondary:hover { background: var(--slate-100); }
 
-    .table-scroll-area { padding: 20px 24px; overflow-x: auto; }
+    .table-scroll-area { padding: 16px 20px; overflow-x: auto; }
     .styled-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #E2E8F0; }
-    .styled-table th, .styled-table td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; font-size: 13px; }
+    .styled-table th, .styled-table td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; font-size: 13px; }
     .styled-table th { background: #F8FAFC; color: var(--slate-600); font-size: 11px; text-transform: uppercase; font-weight: 800; }
     .styled-table th:nth-child(n+2), .styled-table td:nth-child(n+2) { text-align: center; }
     
     tr.category-row td { background: var(--ci-orange-soft); color: var(--ci-orange-dark); font-weight: 800; font-size: 11px; text-transform: uppercase; }
     
     input.coef-input, input.note-input {
-      padding: 6px; text-align: center; border: 1.5px solid #E2E8F0;
+      padding: 5px; text-align: center; border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-sm); font-weight: 700; outline: none; transition: var(--transition);
       font-family: inherit; font-size: 13px;
     }
-    input.coef-input { width: 55px; background: #FFF; }
-    input.note-input { width: 65px; background: #F8FAFC; }
+    input.coef-input { width: 50px; background: #FFF; }
+    input.note-input { width: 60px; background: #F8FAFC; }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
   </style>
 </head>
@@ -272,11 +260,9 @@
     <!-- ================= 🔐 CONNEXION ================= -->
     <div id="login-section">
       <div class="login-wrapper">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-        </div>
+        <div class="brand-icon">🎓</div>
         <h2>Portail Zakaria</h2>
-        <p>Système National d'Évaluation Scolaire</p>
+        <p>Ministère de l'Éducation Nationale</p>
         
         <div class="field-group">
           <input type="text" id="username" placeholder="Identifiant" autocomplete="username" />
@@ -295,133 +281,126 @@
       </div>
     </div>
 
-    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION STRICTE) ================= -->
+    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION EXACTE) ================= -->
     <div id="dashboard-section" style="display:none;">
       
-      <!-- 1. EN-TÊTE (LOGO GAUCHE + PROFIL DROITE) -->
-      <header class="app-header">
-        <div class="header-logo">
+      <!-- LOGO CENTRÉ EN HAUT DE LA PAGE -->
+      <div class="top-logo-container">
+        <div class="logo-centered">
           <div class="logo-badge">🎓</div>
-          <div>
-            <div class="logo-text-title">Portail Zakaria</div>
-            <div class="logo-text-sub">République de Côte d'Ivoire</div>
-          </div>
+          <span class="logo-text">Portail Zakaria</span>
         </div>
-        <div class="profile-pill">
-          <div class="profile-avatar">E</div>
-          <span>Élève / Parent</span>
-        </div>
-      </header>
+      </div>
 
       <div class="dashboard-container">
         
-        <!-- 2. PREMIÈRE SECTION : TRIMESTRES (DISPOSITION EXACTE) -->
+        <!-- SECTION TRIMESTRES (DISPOSITION SCHÉMATIQUE) -->
+        <!-- Ligne 1 : 1er et 2e Trimestre -->
         <div class="section-row-2">
-          <!-- 📘 En haut à gauche : 1er Trimestre -->
+          <!-- 📘 1er Trimestre -->
           <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
             <div class="card-header-flex">
               <span class="card-title">📘 1er Trimestre</span>
-              <span style="font-size:12px; color:var(--ci-blue); font-weight:700;">Saisir ➔</span>
+              <span style="font-size:11px; color:var(--ci-blue); font-weight:700;">Saisir ➔</span>
             </div>
-            <div class="card-val" id="dash-t1">-</div>
-            <div class="card-sub">Moyenne du trimestre</div>
+            <div class="card-val">Moyenne : <span id="dash-t1">-</span></div>
           </div>
 
-          <!-- 📙 En haut à droite : 2ᵉ Trimestre -->
+          <!-- 📙 2e Trimestre -->
           <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
             <div class="card-header-flex">
               <span class="card-title">📙 2ᵉ Trimestre</span>
-              <span style="font-size:12px; color:var(--ci-orange); font-weight:700;">Saisir ➔</span>
+              <span style="font-size:11px; color:var(--ci-orange); font-weight:700;">Saisir ➔</span>
             </div>
-            <div class="card-val" id="dash-t2">-</div>
-            <div class="card-sub">Moyenne du trimestre</div>
+            <div class="card-val">Moyenne : <span id="dash-t2">-</span></div>
           </div>
         </div>
 
-        <!-- 📗 Juste en dessous, centré : 3ᵉ Trimestre -->
+        <!-- Ligne 2 : 3e Trimestre Centré juste en dessous -->
         <div class="section-centered">
           <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
             <div class="card-header-flex">
               <span class="card-title">📗 3ᵉ Trimestre</span>
-              <span style="font-size:12px; color:var(--ci-green); font-weight:700;">Saisir ➔</span>
+              <span style="font-size:11px; color:var(--ci-green); font-weight:700;">Saisir ➔</span>
             </div>
-            <div class="card-val" id="dash-t3">-</div>
-            <div class="card-sub">Moyenne du trimestre</div>
+            <div class="card-val">Moyenne : <span id="dash-t3">-</span></div>
           </div>
         </div>
 
-        <!-- 3. DEUXIÈME SECTION : MOYENNE ANNUELLE (CARTE HORIZONTALE) -->
+        <!-- SECTION MOYENNE ANNUELLE -->
         <div class="premium-card card-annual">
           <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
-            <span style="font-size:20px;">🏅</span>
+            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle</span>
+            <span style="font-size:18px;">🏅</span>
           </div>
-          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-            <div>
-              <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark); font-size:32px;">-</div>
-              <div class="card-sub" id="dash-mention" style="font-size:14px; font-weight:700;">Mention : En attente</div>
+          <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
+            <div style="font-size:16px; font-weight:800; color:var(--slate-900);">
+              Moyenne : <span id="dash-annual" style="color:var(--ci-orange-dark);">--/20</span>
             </div>
-            <div id="annual-badge" style="background:var(--slate-100); color:var(--slate-600); padding:6px 14px; border-radius:20px; font-weight:800; font-size:12px;">
-              Statut : Non évalué
+            <div style="font-size:13px; font-weight:700; color:var(--slate-700);" id="dash-mention">
+              🏅 Mention : --------
+            </div>
+            <div style="font-size:13px; font-weight:700;" id="dash-decision">
+              ✅ Décision : En attente
             </div>
           </div>
         </div>
 
-        <!-- 4. TROISIÈME SECTION : PROGRESSION GÉNÉRALE (CIRCULAIRE GAUCHE + TEXTE DROITE) -->
+        <!-- SECTION PROGRESSION GÉNÉRALE -->
         <div class="premium-card" style="cursor:default;">
           <div class="progress-wrapper">
             <!-- Cercle % à gauche -->
             <div class="circle-mini-container">
               <svg>
-                <circle class="circle-bg" cx="42" cy="42" r="37"></circle>
-                <circle class="circle-progress" id="circle-bar" cx="42" cy="42" r="37"></circle>
+                <circle class="circle-bg" cx="36" cy="36" r="32"></circle>
+                <circle class="circle-progress" id="circle-bar" cx="36" cy="36" r="32"></circle>
               </svg>
               <div class="circle-mini-text" id="circle-val">0%</div>
             </div>
 
-            <!-- Texte à droite -->
+            <!-- Texte & Barre à droite -->
             <div class="progress-info">
-              <div class="card-title" style="margin-bottom:2px;">📊 Progression Générale</div>
-              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800; margin-top:4px;">
-                <span id="progress-status-text">Évaluation globale</span>
-                <span id="progress-percentage-label">0 / 20</span>
+              <div class="card-title">📊 Progression Générale</div>
+              <div style="font-size:12px; font-weight:700; color:var(--slate-600); margin-top:2px;" id="progress-status-text">
+                Barre de progression Premium
               </div>
               <div class="target-bar-bg">
                 <div class="target-bar-fill" id="target-bar-fill"></div>
               </div>
-              <div class="card-sub" id="progress-feedback-text">Moyenne calculée automatiquement sur les 3 trimestres.</div>
             </div>
           </div>
         </div>
 
-        <!-- 5. QUATRIÈME SECTION : CARTES D'ANALYSE CÔTE À CÔTE -->
+        <!-- SECTION CARTES D'ANALYSE CÔTE À CÔTE -->
         <div class="section-row-2">
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
             <div>
-              <div class="card-title" style="color:#E11D48;">📚 Matières à revoir</div>
-              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher les détails</div>
+              <div class="card-title" style="color:#E11D48;">📚 Matières</div>
+              <div style="font-size:14px; font-weight:800; color:var(--slate-800);">à revoir</div>
             </div>
-            <span style="font-size:22px;">⚠️</span>
+            <span style="font-size:20px;">⚠️</span>
           </div>
 
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('best')">
             <div>
-              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points forts</div>
-              <div class="card-sub" style="margin-top:4px;">Cliquer pour afficher les détails</div>
+              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points</div>
+              <div style="font-size:14px; font-weight:800; color:var(--slate-800);">forts</div>
             </div>
-            <span style="font-size:22px;">🌟</span>
+            <span style="font-size:20px;">🌟</span>
           </div>
         </div>
 
-        <!-- 6. CINQUIÈME SECTION : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE -->
+        <!-- SECTION OBJECTIF PASSAGE EN CLASSE SUPÉRIEURE -->
         <div class="objective-card">
-          <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
-            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Moyenne minimale : 10.00 / 20</span>
+          <div class="card-title" style="color:var(--ci-green-dark); margin-bottom:8px;">
+            🎯 Objectif pour passer en classe supérieure
           </div>
-          <div class="objective-content" id="objective-dynamic-text">
-            Saisissez les notes de vos trimestres pour activer le calcul de votre objectif d'admission ainsi que vos recommandations d'études personnalisées.
-          </div>
+          <ul class="obj-list">
+            <li id="obj-min">Moyenne minimale à atteindre : <strong>10,00 / 20</strong></li>
+            <li id="obj-restant">Points restants : <strong>Saisissez vos notes pour calculer</strong></li>
+            <li id="obj-matieres">Matières prioritaires : <strong>Séquence en attente</strong></li>
+            <li id="obj-conseils">Conseils automatiques : <strong>Consultez régulièrement vos progrès.</strong></li>
+          </ul>
         </div>
 
       </div>
@@ -444,7 +423,7 @@
     <div id="trimestre-page" style="display:none;">
       <div class="trim-header">
         <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Retour au tableau de bord</button>
-        <h3 id="trimestre-page-title" style="font-weight:800; font-size:16px;">Notes du 1er Trimestre</h3>
+        <h3 id="trimestre-page-title" style="font-weight:800; font-size:15px;">Notes du 1er Trimestre</h3>
       </div>
 
       <div class="table-scroll-area">
@@ -482,14 +461,14 @@
               <td id="total-coefs">-</td>
               <td id="total-points">-</td>
             </tr>
-            <tr style="background:#E6F5EC; font-weight:800; font-size:15px;">
+            <tr style="background:#E6F5EC; font-weight:800; font-size:14px;">
               <td colspan="3">🎯 Moyenne du Trimestre</td>
               <td id="moyenne-generale" style="color:var(--ci-green-dark);">-</td>
             </tr>
           </tbody>
         </table>
 
-        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:20px; padding:14px;">✅ Valider et revenir au tableau de bord</button>
+        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:16px; padding:12px;">Enregistrer et revenir au tableau de bord</button>
       </div>
     </div>
 
@@ -595,41 +574,48 @@
 
       let moysAnnuelles = Object.values(moyennesTrimestres).filter(m => m !== null);
       let moyAnnuelle = moysAnnuelles.length > 0 ? (moysAnnuelles.reduce((a, b) => a + b, 0) / moysAnnuelles.length).toFixed(2) : null;
-      document.getElementById("dash-annual").innerText = moyAnnuelle ? moyAnnuelle + " / 20" : "-";
-
+      
+      const dashAnnual = document.getElementById("dash-annual");
       const mentionEl = document.getElementById("dash-mention");
-      const annualBadge = document.getElementById("annual-badge");
+      const decisionEl = document.getElementById("dash-decision");
+
       const circleBar = document.getElementById("circle-bar");
       const targetFill = document.getElementById("target-bar-fill");
       const circleVal = document.getElementById("circle-val");
       const progressStatus = document.getElementById("progress-status-text");
-      const progressLabel = document.getElementById("progress-percentage-label");
-      const progressFeedback = document.getElementById("progress-feedback-text");
-      const objText = document.getElementById("objective-dynamic-text");
+
+      const objRestant = document.getElementById("obj-restant");
+      const objMatieres = document.getElementById("obj-matieres");
+      const objConseils = document.getElementById("obj-conseils");
 
       if (moyAnnuelle !== null) {
         const mA = parseFloat(moyAnnuelle);
+        dashAnnual.innerText = mA.toFixed(2) + " / 20";
+
         let mention = "Passable";
         if (mA >= 16) mention = "Très Bien";
         else if (mA >= 14) mention = "Bien";
         else if (mA >= 12) mention = "Assez Bien";
         else if (mA < 10) mention = "Ajourné";
 
-        mentionEl.innerText = "Mention : " + mention;
-        annualBadge.innerText = mA >= 10 ? "Admis(e)" : "Résultat Fragile";
-        annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
-        annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
+        mentionEl.innerHTML = `🏅 Mention : <strong>${mention}</strong>`;
+        
+        if (mA >= 10) {
+          decisionEl.innerHTML = `✅ Décision : <span style="color:var(--ci-green-dark); font-weight:800;">Admis(e)</span>`;
+        } else {
+          decisionEl.innerHTML = `✅ Décision : <span style="color:var(--ci-red); font-weight:800;">Non admis(e)</span>`;
+        }
 
-        // COULEURS DE PROGRESSION DYNAMIQUES (Rouge: <10, Orange: 10-11.99, Vert: >=12)
+        // COULEURS PROGRESSION
         let activeColor = "var(--ci-red)";
-        let statusTitle = "Insuffisant";
+        let statusTitle = "Niveau insuffisant";
         
         if (mA >= 12) {
           activeColor = "var(--ci-green)";
-          statusTitle = "Bonne performance";
+          statusTitle = "Excellente progression";
         } else if (mA >= 10) {
           activeColor = "var(--ci-orange)";
-          statusTitle = "Encore des progrès à faire";
+          statusTitle = "Progression satisfaisante";
         }
 
         circleBar.style.stroke = activeColor;
@@ -637,43 +623,44 @@
 
         const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
         circleVal.innerText = Math.round(percent) + "%";
-        progressLabel.innerText = mA.toFixed(2) + " / 20";
-        progressStatus.innerText = statusTitle;
-        progressFeedback.innerText = `Moyenne globale actualisée sur l'ensemble des trimestres.`;
+        progressStatus.innerText = `${statusTitle} (${mA.toFixed(2)}/20)`;
 
-        // Cercle (stroke-dasharray = 232)
-        const offset = 232 - (232 * percent / 100);
+        // Cercle Dash offset (200px est le stroke-dasharray)
+        const offset = 200 - (200 * percent / 100);
         circleBar.style.strokeDashoffset = offset;
         targetFill.style.width = percent + "%";
 
-        // CALCULS AUTOMATIQUES OBJECTIF D'ADMISSION (SECTION 6)
+        // CALCULS AUTOMATIQUES OBJECTIF D'ADMISSION
         const passageTarget = 10.00;
         let toutesLesNotes = [];
         Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
         
-        // Matières sous la moyenne
         let matieresAAmeliorer = toutesLesNotes.filter(n => n.note < 10).map(n => n.subject);
         let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
-        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos disciplines de base";
+        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "Aucune matière critique";
 
         if (mA >= passageTarget) {
-          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne actuelle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts pour viser une mention encore plus élevée.`;
+          objRestant.innerHTML = `Points restants : <strong>0,00 point (Objectif déjà atteint !)</strong>`;
+          objMatieres.innerHTML = `Matières prioritaires : <strong>Maintien des acquis (${matieresStr})</strong>`;
+          objConseils.innerHTML = `Conseils automatiques : <strong>Félicitations, vous êtes en position d'admission. Continuez ainsi !</strong>`;
         } else {
           const ecart = (passageTarget - mA).toFixed(2);
-          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de <strong>10,00/20</strong> requis pour passer en classe supérieure. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez fortement vos chances d'admission. Continuez vos efforts, vous êtes sur la bonne voie !`;
+          objRestant.innerHTML = `Points restants : <strong>${ecart} point(s) pour atteindre 10/20</strong>`;
+          objMatieres.innerHTML = `Matières prioritaires : <strong>${matieresStr}</strong>`;
+          objConseils.innerHTML = `Conseils automatiques : <strong>Concentrez vos révisions sur les matières ci-dessus pour passer en classe supérieure.</strong>`;
         }
 
       } else {
-        mentionEl.innerText = "Mention : En attente";
-        annualBadge.innerText = "Statut : Non évalué";
+        dashAnnual.innerText = "--/20";
+        mentionEl.innerHTML = `🏅 Mention : --------`;
+        decisionEl.innerHTML = `✅ Décision : Admis(e) / Non admis`;
         circleVal.innerText = "0%";
-        circleBar.style.strokeDashoffset = 232;
+        circleBar.style.strokeDashoffset = 200;
         targetFill.style.width = "0%";
-        progressLabel.innerText = "0 / 20";
       }
     }
 
-    // MODALE DES MATIÈRES
+    // FENÊTRE MODALE DÉTAILS
     function ouvrirModaleDetails(type) {
       let toutesLesNotes = [];
       Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
