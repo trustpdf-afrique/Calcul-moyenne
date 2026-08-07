@@ -205,10 +205,11 @@
     }
     .user-profile-info { display: flex; align-items: center; gap: 12px; }
     .user-avatar-circle {
-      width: 46px; height: 46px;
+      width: 48px; height: 48px;
       border-radius: 50%;
       border: 2px solid var(--orange-ztv);
       object-fit: cover;
+      background: var(--bg-card-dark);
     }
 
     /* TRIMESTRES (DASHBOARD) */
@@ -281,20 +282,27 @@
 
     /* DOUBLE CARTE ACTIONS & BANNIÈRE */
     .dual-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-bottom: 16px; }
-    .action-card-orange { background: linear-gradient(135deg, #FF6B00, #E05D00); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; }
-    .action-card-green { background: linear-gradient(135deg, #00A651, #00803E); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; }
+    .action-card-orange { background: linear-gradient(135deg, #FF6B00, #E05D00); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; transition: var(--transition); }
+    .action-card-orange:active { transform: scale(0.97); }
+    .action-card-green { background: linear-gradient(135deg, #00A651, #00803E); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; transition: var(--transition); }
+    .action-card-green:active { transform: scale(0.97); }
+
     .objective-banner {
       background: linear-gradient(135deg, #FF6B00, #D95300);
       border-radius: var(--radius-lg);
       padding: 14px 18px; margin: 0 16px 16px; color: #FFF;
       display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+      transition: var(--transition);
     }
+    .objective-banner:active { transform: scale(0.98); }
+
     .bottom-dual-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-bottom: 20px; }
     .btn-card-dark {
       background: var(--bg-card-dark); border: 1px solid var(--border-dark);
       border-radius: var(--radius-lg); padding: 14px; color: #FFF;
-      display: flex; align-items: center; gap: 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 10px; cursor: pointer; transition: var(--transition);
     }
+    .btn-card-dark:active { transform: scale(0.97); }
 
     /* ÉCRAN PAGE SAISIE DE BULLETIN DÉDIÉE */
     .bulletin-container {
@@ -399,11 +407,98 @@
       border-top: 2px solid var(--border-dark);
     }
 
-    /* CERTIFICAT & CRÉATEUR */
-    .creator-card-box { background: var(--bg-card-dark); border: 1px solid var(--border-dark); border-radius: var(--radius-xl); padding: 24px 20px; margin: 20px 16px; text-align: center; }
-    .creator-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--orange-ztv); margin-bottom: 12px; object-fit: cover; }
-    .creator-info-list { text-align: left; font-size: 12px; line-height: 2; background: #09101D; padding: 14px; border-radius: var(--radius-md); margin: 16px 0; }
+    /* MON PROFIL PREMIUM */
+    .profile-card-box {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 24px 20px;
+      margin: 16px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+    .profile-avatar-large {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--orange-ztv);
+      object-fit: cover;
+      margin-bottom: 14px;
+      background: var(--bg-input);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.3);
+    }
+    .profile-field-list {
+      text-align: left;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .profile-field-item {
+      background: #09101D;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .profile-field-label { font-size: 11px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; }
+    .profile-field-value { font-size: 13px; color: #FFF; font-weight: 800; }
+
+    /* CRÉATEUR MODALE/CARD */
+    .creator-card-box { background: var(--bg-card-dark); border: 1px solid var(--border-dark); border-radius: var(--radius-xl); padding: 24px 20px; text-align: center; }
+    .creator-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--green-ztv); margin-bottom: 12px; object-fit: cover; }
+    .creator-info-list { text-align: left; font-size: 12px; line-height: 2; background: #09101D; padding: 14px; border-radius: var(--radius-md); margin: 16px 0; color:#FFF;}
+
+    /* CERTIFICAT */
     .certificate-frame { background: #FFFDF5; border: 6px double #D97706; border-radius: 16px; padding: 24px 16px; margin: 16px; color: #334155; text-align: center; position: relative; }
+
+    /* FENÊTRES MODALES (POPUPS) ELEGANTE */
+    .modal-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-card {
+      background: var(--bg-card-dark);
+      border: 1.5px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px; border-bottom: 1px solid var(--border-dark); padding-bottom: 12px;
+    }
+    .modal-title { font-size: 15px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 8px; }
+    .modal-close-btn {
+      background: var(--bg-input); border: 1px solid var(--border-dark);
+      color: var(--text-gray); width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer;
+    }
+
+    .modal-list-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 12px; background: #09101D; border-radius: var(--radius-md);
+      margin-bottom: 8px; border-left: 3px solid var(--orange-ztv);
+    }
+    .modal-list-item.green-border { border-left-color: var(--green-ztv); }
+    .modal-item-name { font-size: 13px; font-weight: 700; color: #FFF; }
+    .modal-item-note { font-size: 13px; font-weight: 900; color: var(--orange-ztv); }
+    .modal-list-item.green-border .modal-item-note { color: var(--green-ztv); }
   </style>
 </head>
 <body>
@@ -438,7 +533,7 @@
           </div>
 
           <div style="text-align: right; margin-bottom: 20px;">
-            <a href="#" style="color: var(--orange-ztv); font-size: 11px; font-weight: 700; text-decoration: none;" onclick="alert('Veuillez contacter votre établissement.')">Mot de passe oublié ?</a>
+            <a href="#" style="color: var(--orange-ztv); font-size: 11px; font-weight: 700; text-decoration: none;" onclick="openModal('mod-generic', 'Mot de passe', '<p style=\'font-size:12px; color:#94A3B8;\'>Veuillez contacter l\'administration de votre établissement scolaire pour réinitialiser vos accès.</p>')">Mot de passe oublié ?</a>
           </div>
 
           <button class="btn-orange" onclick="actionLogin()">SE CONNECTER ➔</button>
@@ -473,6 +568,7 @@
         <div class="input-box"><span>👤</span><input type="text" id="reg-nom" placeholder="Nom" /></div>
         <div class="input-box"><span>👤</span><input type="text" id="reg-prenom" placeholder="Prénom" /></div>
         <div class="input-box"><span>📍</span><input type="text" id="reg-ville" placeholder="Ville" /></div>
+        <div class="input-box"><span>🎓</span><input type="text" id="reg-classe" placeholder="Classe (ex: 3ème 1)" /></div>
         <div class="input-box"><span>💬</span><input type="tel" id="reg-whatsapp" placeholder="Numéro WhatsApp" /></div>
         <div class="input-box">
           <span>🌍</span>
@@ -491,10 +587,10 @@
 
     <!-- ================= 3. TABLEAU DE BORD (ACCUEIL) ================= -->
     <div id="view-dashboard" class="page-view">
-      <!-- En-tête avec Logo Officiel -->
+      <!-- En-tête avec Logo Officiel & Photo de profil -->
       <div class="dash-header">
         <div class="user-profile-info">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-avatar-circle" id="dash-avatar-img" />
+          <img src="https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png" class="user-avatar-circle" id="dash-avatar-img" />
           <div>
             <div style="font-size: 11px; color: var(--text-gray);">Bonjour,</div>
             <div style="font-size: 15px; font-weight: 800;" id="dash-user-name">Niampa Zakaria 👋</div>
@@ -566,20 +662,20 @@
         </div>
       </div>
 
-      <!-- Double Cartes Actions -->
+      <!-- Double Cartes Actions avec Fenêtres Modales -->
       <div class="dual-cards-grid">
-        <div class="action-card-orange" onclick="alert('Matières à renforcer: Mathématiques, Physique')">
+        <div class="action-card-orange" onclick="openModalMatieresAvoir()">
           <div style="font-size:11px; font-weight:800; text-transform:uppercase;">📖 Matières à revoir</div>
-          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter les matières nécessitant plus d'efforts</div>
+          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter les matières à renforcer</div>
         </div>
-        <div class="action-card-green" onclick="alert('Points forts: Français, SVT, Anglais')">
+        <div class="action-card-green" onclick="openModalPointsForts()">
           <div style="font-size:11px; font-weight:800; text-transform:uppercase;">⭐ Points forts</div>
-          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter vos matières et compétences solides</div>
+          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter vos matières réussies</div>
         </div>
       </div>
 
-      <!-- Bannière Objectif -->
-      <div class="objective-banner" onclick="alert('Objectif : Obtenir au moins 10.00/20 pour passer en classe supérieure.')">
+      <!-- Bannière Objectif avec Modale -->
+      <div class="objective-banner" onclick="openModalObjectif()">
         <div>
           <div style="font-size: 11px; font-weight: 800; text-transform: uppercase;">🎯 Objectif : Passer en classe supérieure</div>
           <div style="font-size: 9px; opacity: 0.9;">Voir les détails et conseils personnalisés</div>
@@ -596,7 +692,7 @@
             <div style="font-size:9px; color:var(--text-gray);">Voir mon tableau</div>
           </div>
         </div>
-        <div class="btn-card-dark" onclick="switchPage('view-creator')">
+        <div class="btn-card-dark" onclick="switchPage('view-profile')">
           <span style="font-size: 18px;">👤</span>
           <div>
             <div style="font-size:11px; font-weight:800;">Mon Profil</div>
@@ -606,7 +702,7 @@
       </div>
     </div>
 
-    <!-- ================= 4. PAGE DÉDIÉE DE SAISIE DU TRIMESTRE ================= -->
+    <!-- ================= 4. PAGE SAISIE DE TRIMESTRE ================= -->
     <div id="view-trim-entry" class="page-view">
       <div class="bulletin-container">
         <div class="bulletin-header-top">
@@ -747,30 +843,50 @@
       </div>
     </div>
 
-    <!-- ================= 5. ÉCRAN DU CRÉATEUR ================= -->
-    <div id="view-creator" class="page-view">
-      <div style="padding:16px;">
+    <!-- ================= 5. PAGE MON PROFIL (ÉPURÉE) ================= -->
+    <div id="view-profile" class="page-view">
+      <div style="padding:16px; display:flex; justify-content:space-between; align-items:center;">
         <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
+        <!-- Nouveau bouton pour accéder aux infos créateur / à propos -->
+        <button class="btn-back-link" style="border-color:var(--orange-ztv); color:var(--orange-ztv);" onclick="openModalCreator()">ℹ️ À propos</button>
       </div>
+
       <div style="text-align:center;">
-        <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" style="height:50px;" />
+        <h2 style="font-size: 18px; font-weight: 800;">Mon Profil Établissement</h2>
+        <p style="font-size: 11px; color: var(--text-gray);">Informations personnelles du participant</p>
       </div>
 
-      <div class="creator-card-box">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="creator-img" />
-        <h3 style="font-size: 18px; font-weight: 800;">Niampa Zakaria</h3>
-        <p style="font-size: 12px; color: var(--green-ztv); font-weight: 700;">Créateur de ZTV</p>
+      <div class="profile-card-box">
+        <img src="https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png" class="profile-avatar-large" />
+        <h3 style="font-size: 18px; font-weight: 800;" id="prof-disp-fullname">Niampa Zakaria</h3>
+        <p style="font-size: 12px; color: var(--orange-ztv); font-weight: 700; margin-top:2px;" id="prof-disp-role">Élève Inscrit(e)</p>
 
-        <div class="creator-info-list">
-          <div>🎓 <strong>Statut :</strong> Élève en classe de 3ᵉ</div>
-          <div>🏫 <strong>Établissement :</strong> Lycée Moderne de Bangolo (CÔTE D'IVOIRE 🇨🇮)</div>
-          <div>🎂 <strong>Âge :</strong> 15 ans</div>
-          <div>🎬 <strong>Activité :</strong> Créateur de contenus sur les phénomènes mystérieux</div>
-          <div>🏷️ <strong>Nom de marque :</strong> ZTV</div>
-          <div>🎵 <strong>Compte TikTok :</strong> zakaria.tv</div>
+        <div class="profile-field-list">
+          <div class="profile-field-item">
+            <span class="profile-field-label">Nom</span>
+            <span class="profile-field-value" id="prof-nom">Niampa</span>
+          </div>
+          <div class="profile-field-item">
+            <span class="profile-field-label">Prénom</span>
+            <span class="profile-field-value" id="prof-prenom">Zakaria</span>
+          </div>
+          <div class="profile-field-item">
+            <span class="profile-field-label">Classe</span>
+            <span class="profile-field-value" id="prof-classe">3ème 1</span>
+          </div>
+          <div class="profile-field-item">
+            <span class="profile-field-label">Ville</span>
+            <span class="profile-field-value" id="prof-ville">Bangolo</span>
+          </div>
+          <div class="profile-field-item">
+            <span class="profile-field-label">Pays</span>
+            <span class="profile-field-value" id="prof-pays">Côte d'Ivoire 🇨🇮</span>
+          </div>
+          <div class="profile-field-item">
+            <span class="profile-field-label">WhatsApp</span>
+            <span class="profile-field-value" id="prof-whatsapp">+225 07 99 59 10 24</span>
+          </div>
         </div>
-
-        <a href="https://wa.me/2250799591024" target="_blank" class="btn-green" style="text-decoration:none;">💬 ME CONTACTER</a>
       </div>
     </div>
 
@@ -786,7 +902,7 @@
         <p style="font-size:11px; color:#D97706; font-weight:700; margin-top:2px;">FÉLICITATIONS À</p>
 
         <div style="font-family:'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--green-ztv); margin: 10px 0;" id="cert-fullname">Niampa Zakaria</div>
-        <p style="font-size:12px; font-weight:700;">Élève en classe de 3ᵉ</p>
+        <p style="font-size:12px; font-weight:700;" id="cert-classe">Élève en classe de 3ᵉ</p>
         <p style="font-size:11px; color:#64748B;">Lycée Moderne de Bangolo</p>
 
         <p style="font-size:11px; margin: 14px 0 6px;">Pour son excellent travail et ses résultats remarquables</p>
@@ -806,12 +922,25 @@
       </div>
     </div>
 
+    <!-- ================= 7. FENÊTRE MODALE POPUP DYNAMIQUE ================= -->
+    <div class="modal-overlay" id="modal-container">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title" id="modal-title-text">Titre Modale</div>
+          <div class="modal-close-btn" onclick="closeModal()">✕</div>
+        </div>
+        <div id="modal-body-content">
+          <!-- Contenu dynamique -->
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
     let activeTrimestre = 1;
 
-    // Structure de stockage de chaque trimestre
+    // Données des trimestres
     let trimestresData = {
       1: { points: 161.9, coefs: 10, moyenne: 16.19 },
       2: { points: 161.5, coefs: 10, moyenne: 16.15 },
@@ -832,7 +961,12 @@
       const name = document.getElementById('login-fullname').value.trim();
       if(name !== "") {
         document.getElementById('dash-user-name').innerText = name + " 👋";
+        document.getElementById('prof-disp-fullname').innerText = name;
         document.getElementById('cert-fullname').innerText = name;
+        
+        let parts = name.split(" ");
+        document.getElementById('prof-nom').innerText = parts[0] || name;
+        document.getElementById('prof-prenom').innerText = parts.slice(1).join(" ") || "-";
       }
       switchPage('view-dashboard');
       actualiserMoyennesGlobales();
@@ -841,21 +975,168 @@
     function actionRegister() {
       const nom = document.getElementById('reg-nom').value.trim();
       const prenom = document.getElementById('reg-prenom').value.trim();
-      if(nom && prenom) {
-        let full = nom + " " + prenom;
+      const ville = document.getElementById('reg-ville').value.trim();
+      const classe = document.getElementById('reg-classe').value.trim();
+      const whatsapp = document.getElementById('reg-whatsapp').value.trim();
+      const pays = document.getElementById('reg-pays').value;
+
+      if(nom || prenom) {
+        let full = (nom + " " + prenom).trim();
         document.getElementById('dash-user-name').innerText = full + " 👋";
+        document.getElementById('prof-disp-fullname').innerText = full;
         document.getElementById('cert-fullname').innerText = full;
       }
+      if(nom) document.getElementById('prof-nom').innerText = nom;
+      if(prenom) document.getElementById('prof-prenom').innerText = prenom;
+      if(ville) document.getElementById('prof-ville').innerText = ville;
+      if(classe) {
+        document.getElementById('prof-classe').innerText = classe;
+        document.getElementById('cert-classe').innerText = "Élève en classe de " + classe;
+      }
+      if(whatsapp) document.getElementById('prof-whatsapp').innerText = whatsapp;
+      if(pays) document.getElementById('prof-pays').innerText = pays;
+
       switchPage('view-dashboard');
       actualiserMoyennesGlobales();
     }
 
-    /* Ouverture de la page dédiée pour la saisie des trimestres */
+    /* Gestion des Modales (Popups) */
+    function openModal(title, htmlContent) {
+      document.getElementById('modal-title-text').innerHTML = title;
+      document.getElementById('modal-body-content').innerHTML = htmlContent;
+      document.getElementById('modal-container').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-container').classList.remove('active');
+    }
+
+    /* Modale : Matières à revoir */
+    function openModalMatieresAvoir() {
+      const tableRows = document.querySelectorAll('#bulletin tbody tr');
+      let html = "";
+      let count = 0;
+
+      tableRows.forEach(tr => {
+        const noteInput = tr.querySelector('.inp-note');
+        if(noteInput) {
+          const disciplineName = tr.cells[0].innerText;
+          const noteVal = parseFloat(noteInput.value);
+          if(!isNaN(noteVal) && noteVal < 10) {
+            count++;
+            html += `
+              <div class="modal-list-item">
+                <span class="modal-item-name">${disciplineName}</span>
+                <span class="modal-item-note">${noteVal.toFixed(2)} / 20</span>
+              </div>
+            `;
+          }
+        }
+      });
+
+      if(count === 0) {
+        html = `
+          <div class="modal-list-item">
+            <span class="modal-item-name">Mathématiques</span>
+            <span class="modal-item-note">08.50 / 20</span>
+          </div>
+          <div class="modal-list-item">
+            <span class="modal-item-name">Physique - Chimie</span>
+            <span class="modal-item-note">09.00 / 20</span>
+          </div>
+          <p style="font-size:10px; color:#94A3B8; text-align:center; margin-top:8px;">💡 Conseil : Accordez plus de temps aux révisions dans ces matières.</p>
+        `;
+      }
+
+      openModal("📖 Matières à revoir", html);
+    }
+
+    /* Modale : Points forts */
+    function openModalPointsForts() {
+      const tableRows = document.querySelectorAll('#bulletin tbody tr');
+      let html = "";
+      let count = 0;
+
+      tableRows.forEach(tr => {
+        const noteInput = tr.querySelector('.inp-note');
+        if(noteInput) {
+          const disciplineName = tr.cells[0].innerText;
+          const noteVal = parseFloat(noteInput.value);
+          if(!isNaN(noteVal) && noteVal >= 10) {
+            count++;
+            html += `
+              <div class="modal-list-item green-border">
+                <span class="modal-item-name">${disciplineName}</span>
+                <span class="modal-item-note">${noteVal.toFixed(2)} / 20</span>
+              </div>
+            `;
+          }
+        }
+      });
+
+      if(count === 0) {
+        html = `
+          <div class="modal-list-item green-border">
+            <span class="modal-item-name">Français</span>
+            <span class="modal-item-note">16.00 / 20</span>
+          </div>
+          <div class="modal-list-item green-border">
+            <span class="modal-item-name">SVT</span>
+            <span class="modal-item-note">15.50 / 20</span>
+          </div>
+          <div class="modal-list-item green-border">
+            <span class="modal-item-name">Anglais</span>
+            <span class="modal-item-note">14.00 / 20</span>
+          </div>
+          <p style="font-size:10px; color:#94A3B8; text-align:center; margin-top:8px;">🌟 Bravo ! Continuez de maintenir ce cap.</p>
+        `;
+      }
+
+      openModal("⭐ Points forts", html);
+    }
+
+    /* Modale : Objectif */
+    function openModalObjectif() {
+      let html = `
+        <div style="text-align:center; padding: 10px 0;">
+          <div style="font-size:36px; margin-bottom:8px;">🎯</div>
+          <h4 style="font-size:14px; font-weight:800; color:#FFF;">Passer en classe supérieure</h4>
+          <p style="font-size:12px; color:#94A3B8; margin-top:6px; line-height:1.5;">
+            L'objectif fixé est d'obtenir au minimum une moyenne générale supérieure ou égale à <strong>10.00 / 20</strong> pour valider l'année académique.
+          </p>
+        </div>
+      `;
+      openModal("🎯 Objectif Annuel", html);
+    }
+
+    /* Modale : À propos du Créateur (déplacé depuis Profil) */
+    function openModalCreator() {
+      let html = `
+        <div class="creator-card-box" style="padding:10px 0; border:none; background:transparent;">
+          <img src="https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png" class="creator-img" />
+          <h3 style="font-size: 16px; font-weight: 800; color:#FFF;">Niampa Zakaria</h3>
+          <p style="font-size: 11px; color: var(--green-ztv); font-weight: 700;">Créateur de ZTV Excellence</p>
+
+          <div class="creator-info-list">
+            <div>🎓 <strong>Statut :</strong> Élève en classe de 3ᵉ</div>
+            <div>🏫 <strong>Établissement :</strong> Lycée Moderne de Bangolo (CÔTE D'IVOIRE 🇨🇮)</div>
+            <div>🎂 <strong>Âge :</strong> 15 ans</div>
+            <div>🎬 <strong>Activité :</strong> Créateur de contenus sur les phénomènes mystérieux</div>
+            <div>🏷️ <strong>Nom de marque :</strong> ZTV</div>
+            <div>🎵 <strong>Compte TikTok :</strong> zakaria.tv</div>
+          </div>
+
+          <a href="https://wa.me/2250799591024" target="_blank" class="btn-green" style="text-decoration:none; font-size:13px; padding:12px;">💬 ME CONTACTER SUR WHATSAPP</a>
+        </div>
+      `;
+      openModal("ℹ️ Développeur & Créateur", html);
+    }
+
+    /* Page Saisie du Trimestre */
     function openTrimPage(trimNum) {
       activeTrimestre = trimNum;
       document.getElementById('trim-entry-title').innerText = "Saisie des Notes - " + trimNum + (trimNum === 1 ? "er" : "ᵉ") + " Trimestre";
       
-      // Réinitialisation visuelle des inputs
       const rowNotes = document.querySelectorAll('.inp-note');
       rowNotes.forEach(inp => inp.value = "");
       
@@ -863,7 +1144,6 @@
       switchPage('view-trim-entry');
     }
 
-    /* Calcul dynamique sur la page de saisie des trimestres (sans afficher la moyenne) */
     function calculerBulletin() {
       const coefInputs = document.querySelectorAll('.inp-coef');
       const noteInputs = document.querySelectorAll('.inp-note');
@@ -889,7 +1169,6 @@
       document.getElementById('total-points').innerText = totalPts.toFixed(2);
       document.getElementById('total-coefs').innerText = totalCoefs;
 
-      // Calcul interne de la moyenne
       let moyCalc = totalCoefs > 0 ? (totalPts / totalCoefs) : 0;
       trimestresData[activeTrimestre] = { points: totalPts, coefs: totalCoefs, moyenne: moyCalc };
     }
@@ -899,7 +1178,7 @@
       switchPage('view-dashboard');
     }
 
-    /* Recalcul des moyennes pour la page d'accueil (Tableau de bord) */
+    /* Recalcul des moyennes pour le Tableau de bord */
     function actualiserMoyennesGlobales() {
       const t1 = trimestresData[1];
       const t2 = trimestresData[2];
@@ -909,7 +1188,6 @@
       document.getElementById('val-t2').innerText = (t2.moyenne > 0 ? t2.moyenne.toFixed(2).replace('.', ',') : "0,00") + "/20";
       document.getElementById('val-t3').innerText = (t3.moyenne > 0 ? t3.moyenne.toFixed(2).replace('.', ',') : "0,00") + "/20";
 
-      // Formule exacte : Somme des points des 3 trimestres / Somme des coefs des 3 trimestres
       let ptsCumul = t1.points + t2.points + t3.points;
       let coefCumul = t1.coefs + t2.coefs + t3.coefs;
       let moyAnnuelle = coefCumul > 0 ? (ptsCumul / coefCumul) : 0;
