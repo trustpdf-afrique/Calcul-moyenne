@@ -12,29 +12,27 @@
 
   <style>
     :root {
-      /* Palette Thème Sombre d'après la Maquette */
+      /* Palette Thème Sombre & Couleurs Côte d'Ivoire Premium */
       --bg-dark: #070D18;
       --bg-card-dark: #0F172A;
       --bg-input: #131C2E;
       --border-dark: #1E293B;
 
-      /* Couleurs Vives Identiques Maquette */
       --orange-ztv: #FF6B00;
       --orange-dark: #E05D00;
       --green-ztv: #00A651;
       --green-dark: #008741;
       --green-card: #008D4C;
-      --blue-ztv: #1E40AF;
-      
+      --white: #FFFFFF;
+
       --text-white: #FFFFFF;
       --text-gray: #94A3B8;
       --text-dark: #0F172A;
 
-      /* Radius & Shadows */
-      --radius-xl: 20px;
-      --radius-lg: 14px;
+      --radius-xl: 24px;
+      --radius-lg: 16px;
       --radius-md: 10px;
-      --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.45);
       --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -49,80 +47,95 @@
       color: var(--text-white);
     }
 
-    /* CHÂSSIS APPLICATIF MOBILE FIDÈLE A LA MAQUETTE */
+    /* CHÂSSIS APPLICATIF MOBILE */
     .app-frame {
       width: 100%;
-      max-width: 420px;
+      max-width: 430px;
       height: 100vh;
-      max-height: 880px;
+      max-height: 900px;
       background-color: var(--bg-dark);
       position: relative;
       overflow-y: auto;
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      box-shadow: 0 0 60px rgba(0,0,0,0.9);
       border-radius: 0px;
     }
 
-    @media (min-width: 440px) {
+    @media (min-width: 450px) {
       .app-frame {
-        border-radius: 32px;
-        height: 92vh;
+        border-radius: 36px;
+        height: 94vh;
         border: 2px solid #1E293B;
       }
     }
 
-    /* animations transitions */
+    /* ANIMATIONS TRANSITIONS */
     .page-view {
       display: none;
       flex-direction: column;
       width: 100%;
       min-height: 100%;
-      padding-bottom: 80px;
+      padding-bottom: 30px;
       animation: fadeIn 0.3s ease-out forwards;
     }
 
     .page-view.active { display: flex; }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* EN-TÊTE ET LOGO ZTV */
-    .ztv-brand-header {
-      text-align: center;
-      padding: 30px 20px 10px;
-    }
-    .ztv-logo-img {
-      width: 100px;
+    /* LOGO & BRANDING */
+    .ztv-logo-brand {
+      width: 110px;
       height: auto;
-      margin-bottom: 8px;
-    }
-    .ztv-title-text {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: #FFF;
-    }
-    .ztv-sub-text {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--orange-ztv);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 2px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(255,107,0,0.25));
     }
 
-    /* FORMULAIRES & INPUTS */
-    .form-container { padding: 20px 24px; }
+    /* PAGE DE CONNEXION PREMIUM */
+    .login-wrapper {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      background: radial-gradient(circle at top, rgba(255, 107, 0, 0.12) 0%, rgba(7, 13, 24, 0) 70%);
+    }
+
+    .login-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-xl);
+      padding: 30px 24px;
+      width: 100%;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .flag-accent-bar {
+      display: flex;
+      height: 4px;
+      width: 80px;
+      border-radius: 2px;
+      margin: 16px auto;
+      overflow: hidden;
+    }
+    .flag-accent-bar .orange { flex: 1; background: var(--orange-ztv); }
+    .flag-accent-bar .white { flex: 1; background: var(--white); }
+    .flag-accent-bar .green { flex: 1; background: var(--green-ztv); }
+
     .input-box {
       background: var(--bg-input);
-      border: 1px solid var(--border-dark);
+      border: 1.5px solid var(--border-dark);
       border-radius: var(--radius-lg);
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -139,12 +152,11 @@
       color: #FFF;
       font-size: 14px;
       width: 100%;
-      font-weight: 500;
+      font-weight: 600;
     }
     .input-box select option { background: var(--bg-dark); color: #FFF; }
-    .input-icon { font-size: 16px; opacity: 0.6; }
 
-    /* BOUTONS NATIVE STYLE */
+    /* BOUTONS PREMIUM */
     .btn-orange {
       background: linear-gradient(135deg, var(--orange-ztv), var(--orange-dark));
       color: #FFF;
@@ -159,10 +171,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.35);
+      box-shadow: 0 8px 24px rgba(255, 107, 0, 0.4);
       transition: var(--transition);
     }
-    .btn-orange:active { transform: scale(0.98); }
+    .btn-orange:active { transform: scale(0.97); }
 
     .btn-green {
       background: linear-gradient(135deg, var(--green-ztv), var(--green-dark));
@@ -178,80 +190,38 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 6px 20px rgba(0, 166, 81, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 166, 81, 0.35);
       transition: var(--transition);
     }
-    .btn-green:active { transform: scale(0.98); }
+    .btn-green:active { transform: scale(0.97); }
 
-    /* BARRE DE NAVIGATION EN BAS (4 ONGLETS) */
-    .bottom-nav {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 68px;
-      background: #0B132B;
-      border-top: 1px solid #1E293B;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
-      padding: 0 10px;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      color: #64748B;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      width: 25%;
-    }
-    .nav-item.active { color: var(--orange-ztv); }
-    .nav-item span.icon { font-size: 20px; }
-
-    /* HEADER DASHBOARD UTILISATEUR */
+    /* DASHBOARD HEADER */
     .dash-header {
       padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(7, 13, 24, 0) 100%);
     }
     .user-profile-info { display: flex; align-items: center; gap: 12px; }
     .user-avatar-circle {
-      width: 44px; height: 44px;
+      width: 46px; height: 46px;
       border-radius: 50%;
       border: 2px solid var(--orange-ztv);
       object-fit: cover;
     }
-    .header-icons-right { display: flex; gap: 10px; }
-    .icon-btn-dark {
-      width: 38px; height: 38px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-dark);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 16px;
-      position: relative;
-    }
-    .notif-badge {
-      position: absolute; top: 4px; right: 4px;
-      width: 8px; height: 8px; background: #EF4444; border-radius: 50%;
-    }
 
-    /* TRIMESTRES DISPOSITION MAQUETTE (2 EN HAUT, 1 EN BAS CENTRÉ) */
+    /* TRIMESTRES (DASHBOARD) */
     .trimestres-section { padding: 0 16px; margin-bottom: 16px; }
     .trimestres-row-top { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
     .trimestres-row-bottom { display: flex; justify-content: center; }
-    .trimestres-row-bottom .trim-card { width: 55%; }
+    .trimestres-row-bottom .trim-card { width: 60%; }
 
     .trim-card {
       border-radius: var(--radius-lg);
-      padding: 14px;
+      padding: 16px;
       color: #FFF;
       cursor: pointer;
-      position: relative;
       box-shadow: var(--shadow-card);
       transition: var(--transition);
     }
@@ -260,7 +230,7 @@
     .trim-card-2 { background: #FFFFFF; color: var(--text-dark); }
     .trim-card-3 { background: linear-gradient(135deg, #00A651, #00803E); }
 
-    .trim-header-flex { display: flex; justify-content: space-between; align-items: flex-start; }
+    .trim-header-flex { display: flex; justify-content: space-between; align-items: center; }
     .trim-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; }
     .trim-val { font-size: 20px; font-weight: 900; margin-top: 6px; }
     .trim-arrow-circle {
@@ -270,7 +240,7 @@
     }
     .trim-card-2 .trim-arrow-circle { background: rgba(0,0,0,0.08); }
 
-    /* CARTE MOYENNE ANNUELLE MAQUETTE */
+    /* CARTE MOYENNE ANNUELLE */
     .annual-card-ztv {
       background: #FFFFFF;
       border-radius: var(--radius-xl);
@@ -290,7 +260,7 @@
     .annual-stat-lbl { font-size: 10px; color: #64748B; font-weight: 700; text-transform: uppercase; }
     .annual-stat-val { font-size: 18px; font-weight: 900; margin-top: 4px; color: #0F172A; }
 
-    /* CARTE PROGRESSION GÉNÉRALE */
+    /* PROGRESSION GÉNÉRALE */
     .progression-card-ztv {
       background: #FFFFFF;
       border-radius: var(--radius-xl);
@@ -309,23 +279,10 @@
     .prog-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
     .prog-bar-fill { height: 100%; width: 85%; background: var(--green-ztv); border-radius: 4px; }
 
-    /* DUAL ACTION CARDS (MATIÈRES À REVOIR / POINTS FORTS) */
-    .dual-cards-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-      padding: 0 16px; margin-bottom: 16px;
-    }
-    .action-card-orange {
-      background: linear-gradient(135deg, #FF6B00, #E05D00);
-      border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer;
-    }
-    .action-card-green {
-      background: linear-gradient(135deg, #00A651, #00803E);
-      border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer;
-    }
-    .action-card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
-    .action-card-sub { font-size: 10px; opacity: 0.85; margin-top: 4px; font-weight: 500; }
-
-    /* BANNIÈRE OBJECTIF & BOTTOM BUTTONS */
+    /* DOUBLE CARTE ACTIONS & BANNIÈRE */
+    .dual-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-bottom: 16px; }
+    .action-card-orange { background: linear-gradient(135deg, #FF6B00, #E05D00); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; }
+    .action-card-green { background: linear-gradient(135deg, #00A651, #00803E); border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer; }
     .objective-banner {
       background: linear-gradient(135deg, #FF6B00, #D95300);
       border-radius: var(--radius-lg);
@@ -339,68 +296,114 @@
       display: flex; align-items: center; gap: 10px; cursor: pointer;
     }
 
-    /* ÉCRAN DU CRÉATEUR (NIAMPA ZAKARIA) */
-    .creator-card-box {
+    /* ÉCRAN PAGE SAISIE DE BULLETIN DÉDIÉE */
+    .bulletin-container {
+      padding: 16px;
+      background: var(--bg-dark);
+      min-height: 100%;
+    }
+    .bulletin-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .btn-back-link {
       background: var(--bg-card-dark);
       border: 1px solid var(--border-dark);
-      border-radius: var(--radius-xl);
-      padding: 24px 20px;
-      margin: 20px 16px;
-      text-align: center;
-    }
-    .creator-img {
-      width: 90px; height: 90px; border-radius: 50%;
-      border: 3px solid var(--orange-ztv); margin-bottom: 12px; object-fit: cover;
-    }
-    .creator-info-list {
-      text-align: left; font-size: 12px; line-height: 2;
-      background: #09101D; padding: 14px; border-radius: var(--radius-md); margin: 16px 0;
+      color: #FFF;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* CERTIFICAT DU TABLEAU D'HONNEUR PARCHEMIN ET OR */
-    .certificate-frame {
-      background: #FFFDF5;
-      border: 6px double #D97706;
-      border-radius: 16px;
-      padding: 24px 16px;
-      margin: 16px;
-      color: #334155;
+    /* TABLEAU DES NOTES STYLE PREMIUM */
+    .bulletin-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-card-dark);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      margin-bottom: 20px;
+    }
+    .bulletin-table th {
+      background: #131D31;
+      color: var(--orange-ztv);
+      padding: 12px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-dark);
       text-align: center;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .cert-badge-top { font-size: 32px; margin-bottom: 4px; }
-    .cert-main-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; font-weight: 900; color: #78350F; text-transform: uppercase;
+    .bulletin-table th:first-child { text-align: left; padding-left: 12px; }
+    .bulletin-table td {
+      padding: 10px 8px;
+      font-size: 12px;
+      border-bottom: 1px solid #1A263D;
+      text-align: center;
+      color: #FFF;
     }
-    .cert-student-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 900; color: var(--green-ztv); margin: 10px 0;
-      border-bottom: 2px solid #FDE68A; display: inline-block; padding: 0 12px;
-    }
-    .cert-seal-gold {
-      width: 60px; height: 60px; border-radius: 50%; border: 2px dashed #D97706;
-      display: flex; align-items: center; justify-content: center; margin: 14px auto 0;
-      font-size: 24px; color: #D97706;
+    .bulletin-table td:first-child { text-align: left; padding-left: 12px; font-weight: 600; }
+    
+    .section-title-row td {
+      background: #09101D;
+      color: var(--green-ztv);
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center !important;
+      padding: 8px !important;
     }
 
-    /* MODALE DE SAISIE ET TABLES */
-    .modal-overlay {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
-      z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
+    .inp-coef {
+      width: 42px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-dark);
+      color: #FFF;
+      text-align: center;
+      border-radius: 6px;
+      padding: 6px;
+      font-weight: 700;
+      font-size: 12px;
     }
-    .modal-body-dark {
-      background: var(--bg-card-dark); border: 1px solid var(--border-dark);
-      border-radius: var(--radius-xl); width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px;
+
+    .inp-note {
+      width: 58px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--orange-ztv);
+      color: #FFF;
+      text-align: center;
+      border-radius: 8px;
+      padding: 6px;
+      font-weight: 800;
+      font-size: 13px;
     }
-    .grade-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    .grade-table th, .grade-table td { padding: 10px 6px; font-size: 12px; border-bottom: 1px solid var(--border-dark); text-align: center; }
-    .grade-table th:first-child, .grade-table td:first-child { text-align: left; }
-    .table-input {
-      width: 50px; background: var(--bg-input); border: 1px solid var(--border-dark);
-      color: #FFF; text-align: center; border-radius: 6px; padding: 6px; font-weight: 700;
+    .inp-note:focus { outline: none; background: #1B2842; }
+
+    .tot-cell { font-weight: 800; color: #38BDF8; }
+
+    .summary-row td {
+      background: #131D31;
+      font-weight: 800;
+      color: var(--orange-ztv);
+      font-size: 13px;
+      border-top: 2px solid var(--border-dark);
     }
+
+    /* CERTIFICAT & CRÉATEUR */
+    .creator-card-box { background: var(--bg-card-dark); border: 1px solid var(--border-dark); border-radius: var(--radius-xl); padding: 24px 20px; margin: 20px 16px; text-align: center; }
+    .creator-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--orange-ztv); margin-bottom: 12px; object-fit: cover; }
+    .creator-info-list { text-align: left; font-size: 12px; line-height: 2; background: #09101D; padding: 14px; border-radius: var(--radius-md); margin: 16px 0; }
+    .certificate-frame { background: #FFFDF5; border: 6px double #D97706; border-radius: 16px; padding: 24px 16px; margin: 16px; color: #334155; text-align: center; position: relative; }
   </style>
 </head>
 <body>
@@ -408,69 +411,71 @@
   <!-- CHÂSSIS APPLICATION -->
   <div class="app-frame">
 
-    <!-- ================= 1. PAGE DE CONNEXION ================= -->
+    <!-- ================= 1. PAGE DE CONNEXION PREMIUM ================= -->
     <div id="view-login" class="page-view active">
-      <div class="ztv-brand-header" style="margin-top: 40px;">
-        <div style="font-size: 42px;">🎓</div>
-        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
-        <div class="ztv-sub-text">Côte d'Ivoire 🇨🇮</div>
-      </div>
+      <div class="login-wrapper">
+        <div class="login-card">
+          <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" alt="ZTV Logo" class="ztv-logo-brand" />
+          
+          <div style="font-size: 18px; font-weight: 800; margin-top: 10px;">ZTV EXCELLENCE</div>
+          <div style="font-size: 10px; font-weight: 700; color: var(--orange-ztv); text-transform: uppercase; letter-spacing: 1px;">Côte d'Ivoire 🇨🇮</div>
 
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h2 style="font-size: 18px; font-weight: 800;">Bienvenue !</h2>
-        <p style="font-size: 12px; color: var(--text-gray);">Connectez-vous pour continuer</p>
-      </div>
+          <div class="flag-accent-bar">
+            <div class="orange"></div><div class="white"></div><div class="green"></div>
+          </div>
 
-      <div class="form-container">
-        <div class="input-box">
-          <span class="input-icon">👤</span>
-          <input type="text" id="login-fullname" placeholder="Nom complet" />
+          <p style="font-size: 12px; color: var(--text-gray); margin-bottom: 20px;">Connectez-vous à votre espace scolaire</p>
+
+          <div class="input-box">
+            <span style="opacity:0.7;">👤</span>
+            <input type="text" id="login-fullname" placeholder="Nom complet" />
+          </div>
+
+          <div class="input-box">
+            <span style="opacity:0.7;">🔒</span>
+            <input type="password" id="login-pass" maxlength="10" placeholder="Mot de passe" />
+            <span style="cursor:pointer; opacity:0.7;" onclick="togglePassVisibility('login-pass')">👁️</span>
+          </div>
+
+          <div style="text-align: right; margin-bottom: 20px;">
+            <a href="#" style="color: var(--orange-ztv); font-size: 11px; font-weight: 700; text-decoration: none;" onclick="alert('Veuillez contacter votre établissement.')">Mot de passe oublié ?</a>
+          </div>
+
+          <button class="btn-orange" onclick="actionLogin()">SE CONNECTER ➔</button>
+
+          <div style="display:flex; align-items:center; margin: 20px 0; color: var(--text-gray); font-size: 11px;">
+            <div style="flex:1; height:1px; background:var(--border-dark);"></div>
+            <span style="padding: 0 10px; font-weight: 700;">OU</span>
+            <div style="flex:1; height:1px; background:var(--border-dark);"></div>
+          </div>
+
+          <button class="btn-green" onclick="switchPage('view-register')">➕ CRÉER UN COMPTE</button>
         </div>
-        <div class="input-box">
-          <span class="input-icon">🔒</span>
-          <input type="password" id="login-pass" maxlength="4" placeholder="Mot de passe (4 chiffres)" />
-          <span class="input-icon" style="cursor:pointer;" onclick="togglePassVisibility('login-pass')">👁️</span>
+
+        <div style="margin-top: 24px; text-align: center; font-size: 10px; color: var(--text-gray);">
+          🔒 Saisie sécurisée des bulletins scolaires
         </div>
-
-        <div style="text-align: right; margin-bottom: 20px;">
-          <a href="#" style="color: var(--orange-ztv); font-size: 11px; font-weight: 700; text-decoration: none;" onclick="showForgotModal()">Mot de passe oublié ?</a>
-        </div>
-
-        <button class="btn-orange" onclick="actionLogin()">SE CONNECTER ➔</button>
-
-        <div style="display:flex; align-items:center; margin: 24px 0; color: var(--text-gray); font-size: 12px;">
-          <div style="flex:1; height:1px; background:var(--border-dark);"></div>
-          <span style="padding: 0 10px; font-weight: 700;">OU</span>
-          <div style="flex:1; height:1px; background:var(--border-dark);"></div>
-        </div>
-
-        <button class="btn-green" onclick="switchPage('view-register')">➕ CRÉER UN COMPTE</button>
-      </div>
-
-      <div style="margin-top: auto; text-align: center; padding: 20px; font-size: 10px; color: var(--text-gray);">
-        🔒 Vos données sont sécurisées
       </div>
     </div>
 
     <!-- ================= 2. PAGE CRÉER UN COMPTE ================= -->
     <div id="view-register" class="page-view">
       <div style="padding: 16px;">
-        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-login')">⬅️</button>
+        <button class="btn-back-link" onclick="switchPage('view-login')">⬅️ Retour</button>
       </div>
 
-      <div class="ztv-brand-header" style="padding-top:0;">
-        <div style="font-size: 36px;">🎓</div>
-        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
-        <div class="ztv-sub-text">Créer un compte</div>
+      <div style="text-align:center; padding: 10px 20px;">
+        <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" alt="ZTV Logo" class="ztv-logo-brand" style="width:80px;" />
+        <h2 style="font-size: 18px; font-weight: 800; margin-top: 8px;">Créer un compte</h2>
       </div>
 
-      <div class="form-container">
-        <div class="input-box"><span class="input-icon">👤</span><input type="text" id="reg-nom" placeholder="Nom" /></div>
-        <div class="input-box"><span class="input-icon">👤</span><input type="text" id="reg-prenom" placeholder="Prénom" /></div>
-        <div class="input-box"><span class="input-icon">📍</span><input type="text" id="reg-ville" placeholder="Ville" /></div>
-        <div class="input-box"><span class="input-icon">💬</span><input type="tel" id="reg-whatsapp" placeholder="Numéro WhatsApp" /></div>
+      <div style="padding: 20px 24px;">
+        <div class="input-box"><span>👤</span><input type="text" id="reg-nom" placeholder="Nom" /></div>
+        <div class="input-box"><span>👤</span><input type="text" id="reg-prenom" placeholder="Prénom" /></div>
+        <div class="input-box"><span>📍</span><input type="text" id="reg-ville" placeholder="Ville" /></div>
+        <div class="input-box"><span>💬</span><input type="tel" id="reg-whatsapp" placeholder="Numéro WhatsApp" /></div>
         <div class="input-box">
-          <span class="input-icon">🌍</span>
+          <span>🌍</span>
           <select id="reg-pays">
             <option value="Côte d'Ivoire">Côte d'Ivoire 🇨🇮</option>
             <option value="Bénin">Bénin 🇧🇯</option>
@@ -478,16 +483,15 @@
             <option value="Sénégal">Sénégal 🇸🇳</option>
           </select>
         </div>
-        <div class="input-box"><span class="input-icon">🔒</span><input type="password" id="reg-pass" maxlength="4" placeholder="Mot de passe (4 chiffres)" /></div>
+        <div class="input-box"><span>🔒</span><input type="password" id="reg-pass" maxlength="4" placeholder="Mot de passe (4 chiffres)" /></div>
 
         <button class="btn-green" style="margin-top: 10px;" onclick="actionRegister()">TERMINER ✅</button>
-        <p style="font-size: 10px; color: var(--text-gray); text-align: center; margin-top: 12px;">Le mot de passe doit contenir 4 chiffres uniquement</p>
       </div>
     </div>
 
     <!-- ================= 3. TABLEAU DE BORD (ACCUEIL) ================= -->
     <div id="view-dashboard" class="page-view">
-      <!-- En-tête Utilisateur -->
+      <!-- En-tête avec Logo Officiel -->
       <div class="dash-header">
         <div class="user-profile-info">
           <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-avatar-circle" id="dash-avatar-img" />
@@ -496,16 +500,13 @@
             <div style="font-size: 15px; font-weight: 800;" id="dash-user-name">Niampa Zakaria 👋</div>
           </div>
         </div>
-        <div class="header-icons-right">
-          <div class="icon-btn-dark">🔔<div class="notif-badge"></div></div>
-          <div class="icon-btn-dark" onclick="switchPage('view-creator')">☰</div>
-        </div>
+        <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" alt="ZTV Logo" style="height: 40px; width: auto;" />
       </div>
 
-      <!-- Les 3 Cartes Trimestres (Layout Maquette) -->
+      <!-- Les 3 Cartes Trimestres -->
       <div class="trimestres-section">
         <div class="trimestres-row-top">
-          <div class="trim-card trim-card-1" onclick="openTrimModal(1)">
+          <div class="trim-card trim-card-1" onclick="openTrimPage(1)">
             <div class="trim-header-flex">
               <div class="trim-title">1er Trimestre</div>
               <div class="trim-arrow-circle">➔</div>
@@ -514,7 +515,7 @@
             <div class="trim-val" id="val-t1">16,19/20</div>
           </div>
 
-          <div class="trim-card trim-card-2" onclick="openTrimModal(2)">
+          <div class="trim-card trim-card-2" onclick="openTrimPage(2)">
             <div class="trim-header-flex">
               <div class="trim-title">2ᵉ Trimestre</div>
               <div class="trim-arrow-circle">➔</div>
@@ -525,7 +526,7 @@
         </div>
 
         <div class="trimestres-row-bottom">
-          <div class="trim-card trim-card-3" onclick="openTrimModal(3)">
+          <div class="trim-card trim-card-3" onclick="openTrimPage(3)">
             <div class="trim-header-flex">
               <div class="trim-title">3ᵉ Trimestre</div>
               <div class="trim-arrow-circle">➔</div>
@@ -550,7 +551,7 @@
           </div>
           <div>
             <div class="annual-stat-lbl">Décision</div>
-            <div class="annual-stat-val" style="color:var(--green-ztv); font-size:14px; margin-top:6px;">ADMIS(E) ✅</div>
+            <div class="annual-stat-val" style="color:var(--green-ztv); font-size:13px; margin-top:6px;">ADMIS(E) ✅</div>
           </div>
         </div>
       </div>
@@ -568,25 +569,25 @@
       <!-- Double Cartes Actions -->
       <div class="dual-cards-grid">
         <div class="action-card-orange" onclick="alert('Matières à renforcer: Mathématiques, Physique')">
-          <div class="action-card-title">📖 Matières à revoir</div>
-          <div class="action-card-sub">Consulter les matières nécessitant plus d'efforts</div>
+          <div style="font-size:11px; font-weight:800; text-transform:uppercase;">📖 Matières à revoir</div>
+          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter les matières nécessitant plus d'efforts</div>
         </div>
         <div class="action-card-green" onclick="alert('Points forts: Français, SVT, Anglais')">
-          <div class="action-card-title">⭐ Points forts</div>
-          <div class="action-card-sub">Consulter vos matières et compétences solides</div>
+          <div style="font-size:11px; font-weight:800; text-transform:uppercase;">⭐ Points forts</div>
+          <div style="font-size:9px; opacity:0.85; margin-top:4px;">Consulter vos matières et compétences solides</div>
         </div>
       </div>
 
       <!-- Bannière Objectif -->
       <div class="objective-banner" onclick="alert('Objectif : Obtenir au moins 10.00/20 pour passer en classe supérieure.')">
         <div>
-          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase;">🎯 Objectif : Passer en classe supérieure</div>
-          <div style="font-size: 10px; opacity: 0.9;">Voir les détails et conseils personnalisés</div>
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase;">🎯 Objectif : Passer en classe supérieure</div>
+          <div style="font-size: 9px; opacity: 0.9;">Voir les détails et conseils personnalisés</div>
         </div>
         <div style="font-size:14px;">➔</div>
       </div>
 
-      <!-- Bottom Dual Buttons -->
+      <!-- Actions Bottom -->
       <div class="bottom-dual-btns">
         <div class="btn-card-dark" onclick="switchPage('view-certif')">
           <span style="font-size: 18px;">🏆</span>
@@ -599,20 +600,160 @@
           <span style="font-size: 18px;">👤</span>
           <div>
             <div style="font-size:11px; font-weight:800;">Mon Profil</div>
-            <div style="font-size:9px; color:var(--text-gray);">Gérer mon compte</div>
+            <div style="font-size:9px; color:var(--text-gray);">Gérer mon profil</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ================= 4. ÉCRAN DU CRÉATEUR ================= -->
+    <!-- ================= 4. PAGE DÉDIÉE DE SAISIE DU TRIMESTRE ================= -->
+    <div id="view-trim-entry" class="page-view">
+      <div class="bulletin-container">
+        <div class="bulletin-header-top">
+          <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour au tableau de bord</button>
+          <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" style="height:32px;" />
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <h2 style="font-size:16px; font-weight:800;" id="trim-entry-title">Saisie des Notes - 1er Trimestre</h2>
+          <p style="font-size:11px; color:var(--text-gray);">Renseignez ou modifiez vos coefficients et vos notes par discipline.</p>
+        </div>
+
+        <table class="bulletin-table" id="bulletin">
+          <thead>
+            <tr>
+              <th>Discipline</th>
+              <th>Coef.</th>
+              <th>Note</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LETTRES -->
+            <tr class="section-title-row"><td colspan="4">--- LETTRES ---</td></tr>
+            <tr>
+              <td>Français</td>
+              <td><input type="number" class="inp-coef" value="3" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Anglais</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Espagnol</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Allemand</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Histoire - Géographie</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+
+            <!-- SCIENCES -->
+            <tr class="section-title-row"><td colspan="4">--- SCIENCES ---</td></tr>
+            <tr>
+              <td>Mathématiques</td>
+              <td><input type="number" class="inp-coef" value="3" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Physique - Chimie</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>SVT</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+
+            <!-- AUTRES MATIÈRES -->
+            <tr class="section-title-row"><td colspan="4">--- AUTRES MATIÈRES ---</td></tr>
+            <tr>
+              <td>Philosophie</td>
+              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>EDHC</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>EPS</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Arts plastiques</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Musique</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>TICE à l'école</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Conduite</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+            <tr>
+              <td>Entrepreneuriat</td>
+              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
+              <td><input type="number" min="0" max="20" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td class="tot-cell">-</td>
+            </tr>
+
+            <!-- LIGNE DE TOTAL SANS LA MOYENNE GÉNÉRALE -->
+            <tr class="summary-row">
+              <td colspan="2">Total Général</td>
+              <td id="total-coefs">0</td>
+              <td id="total-points">0.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn-orange" onclick="enregistrerPageTrimestre()">💾 ENREGISTRER ET REVENIR</button>
+      </div>
+    </div>
+
+    <!-- ================= 5. ÉCRAN DU CRÉATEUR ================= -->
     <div id="view-creator" class="page-view">
       <div style="padding:16px;">
-        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-dashboard')">⬅️</button>
+        <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
       </div>
-      <div class="ztv-brand-header" style="padding-top:0;">
-        <div style="font-size:28px;">🎓</div>
-        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
+      <div style="text-align:center;">
+        <img src="https://i.postimg.cc/fy9QP68q/file-00000000dd5081f48d39ca7eb9ecf91d.png" style="height:50px;" />
       </div>
 
       <div class="creator-card-box">
@@ -633,18 +774,18 @@
       </div>
     </div>
 
-    <!-- ================= 5. CERTIFICAT TABLEAU D'HONNEUR ================= -->
+    <!-- ================= 6. CERTIFICAT TABLEAU D'HONNEUR ================= -->
     <div id="view-certif" class="page-view">
       <div style="padding:16px;">
-        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-dashboard')">⬅️</button>
+        <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
       </div>
 
       <div class="certificate-frame">
-        <div class="cert-badge-top">🏆</div>
-        <div class="cert-main-title">Tableau d'Honneur</div>
+        <div style="font-size: 32px;">🏆</div>
+        <div style="font-family:'Playfair Display', serif; font-size: 22px; font-weight: 900; color: #78350F; text-transform: uppercase;">Tableau d'Honneur</div>
         <p style="font-size:11px; color:#D97706; font-weight:700; margin-top:2px;">FÉLICITATIONS À</p>
 
-        <div class="cert-student-name" id="cert-fullname">Niampa Zakaria</div>
+        <div style="font-family:'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--green-ztv); margin: 10px 0;" id="cert-fullname">Niampa Zakaria</div>
         <p style="font-size:12px; font-weight:700;">Élève en classe de 3ᵉ</p>
         <p style="font-size:11px; color:#64748B;">Lycée Moderne de Bangolo</p>
 
@@ -657,89 +798,29 @@
         </div>
 
         <p style="font-size:10px; color:#475569; line-height:1.4; padding:0 10px;">
-          Grâce à ton sérieux, ta persévérance et ton travail régulier, tu mérites pleinement ta place dans le TABLEAU D'HONNEUR.
+          Grâce à ton sérieux, ta persévérance et ton travail régulier, tu mérites pleinement ta place au TABLEAU D'HONNEUR.
         </p>
 
-        <div class="cert-seal-gold">🎖️</div>
-        <div style="font-size:9px; font-weight:800; color:#92400E; margin-top:8px;">ZTV EXCELLENCE SCOLAIRE</div>
-      </div>
-    </div>
-
-    <!-- ================= MODALE SAISIE DE NOTES ================= -->
-    <div class="modal-overlay" id="trim-modal">
-      <div class="modal-body-dark">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <h3 id="modal-trim-title" style="font-size:16px; font-weight:800;">Saisie 1er Trimestre</h3>
-          <button style="background:none; border:none; color:#FFF; font-size:18px; cursor:pointer;" onclick="closeTrimModal()">✕</button>
-        </div>
-
-        <table class="grade-table">
-          <thead>
-            <tr>
-              <th>Matière</th>
-              <th>Coef</th>
-              <th>Note/20</th>
-            </tr>
-          </thead>
-          <tbody id="modal-table-body">
-            <!-- Injecté par JS -->
-          </tbody>
-        </table>
-
-        <button class="btn-orange" style="margin-top:20px;" onclick="saveTrimNotes()">ENREGISTRER LES NOTES</button>
-      </div>
-    </div>
-
-    <!-- BARRE DE NAVIGATION EN BAS (4 ONGLETS NATIVE) -->
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchPage('view-dashboard')">
-        <span class="icon">🏠</span>
-        <span>Accueil</span>
-      </div>
-      <div class="nav-item" onclick="alert('Rubrique Concours bientôt disponible !')">
-        <span class="icon">🏆</span>
-        <span>Concours</span>
-      </div>
-      <div class="nav-item" onclick="alert('Classements généraux en cours d\'actualisation.')">
-        <span class="icon">📊</span>
-        <span>Classements</span>
-      </div>
-      <div class="nav-item" onclick="switchPage('view-creator')">
-        <span class="icon">👤</span>
-        <span>Profil</span>
+        <div style="width: 50px; height: 50px; border-radius: 50%; border: 2px dashed #D97706; display: flex; align-items: center; justify-content: center; margin: 12px auto 0; font-size: 20px;">🎖️</div>
+        <div style="font-size:9px; font-weight:800; color:#92400E; margin-top:6px;">ZTV EXCELLENCE SCOLAIRE</div>
       </div>
     </div>
 
   </div>
 
   <script>
-    // Données par défaut conforme à la maquette
-    let currentTrim = 1;
-    let studentData = {
-      fullname: "Niampa Zakaria",
-      pass: "1234",
-      trimestres: {
-        1: { points: 161.9, coefs: 10, moyenne: 16.19 },
-        2: { points: 161.5, coefs: 10, moyenne: 16.15 },
-        3: { points: 166.3, coefs: 10, moyenne: 16.63 }
-      }
-    };
+    let activeTrimestre = 1;
 
-    const matieresDefaut = [
-      { name: "Français", coef: 3, note: 16 },
-      { name: "Anglais", coef: 2, note: 15 },
-      { name: "Mathématiques", coef: 3, note: 17 },
-      { name: "Physique-Chimie", coef: 2, note: 16 }
-    ];
+    // Structure de stockage de chaque trimestre
+    let trimestresData = {
+      1: { points: 161.9, coefs: 10, moyenne: 16.19 },
+      2: { points: 161.5, coefs: 10, moyenne: 16.15 },
+      3: { points: 166.3, coefs: 10, moyenne: 16.63 }
+    };
 
     function switchPage(pageId) {
       document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
-
-      // Update Nav
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      if(pageId === 'view-dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
-      if(pageId === 'view-creator') document.querySelectorAll('.nav-item')[3].classList.add('active');
     }
 
     function togglePassVisibility(inputId) {
@@ -749,86 +830,89 @@
 
     function actionLogin() {
       const name = document.getElementById('login-fullname').value.trim();
-      const pass = document.getElementById('login-pass').value.trim();
-
       if(name !== "") {
-        studentData.fullname = name;
         document.getElementById('dash-user-name').innerText = name + " 👋";
         document.getElementById('cert-fullname').innerText = name;
       }
       switchPage('view-dashboard');
-      recalculerMoyennes();
+      actualiserMoyennesGlobales();
     }
 
     function actionRegister() {
       const nom = document.getElementById('reg-nom').value.trim();
       const prenom = document.getElementById('reg-prenom').value.trim();
       if(nom && prenom) {
-        studentData.fullname = nom + " " + prenom;
-        document.getElementById('dash-user-name').innerText = studentData.fullname + " 👋";
-        document.getElementById('cert-fullname').innerText = studentData.fullname;
+        let full = nom + " " + prenom;
+        document.getElementById('dash-user-name').innerText = full + " 👋";
+        document.getElementById('cert-fullname').innerText = full;
       }
       switchPage('view-dashboard');
-      recalculerMoyennes();
+      actualiserMoyennesGlobales();
     }
 
-    function openTrimModal(trimNum) {
-      currentTrim = trimNum;
-      document.getElementById('modal-trim-title').innerText = "Saisie Notes - " + trimNum + "er Trimestre";
+    /* Ouverture de la page dédiée pour la saisie des trimestres */
+    function openTrimPage(trimNum) {
+      activeTrimestre = trimNum;
+      document.getElementById('trim-entry-title').innerText = "Saisie des Notes - " + trimNum + (trimNum === 1 ? "er" : "ᵉ") + " Trimestre";
       
-      const tbody = document.getElementById('modal-table-body');
-      tbody.innerHTML = "";
+      // Réinitialisation visuelle des inputs
+      const rowNotes = document.querySelectorAll('.inp-note');
+      rowNotes.forEach(inp => inp.value = "");
       
-      matieresDefaut.forEach((m, idx) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${m.name}</td>
-            <td><input type="number" class="table-input" value="${m.coef}" readonly /></td>
-            <td><input type="number" class="table-input val-note" value="${m.note}" min="0" max="20" /></td>
-          </tr>
-        `;
-      });
-
-      document.getElementById('trim-modal').style.display = 'flex';
+      calculerBulletin();
+      switchPage('view-trim-entry');
     }
 
-    function closeTrimModal() {
-      document.getElementById('trim-modal').style.display = 'none';
-    }
+    /* Calcul dynamique sur la page de saisie des trimestres (sans afficher la moyenne) */
+    function calculerBulletin() {
+      const coefInputs = document.querySelectorAll('.inp-coef');
+      const noteInputs = document.querySelectorAll('.inp-note');
+      const totCells = document.querySelectorAll('.tot-cell');
 
-    function saveTrimNotes() {
-      const inputs = document.querySelectorAll('.val-note');
       let totalPts = 0;
-      let totalCoef = 0;
+      let totalCoefs = 0;
 
-      inputs.forEach((input, i) => {
-        let val = parseFloat(input.value) || 0;
-        let coef = matieresDefaut[i].coef;
-        totalPts += val * coef;
-        totalCoef += coef;
+      noteInputs.forEach((input, index) => {
+        const coef = parseFloat(coefInputs[index].value) || 0;
+        const note = parseFloat(input.value);
+
+        if (!isNaN(note) && note >= 0 && note <= 20) {
+          const val = note * coef;
+          totCells[index].innerText = val.toFixed(2);
+          totalPts += val;
+          totalCoefs += coef;
+        } else {
+          totCells[index].innerText = "-";
+        }
       });
 
-      let moy = totalCoef > 0 ? (totalPts / totalCoef) : 0;
-      studentData.trimestres[currentTrim] = { points: totalPts, coefs: totalCoef, moyenne: moy };
+      document.getElementById('total-points').innerText = totalPts.toFixed(2);
+      document.getElementById('total-coefs').innerText = totalCoefs;
 
-      closeTrimModal();
-      recalculerMoyennes();
+      // Calcul interne de la moyenne
+      let moyCalc = totalCoefs > 0 ? (totalPts / totalCoefs) : 0;
+      trimestresData[activeTrimestre] = { points: totalPts, coefs: totalCoefs, moyenne: moyCalc };
     }
 
-    // FORMULE OFFICIELLE DE CÔTE D'IVOIRE
-    function recalculerMoyennes() {
-      const t1 = studentData.trimestres[1];
-      const t2 = studentData.trimestres[2];
-      const t3 = studentData.trimestres[3];
+    function enregistrerPageTrimestre() {
+      actualiserMoyennesGlobales();
+      switchPage('view-dashboard');
+    }
 
-      document.getElementById('val-t1').innerText = t1.moyenne.toFixed(2).replace('.', ',') + "/20";
-      document.getElementById('val-t2').innerText = t2.moyenne.toFixed(2).replace('.', ',') + "/20";
-      document.getElementById('val-t3').innerText = t3.moyenne.toFixed(2).replace('.', ',') + "/20";
+    /* Recalcul des moyennes pour la page d'accueil (Tableau de bord) */
+    function actualiserMoyennesGlobales() {
+      const t1 = trimestresData[1];
+      const t2 = trimestresData[2];
+      const t3 = trimestresData[3];
 
-      // Calcul Officiel Annuel = Somme des points des 3 trimestres / Somme des coefficients
-      let totalPoints3T = t1.points + t2.points + t3.points;
-      let totalCoefs3T = t1.coefs + t2.coefs + t3.coefs;
-      let moyAnnuelle = totalCoefs3T > 0 ? (totalPoints3T / totalCoefs3T) : 0;
+      document.getElementById('val-t1').innerText = (t1.moyenne > 0 ? t1.moyenne.toFixed(2).replace('.', ',') : "0,00") + "/20";
+      document.getElementById('val-t2').innerText = (t2.moyenne > 0 ? t2.moyenne.toFixed(2).replace('.', ',') : "0,00") + "/20";
+      document.getElementById('val-t3').innerText = (t3.moyenne > 0 ? t3.moyenne.toFixed(2).replace('.', ',') : "0,00") + "/20";
+
+      // Formule exacte : Somme des points des 3 trimestres / Somme des coefs des 3 trimestres
+      let ptsCumul = t1.points + t2.points + t3.points;
+      let coefCumul = t1.coefs + t2.coefs + t3.coefs;
+      let moyAnnuelle = coefCumul > 0 ? (ptsCumul / coefCumul) : 0;
 
       document.getElementById('val-annual').innerText = moyAnnuelle.toFixed(2).replace('.', ',') + "/20";
       document.getElementById('cert-annual-val').innerText = moyAnnuelle.toFixed(2).replace('.', ',') + " / 20";
@@ -836,10 +920,6 @@
       let pct = Math.min(100, Math.round((moyAnnuelle / 20) * 100));
       document.getElementById('circle-pct').innerText = pct + "%";
       document.getElementById('bar-fill').style.width = pct + "%";
-    }
-
-    function showForgotModal() {
-      alert("Veuillez contacter l'assistance WhatsApp pour récupérer votre accès.");
     }
   </script>
 </body>
