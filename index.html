@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -27,8 +27,8 @@
       --ci-blue-soft: rgba(37, 99, 235, 0.08);
       --ci-blue-border: rgba(37, 99, 235, 0.25);
       
-      --ci-red: #EF4444;
-      --ci-red-soft: rgba(239, 68, 68, 0.08);
+      --ci-gold: #D97706;
+      --ci-gold-light: #FEF3C7;
 
       --slate-900: #0F172A;
       --slate-800: #1E293B;
@@ -88,7 +88,7 @@
       z-index: 20;
     }
 
-    /* --- 🔑 SECTIONS AUTHENTIFICATION & COMPTES --- */
+    /* AUTHENTIFICATION & COMPTES */
     .auth-section { padding: 48px 24px; text-align: center; }
     .auth-wrapper { max-width: 420px; margin: 0 auto; }
     .brand-icon {
@@ -116,6 +116,7 @@
       color: white; font-weight: 700; border: none; border-radius: var(--radius-lg);
       cursor: pointer; font-size: 15px; transition: var(--transition); margin-top: 10px;
       box-shadow: 0 6px 18px rgba(255, 130, 0, 0.28);
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 130, 0, 0.35); }
     .btn-primary:active { transform: translateY(0); }
@@ -126,7 +127,7 @@
     .error-msg { color: #E11D48; margin-top: 12px; font-size: 13px; font-weight: 700; }
     .success-box { background: var(--ci-green-soft); border: 1.5px solid var(--ci-green-border); border-radius: var(--radius-lg); padding: 18px; margin-top: 16px; text-align: left; }
 
-    /* --- 1. EN-TÊTE PREMIUM --- */
+    /* EN-TÊTE PREMIUM */
     .app-header {
       display: flex;
       justify-content: space-between;
@@ -161,7 +162,7 @@
       justify-content: center; font-size: 11px; font-weight: 800;
     }
 
-    /* --- DASHBOARD LAYOUT & ESPACEMENT --- */
+    /* DASHBOARD LAYOUT */
     .dashboard-container {
       padding: 32px;
       display: flex;
@@ -169,7 +170,43 @@
       gap: 24px;
     }
 
-    /* 2. DISPOSITION PARFAITE DES TRIMESTRES */
+    /* BOUTON D'HONNEUR BANNIÈRE PREMIUM */
+    .honor-banner-card {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #F59E0B;
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.2);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .honor-banner-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -5px rgba(245, 158, 11, 0.3);
+      border-color: #D97706;
+    }
+    .honor-banner-card::before {
+      content: ""; position: absolute; top:-50%; left:-50%; width:200%; height:200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: rotate(45deg); transition: 0.8s;
+    }
+    .honor-banner-card:hover::before { left: 100%; }
+
+    .honor-btn-content { display: flex; align-items: center; gap: 16px; z-index: 2; }
+    .honor-icon-wrapper {
+      width: 52px; height: 52px; background: #D97706; color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 26px; box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
+    }
+    .honor-title { font-size: 18px; font-weight: 800; color: #78350F; }
+    .honor-sub { font-size: 13px; color: #92400E; font-weight: 600; }
+
+    /* TRIMESTRES GRID */
     .trimestres-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -192,9 +229,11 @@
       .app-header { padding: 16px 20px; }
       .trimestres-grid { grid-template-columns: 1fr; gap: 16px; }
       .trimestres-centered-row .premium-card { width: 100%; }
+      .honor-banner-card { flex-direction: column; text-align: center; gap: 14px; }
+      .honor-btn-content { flex-direction: column; }
     }
 
-    /* --- CARTES PREMIUM --- */
+    /* CARTES PREMIUM */
     .premium-card {
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
@@ -238,7 +277,7 @@
     .card-val { font-size: 30px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.8px; line-height: 1.1; }
     .card-sub { font-size: 13px; color: var(--slate-600); font-weight: 600; margin-top: 4px; }
 
-    /* 4. PROGRESSION GÉNÉRALE */
+    /* PROGRESSION GÉNÉRALE */
     .progress-wrapper {
       display: flex; align-items: center; gap: 28px;
     }
@@ -259,7 +298,7 @@
     .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; margin: 10px 0; }
     .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 1s ease, background-color 0.4s ease; }
 
-    /* 5. CARTES D'ANALYSE */
+    /* CARTES D'ANALYSE */
     .analysis-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -269,7 +308,7 @@
       .analysis-grid { grid-template-columns: 1fr; }
     }
 
-    /* 6. OBJECTIF PASSAGE */
+    /* OBJECTIF PASSAGE */
     .objective-card {
       background: #FFFFFF;
       border: 1.5px solid rgba(0, 154, 68, 0.3);
@@ -291,9 +330,9 @@
       font-weight: 800; font-size: 12px;
     }
 
-    /* --- FENÊTRE MODALE & PROFIL --- */
+    /* MODALES & PROFIL */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(6px);
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(6px);
       z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .modal-card {
@@ -316,7 +355,7 @@
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    /* --- PAGE DE SAISIE PAR TRIMESTRE --- */
+    /* PAGE DE SAISIE PAR TRIMESTRE */
     #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
     .trim-header {
       padding: 20px 32px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
@@ -347,30 +386,56 @@
     input.note-input { width: 70px; background: var(--slate-50); }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
 
-    /* --- BOUTON ASSISTANCE FLOTTANT WHATSAPP --- */
+    /* BOUTON ASSISTANCE FLOTTANT WHATSAPP */
     .whatsapp-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 60px;
-      height: 60px;
-      background: #25D366;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-      z-index: 999;
-      cursor: pointer;
-      text-decoration: none;
-      transition: var(--transition);
+      position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
+      background: #25D366; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4); z-index: 999;
+      cursor: pointer; text-decoration: none; transition: var(--transition);
     }
-    .whatsapp-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5);
-    }
+    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5); }
     .whatsapp-btn svg { width: 34px; height: 34px; fill: white; }
+
+    /* 🏆 STYLES TABLEAU D'HONNEUR CERTIFICAT PREMIUM */
+    .certificate-modal-card {
+      background: #FFF; width: 100%; max-width: 750px; border-radius: var(--radius-xl);
+      padding: 36px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .cert-frame {
+      border: 4px double #D97706; padding: 32px; border-radius: 16px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF7 100%);
+      position: relative; text-align: center; box-shadow: inset 0 0 20px rgba(217, 119, 6, 0.05);
+    }
+    .cert-flag-strip {
+      height: 6px; width: 100%; position: absolute; top: 0; left: 0;
+      background: linear-gradient(90deg, var(--ci-orange) 0%, var(--ci-orange) 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, var(--ci-green) 66.6%, var(--ci-green) 100%);
+    }
+    .cert-header { margin-bottom: 24px; }
+    .cert-logo { font-size: 38px; margin-bottom: 6px; }
+    .cert-republique { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--slate-600); }
+    .cert-title { font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-weight: 900; color: #78350F; margin: 12px 0 4px; }
+    .cert-subtitle { font-size: 13px; font-weight: 700; color: #D97706; text-transform: uppercase; letter-spacing: 1.5px; }
+    .cert-body { margin: 28px 0; }
+    .cert-student-name { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--slate-900); border-bottom: 2px solid var(--ci-gold-light); display: inline-block; padding: 0 16px 4px; margin: 8px 0; }
+    .cert-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; background: #FEF3C7; padding: 14px; border-radius: var(--radius-md); text-align: center; }
+    .cert-detail-item { font-size: 12px; color: #78350F; }
+    .cert-detail-item strong { display: block; font-size: 14px; color: #92400E; margin-top: 2px; }
+    .cert-message { font-size: 14px; color: var(--slate-700); line-height: 1.7; font-weight: 500; max-width: 580px; margin: 0 auto; }
+    .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 36px; padding-top: 20px; border-top: 1px dashed #F59E0B; }
+    .cert-seal { width: 70px; height: 70px; border: 2px dashed #D97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #D97706; }
+    .cert-signature { text-align: right; font-size: 12px; font-weight: 700; color: var(--slate-600); }
+
+    /* STYLES SPÉCIFIQUES POUR L'IMPRESSION */
+    @media print {
+      body * { visibility: hidden; }
+      #honor-modal, #honor-modal * { visibility: visible; }
+      #honor-modal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #FFF; padding: 0; display: block !important; }
+      .certificate-modal-card { box-shadow: none; max-width: 100%; border: none; padding: 0; }
+      .cert-frame { border: 4px double #D97706; padding: 40px; }
+      .no-print { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -395,6 +460,14 @@
           <input type="text" id="reg-prenom" placeholder="Ex: Jean" />
         </div>
         <div class="field-group">
+          <label>Classe</label>
+          <input type="text" id="reg-classe" placeholder="Ex: 3ème 1 / Tle A" />
+        </div>
+        <div class="field-group">
+          <label>Établissement (Optionnel)</label>
+          <input type="text" id="reg-ecole" placeholder="Ex: Lycée Moderne d'Abidjan" />
+        </div>
+        <div class="field-group">
           <label>Ville</label>
           <input type="text" id="reg-ville" placeholder="Ex: Abidjan" />
         </div>
@@ -407,7 +480,6 @@
             <option value="Cameroun">Cameroun</option>
             <option value="Congo">Congo</option>
             <option value="Mali">Mali</option>
-
             <option value="Sénégal">Sénégal</option>
             <option value="Togo">Togo</option>
             <option value="Autre">Autre</option>
@@ -513,6 +585,18 @@
 
       <div class="dashboard-container">
         
+        <!-- 🏆 BOUTON / BANNIÈRE PREMIUM TABLEAU D'HONNEUR -->
+        <div class="honor-banner-card" onclick="ouvrirTableauHonneur()">
+          <div class="honor-btn-content">
+            <div class="honor-icon-wrapper">🏆</div>
+            <div>
+              <div class="honor-title">Tableau d'Honneur Premium</div>
+              <div class="honor-sub">Découvrez si vous êtes admissible à la distinction officielle d'excellence</div>
+            </div>
+          </div>
+          <span style="font-size: 14px; font-weight: 800; color: #78350F; background: #FDE68A; padding: 8px 16px; border-radius: 20px; z-index:2;">Consulter ➔</span>
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:20px;">
           <div class="trimestres-grid">
             <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
@@ -548,7 +632,7 @@
 
         <div class="premium-card card-annual">
           <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
+            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle Officielle</span>
             <span style="font-size:22px;">🏅</span>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
@@ -581,7 +665,7 @@
               <div class="target-bar-bg">
                 <div class="target-bar-fill" id="target-bar-fill"></div>
               </div>
-              <div class="card-sub" id="progress-feedback-text">Moyenne calculée automatiquement sur les 3 trimestres.</div>
+              <div class="card-sub" id="progress-feedback-text">Calculé selon la méthode officielle du Ministère de l'Éducation Nationale.</div>
             </div>
           </div>
         </div>
@@ -610,8 +694,69 @@
             <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Moyenne minimale : 10.00 / 20</span>
           </div>
           <div class="objective-content" id="objective-dynamic-text">
-            Saisissez les notes de vos trimestres pour activer le calcul de votre objectif d'admission ainsi que vos recommandations d'études personnalisées.
+            Saisissez les notes de vos trimestres pour activer le calcul officiel de votre objectif d'admission.
           </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= 🏆 FENÊTRE MODALE TABLEAU D'HONNEUR ================= -->
+    <div class="modal-overlay" id="honor-modal">
+      <div class="certificate-modal-card">
+        <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <button class="btn-secondary" onclick="imprimerCertificat()">🖨️ Imprimer le Tableau d'honneur</button>
+          <button class="btn-close" onclick="fermerTableauHonneur()">✕</button>
+        </div>
+
+        <!-- CERTIFICAT ACCORDÉ (≥ 14) -->
+        <div id="cert-success" class="cert-frame" style="display:none;">
+          <div class="cert-flag-strip"></div>
+          <div class="cert-header">
+            <div class="cert-logo">🎓</div>
+            <div class="cert-republique">RÉPUBLIQUE DE CÔTE D'IVOIRE</div>
+            <div style="font-size:10px; font-weight:700; color:var(--ci-orange-dark);">Union - Discipline - Travail</div>
+            <div class="cert-title">Tableau d'Honneur</div>
+            <div class="cert-subtitle">Certificat de Mérite et d'Excellence Scolaire</div>
+          </div>
+
+          <div class="cert-body">
+            <p style="font-size:13px; color:var(--slate-600); font-weight:600;">Ce certificat officiel est décerné à :</p>
+            <div class="cert-student-name" id="cert-student-fullname">Kouadio Jean</div>
+
+            <div class="cert-details-grid">
+              <div class="cert-detail-item">Classe<strong id="cert-classe">3ème A</strong></div>
+              <div class="cert-detail-item">Établissement<strong id="cert-ecole">Lycée Moderne</strong></div>
+              <div class="cert-detail-item">Année Scolaire<strong id="cert-annee">2025 - 2026</strong></div>
+            </div>
+
+            <p class="cert-message" id="cert-message-text">
+              Félicitations ! Grâce à votre excellent travail et à votre sérieux, vous obtenez une moyenne annuelle officielle de <strong id="cert-moyenne-val">16.35</strong>/20 et êtes inscrit(e) au Tableau d'honneur. Continuez à viser l'excellence.
+            </p>
+          </div>
+
+          <div class="cert-footer">
+            <div class="cert-seal">🏅</div>
+            <div style="text-align:center;">
+              <span style="font-size:12px; font-weight:800; color:#78350F;">MENTION</span><br>
+              <strong id="cert-mention-val" style="font-size:16px; color:var(--ci-green-dark);">TRÈS BIEN</strong>
+            </div>
+            <div class="cert-signature">
+              Portail National d'Excellence<br>
+              <em>Le Comité d'Évaluation</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- MESSAGE ENCOURAGEMENT (< 14) -->
+        <div id="cert-fail" style="display:none; text-align:center; padding:30px 10px;">
+          <div style="font-size:50px; margin-bottom:12px;">💪</div>
+          <h3 style="font-size:20px; font-weight:800; color:var(--slate-900); margin-bottom:10px;">Continuez vos efforts !</h3>
+          <p style="font-size:15px; color:var(--slate-700); line-height:1.6; max-width:440px; margin:0 auto;">
+            Votre moyenne annuelle actuelle (<strong id="fail-moyenne-val">-</strong>/20) ne permet pas encore d'accéder au Tableau d'honneur (minimum 14.00/20).<br><br>
+            Continuez vos efforts, vous pouvez y parvenir !
+          </p>
+          <button class="btn-primary" style="max-width:240px; margin:24px auto 0;" onclick="fermerTableauHonneur()">D'accord, je continue !</button>
         </div>
 
       </div>
@@ -627,6 +772,8 @@
         <div style="font-size:14px; line-height:1.8; color:var(--slate-800); margin-bottom:20px;">
           <p><strong>Nom :</strong> <span id="prof-nom"></span></p>
           <p><strong>Prénom :</strong> <span id="prof-prenom"></span></p>
+          <p><strong>Classe :</strong> <span id="prof-classe"></span></p>
+          <p><strong>Établissement :</strong> <span id="prof-ecole"></span></p>
           <p><strong>Ville :</strong> <span id="prof-ville"></span></p>
           <p><strong>Pays :</strong> <span id="prof-pays"></span></p>
           <p><strong>WhatsApp :</strong> <span id="prof-whatsapp"></span></p>
@@ -636,7 +783,6 @@
 
         <button class="btn-secondary" style="width:100%; justify-content:center;" onclick="afficherChangementPass()">🔑 Modifier le mot de passe</button>
 
-        <!-- Formulaire Changement Mot de Passe -->
         <div id="change-pass-form" style="display:none; margin-top:16px; background:var(--slate-50); padding:16px; border-radius:var(--radius-lg);">
           <div class="field-group">
             <label>Mot de passe actuel</label>
@@ -724,7 +870,7 @@
 
   </div>
 
-  <!-- ================= 💬 BOUTON ASSISTANCE WHATSAPP FLOTTANT ================= -->
+  <!-- 💬 BOUTON ASSISTANCE WHATSAPP FLOTTANT -->
   <a href="https://wa.me/2250799591024" target="_blank" class="whatsapp-btn" title="Contacter l'Assistance WhatsApp">
     <svg viewBox="0 0 32 32">
       <path d="M16 2a13.94 13.94 0 0 0-12 21l-2 7.33 7.52-1.97A13.92 13.92 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.87-1.6l-.42-.25-4.36 1.14 1.16-4.25-.28-.44a11.52 11.52 0 1 1 9.77 5.4zm6.31-8.62c-.35-.17-2.06-1-2.38-1.12s-.55-.17-.79.18-.93 1.12-1.14 1.35-.42.26-.77.09a9.75 9.75 0 0 1-2.86-1.77 10.74 10.74 0 0 1-1.98-2.47c-.2-.35 0-.54.17-.71s.35-.41.52-.61a2.36 2.36 0 0 0 .35-.58.64.64 0 0 0 0-.61c-.09-.17-.79-1.91-1.08-2.61s-.58-.59-.79-.6h-.68a1.31 1.31 0 0 0-.95.44 4 4 0 0 0-1.25 3 6.91 6.91 0 0 0 1.48 3.66A15.85 15.85 0 0 0 15 20.76a17.71 17.71 0 0 0 2.11.78 5.08 5.08 0 0 0 2.33.15 3.8 3.8 0 0 0 2.5-1.76 3.07 3.07 0 0 0 .21-1.76c-.08-.13-.33-.21-.68-.38z"/>
@@ -734,7 +880,15 @@
   <script>
     let compteUtilisateur = null;
 
-    // Vérification initiale du compte au chargement
+    // Structure de stockage par trimestre
+    let trimestreActif = 1;
+    let donneesTrimestres = {
+      1: { points: 0, coefs: 0, moyenne: null, notes: [] },
+      2: { points: 0, coefs: 0, moyenne: null, notes: [] },
+      3: { points: 0, coefs: 0, moyenne: null, notes: [] }
+    };
+    let moyenneAnnuelleOfficielle = null;
+
     window.addEventListener("DOMContentLoaded", () => {
       const data = localStorage.getItem("userAccount");
       if (data) {
@@ -771,10 +925,12 @@
       document.getElementById("trimestre-page").style.display = "none";
     }
 
-    // 1. CRÉATION DU COMPTE
+    // CRÉATION DE COMPTE
     function creerCompte() {
       const nom = document.getElementById("reg-nom").value.trim();
       const prenom = document.getElementById("reg-prenom").value.trim();
+      const classe = document.getElementById("reg-classe").value.trim() || "Classe non précisée";
+      const ecole = document.getElementById("reg-ecole").value.trim() || "Établissement non précisé";
       const ville = document.getElementById("reg-ville").value.trim();
       const pays = document.getElementById("reg-pays").value;
       const whatsapp = document.getElementById("reg-whatsapp").value.trim();
@@ -782,7 +938,7 @@
       const err = document.getElementById("reg-error");
 
       if (!nom || !prenom || !ville || !pays || !whatsapp || !pass) {
-        err.innerText = "⛔ Tous les champs sont obligatoires.";
+        err.innerText = "⛔ Tous les champs principaux sont obligatoires.";
         return;
       }
 
@@ -791,14 +947,14 @@
         return;
       }
 
-      compteUtilisateur = { nom, prenom, ville, pays, whatsapp, pass };
+      compteUtilisateur = { nom, prenom, classe, ecole, ville, pays, whatsapp, pass };
       localStorage.setItem("userAccount", JSON.stringify(compteUtilisateur));
       
       err.innerText = "";
       afficherConnexion();
     }
 
-    // 2. CONNEXION
+    // CONNEXION
     function seConnecter() {
       const fullname = document.getElementById("login-fullname").value.trim().toLowerCase();
       const pass = document.getElementById("login-pass").value.trim();
@@ -817,7 +973,6 @@
         masquerToutesSections();
         document.getElementById("dashboard-section").style.display = "block";
         
-        // Mettre à jour l'en-tête profil
         document.getElementById("header-user-name").innerText = compteUtilisateur.prenom;
         document.getElementById("header-avatar").innerText = compteUtilisateur.prenom.charAt(0).toUpperCase();
       } else {
@@ -825,7 +980,7 @@
       }
     }
 
-    // 3. RECHERCHE MOT DE PASSE OUBLIÉ
+    // RÉCUPÉRATION COMPTE
     function rechercherCompteWhatsApp() {
       const num = document.getElementById("forgot-whatsapp").value.trim();
       const err = document.getElementById("forgot-error");
@@ -849,14 +1004,14 @@
       document.getElementById("forgot-step3").style.display = "block";
     }
 
-    function annulerForgot() {
-      afficherConnexion();
-    }
+    function annulerForgot() { afficherConnexion(); }
 
-    // PROFIL & SÉCURITÉ
+    // PROFIL
     function ouvrirProfil() {
       document.getElementById("prof-nom").innerText = compteUtilisateur.nom;
       document.getElementById("prof-prenom").innerText = compteUtilisateur.prenom;
+      document.getElementById("prof-classe").innerText = compteUtilisateur.classe;
+      document.getElementById("prof-ecole").innerText = compteUtilisateur.ecole;
       document.getElementById("prof-ville").innerText = compteUtilisateur.ville;
       document.getElementById("prof-pays").innerText = compteUtilisateur.pays;
       document.getElementById("prof-whatsapp").innerText = compteUtilisateur.whatsapp;
@@ -865,13 +1020,8 @@
       document.getElementById("profile-modal").style.display = "flex";
     }
 
-    function fermerProfil() {
-      document.getElementById("profile-modal").style.display = "none";
-    }
-
-    function afficherChangementPass() {
-      document.getElementById("change-pass-form").style.display = "block";
-    }
+    function fermerProfil() { document.getElementById("profile-modal").style.display = "none"; }
+    function afficherChangementPass() { document.getElementById("change-pass-form").style.display = "block"; }
 
     function enregistrerNouveauPass() {
       const curr = document.getElementById("pass-curr").value.trim();
@@ -898,16 +1048,9 @@
       fermerProfil();
     }
 
-    function seDeconnecter() {
-      fermerProfil();
-      afficherConnexion();
-    }
+    function seDeconnecter() { fermerProfil(); afficherConnexion(); }
 
-    /* ================= 🧮 LOGIQUE DES CALCULS (INCHANGÉE) ================= */
-    let trimestreActif = 1;
-    let moyennesTrimestres = { 1: null, 2: null, 3: null };
-    let donneesTrimestres = { 1: [], 2: [], 3: [] };
-
+    /* ================= 🧮 LOGIQUE DES CALCULS OFFICIELS ================= */
     function ouvrirSaisieTrimestre(num) {
       trimestreActif = num;
       const noms = ["1er Trimestre", "2ᵉ Trimestre", "3ᵉ Trimestre"];
@@ -940,10 +1083,11 @@
       });
     }
 
+    // 1. CALCUL TRIMESTRIEL OFFICIEL : Moyenne = Total Points / Total Coefs
     function calculer() {
       syncCoefficients();
-      let total = 0;
-      let coefs = 0;
+      let totalPts = 0;
+      let totalCoeffs = 0;
       let notesCurrent = [];
       
       notesInputs.forEach((input, index) => {
@@ -952,43 +1096,64 @@
         const subjectName = input.closest('tr').children[0].innerText;
 
         if (coef > 0 && !isNaN(note) && note >= 0 && note <= 20) {
-          const val = note * coef;
-          totalCells[index].innerText = val.toFixed(2);
-          total += val;
-          coefs += coef;
+          const ptPondere = note * coef;
+          totalCells[index].innerText = ptPondere.toFixed(2);
+          totalPts += ptPondere;
+          totalCoeffs += coef;
           notesCurrent.push({ subject: subjectName, note: note, inputVal: input.value });
         } else {
           totalCells[index].innerText = "";
         }
       });
 
-      totalPoints.innerText = total.toFixed(2);
-      totalCoefs.innerText = coefs;
+      totalPoints.innerText = totalPts.toFixed(2);
+      totalCoefs.innerText = totalCoeffs;
       
-      const moyCalculated = coefs ? (total / coefs).toFixed(2) : null;
+      // Formule Officielle Trimestrielle
+      const moyCalculated = totalCoeffs > 0 ? (totalPts / totalCoeffs).toFixed(2) : null;
       moyenneGenerale.innerText = moyCalculated ? moyCalculated : "-";
 
-      moyennesTrimestres[trimestreActif] = moyCalculated ? parseFloat(moyCalculated) : null;
-      donneesTrimestres[trimestreActif] = notesCurrent;
+      // Sauvegarde officielle des totaux bruts du trimestre
+      donneesTrimestres[trimestreActif] = {
+        points: totalPts,
+        coefs: totalCoeffs,
+        moyenne: moyCalculated ? parseFloat(moyCalculated) : null,
+        notes: notesCurrent
+      };
     }
 
     function restaurerSaisie(num) {
-      const savedData = donneesTrimestres[num] || [];
+      const savedNotes = donneesTrimestres[num].notes || [];
       notesInputs.forEach((input) => {
         const subjectName = input.closest('tr').children[0].innerText;
-        const match = savedData.find(d => d.subject === subjectName);
+        const match = savedNotes.find(d => d.subject === subjectName);
         input.value = match ? match.inputVal : "";
       });
     }
 
+    // 2. CALCUL ANNUEL OFFICIEL : Total Points 3 Trimestres / Total Coefs 3 Trimestres
     function misesAJourDashboard() {
-      document.getElementById("dash-t1").innerText = moyennesTrimestres[1] !== null ? moyennesTrimestres[1].toFixed(2) : "-";
-      document.getElementById("dash-t2").innerText = moyennesTrimestres[2] !== null ? moyennesTrimestres[2].toFixed(2) : "-";
-      document.getElementById("dash-t3").innerText = moyennesTrimestres[3] !== null ? moyennesTrimestres[3].toFixed(2) : "-";
+      const t1 = donneesTrimestres[1];
+      const t2 = donneesTrimestres[2];
+      const t3 = donneesTrimestres[3];
 
-      let moysAnnuelles = Object.values(moyennesTrimestres).filter(m => m !== null);
-      let moyAnnuelle = moysAnnuelles.length > 0 ? (moysAnnuelles.reduce((a, b) => a + b, 0) / moysAnnuelles.length).toFixed(2) : null;
-      document.getElementById("dash-annual").innerText = moyAnnuelle ? moyAnnuelle + " / 20" : "-";
+      document.getElementById("dash-t1").innerText = t1.moyenne !== null ? t1.moyenne.toFixed(2) : "-";
+      document.getElementById("dash-t2").innerText = t2.moyenne !== null ? t2.moyenne.toFixed(2) : "-";
+      document.getElementById("dash-t3").innerText = t3.moyenne !== null ? t3.moyenne.toFixed(2) : "-";
+
+      // Somme officielle des points et des coefficients
+      const grandTotalPoints = t1.points + t2.points + t3.points;
+      const grandTotalCoefs = t1.coefs + t2.coefs + t3.coefs;
+
+      if (grandTotalCoefs > 0) {
+        // Moyenne Annuelle Officielle
+        moyenneAnnuelleOfficielle = parseFloat((grandTotalPoints / grandTotalCoefs).toFixed(2));
+      } else {
+        moyenneAnnuelleOfficielle = null;
+      }
+
+      const mA = moyenneAnnuelleOfficielle;
+      document.getElementById("dash-annual").innerText = mA !== null ? mA.toFixed(2) + " / 20" : "-";
 
       const mentionEl = document.getElementById("dash-mention");
       const annualBadge = document.getElementById("annual-badge");
@@ -1000,8 +1165,7 @@
       const progressFeedback = document.getElementById("progress-feedback-text");
       const objText = document.getElementById("objective-dynamic-text");
 
-      if (moyAnnuelle !== null) {
-        const mA = parseFloat(moyAnnuelle);
+      if (mA !== null) {
         let mention = "Passable";
         if (mA >= 16) mention = "Très Bien";
         else if (mA >= 14) mention = "Bien";
@@ -1031,25 +1195,23 @@
         circleVal.innerText = Math.round(percent) + "%";
         progressLabel.innerText = mA.toFixed(2) + " / 20";
         progressStatus.innerText = statusTitle;
-        progressFeedback.innerText = `Moyenne globale actualisée sur l'ensemble des trimestres.`;
+        progressFeedback.innerText = `Calcul officiel basé sur le cumul exact des points et coefficients des 3 trimestres.`;
 
         const offset = 251.3 - (251.3 * percent / 100);
         circleBar.style.strokeDashoffset = offset;
         targetFill.style.width = percent + "%";
 
         const passageTarget = 10.00;
-        let toutesLesNotes = [];
-        Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
-        
-        let matieresAAmeliorer = toutesLesNotes.filter(n => n.note < 10).map(n => n.subject);
+        let toutesNotes = [...t1.notes, ...t2.notes, ...t3.notes];
+        let matieresAAmeliorer = toutesNotes.filter(n => n.note < 10).map(n => n.subject);
         let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
         let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos disciplines fondamentales";
 
         if (mA >= passageTarget) {
-          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne actuelle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts pour viser une mention encore plus élevée.`;
+          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne annuelle officielle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts.`;
         } else {
           const ecart = (passageTarget - mA).toFixed(2);
-          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> pour atteindre l'objectif de <strong>10,00/20</strong> requis pour passer en classe supérieure. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmentez fortement vos chances d'admission. Continuez vos efforts, vous êtes sur la bonne voie !`;
+          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> sur votre moyenne officielle pour atteindre l'objectif de <strong>10,00/20</strong> requis. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmenterez fortement vos chances d'admission.`;
         }
 
       } else {
@@ -1062,9 +1224,56 @@
       }
     }
 
+    // 🏆 TABLEAU D'HONNEUR & CERTIFICAT
+    function ouvrirTableauHonneur() {
+      const modal = document.getElementById("honor-modal");
+      const successBox = document.getElementById("cert-success");
+      const failBox = document.getElementById("cert-fail");
+
+      if (moyenneAnnuelleOfficielle !== null && moyenneAnnuelleOfficielle >= 14.00) {
+        // Étudiant Admissible
+        document.getElementById("cert-student-fullname").innerText = compteUtilisateur.nom + " " + compteUtilisateur.prenom;
+        document.getElementById("cert-classe").innerText = compteUtilisateur.classe || "Scolaire";
+        document.getElementById("cert-ecole").innerText = compteUtilisateur.ecole || compteUtilisateur.ville;
+        document.getElementById("cert-annee").innerText = "2025 - 2026";
+        document.getElementById("cert-moyenne-val").innerText = moyenneAnnuelleOfficielle.toFixed(2);
+
+        let mention = "ASSEZ BIEN";
+        if (moyenneAnnuelleOfficielle >= 16) mention = "TRÈS BIEN";
+        else if (moyenneAnnuelleOfficielle >= 14) mention = "BIEN";
+        document.getElementById("cert-mention-val").innerText = mention;
+
+        document.getElementById("cert-message-text").innerHTML = `Félicitations ! Grâce à votre excellent travail et à votre sérieux, vous obtenez une moyenne annuelle officielle de <strong>${moyenneAnnuelleOfficielle.toFixed(2)}/20</strong> et êtes inscrit(e) au Tableau d'honneur. Continuez à viser l'excellence.`;
+
+        successBox.style.display = "block";
+        failBox.style.display = "none";
+      } else {
+        // Étudiant Non Admissible
+        const valStr = moyenneAnnuelleOfficielle !== null ? moyenneAnnuelleOfficielle.toFixed(2) : "non calculée";
+        document.getElementById("fail-moyenne-val").innerText = valStr;
+
+        successBox.style.display = "none";
+        failBox.style.display = "block";
+      }
+
+      modal.style.display = "flex";
+    }
+
+    function fermerTableauHonneur() {
+      document.getElementById("honor-modal").style.display = "none";
+    }
+
+    function imprimerCertificat() {
+      window.print();
+    }
+
+    // FENÊTRE MODALE DÉTAILS
     function ouvrirModaleDetails(type) {
-      let toutesLesNotes = [];
-      Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
+      let toutesNotes = [
+        ...donneesTrimestres[1].notes,
+        ...donneesTrimestres[2].notes,
+        ...donneesTrimestres[3].notes
+      ];
 
       const modal = document.getElementById("details-modal");
       const title = document.getElementById("modal-title-text");
@@ -1072,11 +1281,11 @@
 
       list.innerHTML = "";
 
-      if (toutesLesNotes.length === 0) {
+      if (toutesNotes.length === 0) {
         list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Veuillez d'abord saisir des notes dans un trimestre.</li>`;
       } else if (type === 'weak') {
         title.innerText = "📚 Matières à revoir (< 10/20)";
-        const faibles = toutesLesNotes.filter(n => n.note < 10);
+        const faibles = toutesNotes.filter(n => n.note < 10);
         if (faibles.length === 0) {
           list.innerHTML = `<li style="justify-content:center; color:var(--ci-green-dark);">Félicitations ! Aucune matière sous la moyenne.</li>`;
         } else {
@@ -1086,7 +1295,7 @@
         }
       } else if (type === 'best') {
         title.innerText = "⭐ Points forts (≥ 12/20)";
-        const fortes = toutesLesNotes.filter(n => n.note >= 12);
+        const fortes = toutesNotes.filter(n => n.note >= 12);
         if (fortes.length === 0) {
           list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Aucune note ≥ 12/20 enregistrée.</li>`;
         } else {
