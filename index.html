@@ -80,7 +80,6 @@
       border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
-    /* Bandeau supérieur aux couleurs du Drapeau Ivoirien */
     .app-shell::before {
       content: "";
       position: absolute;
@@ -89,9 +88,9 @@
       z-index: 20;
     }
 
-    /* --- 🔑 LOGIN OVERLAY --- */
-    #login-section { padding: 60px 24px; text-align: center; }
-    .login-wrapper { max-width: 380px; margin: 0 auto; }
+    /* --- 🔑 SECTIONS AUTHENTIFICATION & COMPTES --- */
+    .auth-section { padding: 48px 24px; text-align: center; }
+    .auth-wrapper { max-width: 420px; margin: 0 auto; }
     .brand-icon {
       width: 72px; height: 72px;
       background: linear-gradient(135deg, var(--ci-orange-soft), var(--ci-green-soft));
@@ -100,27 +99,32 @@
       box-shadow: 0 8px 20px rgba(255, 130, 0, 0.15);
     }
     .brand-icon svg { width: 36px; height: 36px; fill: var(--ci-orange); }
-    .login-wrapper h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); }
-    .login-wrapper p { color: var(--slate-600); font-size: 14px; margin-top: 4px; margin-bottom: 28px; font-weight: 500; }
+    .auth-wrapper h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); }
+    .auth-wrapper p { color: var(--slate-600); font-size: 14px; margin-top: 4px; margin-bottom: 24px; font-weight: 500; }
     
-    .field-group { position: relative; margin-bottom: 16px; text-align: left; }
-    .field-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--slate-400); width: 20px; height: 20px; }
-    .field-group input {
-      width: 100%; padding: 14px 16px 14px 48px; border: 1.5px solid #E2E8F0;
+    .field-group { position: relative; margin-bottom: 14px; text-align: left; }
+    .field-group label { display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field-group input, .field-group select {
+      width: 100%; padding: 12px 16px; border: 1.5px solid #E2E8F0;
       border-radius: var(--radius-lg); font-size: 14px; outline: none; background: var(--slate-50);
-      transition: var(--transition); font-weight: 600; color: var(--slate-900);
+      transition: var(--transition); font-weight: 600; color: var(--slate-900); font-family: inherit;
     }
-    .field-group input:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 4px rgba(255, 130, 0, 0.12); }
+    .field-group input:focus, .field-group select:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 4px rgba(255, 130, 0, 0.12); }
     
     .btn-primary {
       width: 100%; padding: 15px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
       color: white; font-weight: 700; border: none; border-radius: var(--radius-lg);
-      cursor: pointer; font-size: 15px; transition: var(--transition);
+      cursor: pointer; font-size: 15px; transition: var(--transition); margin-top: 10px;
       box-shadow: 0 6px 18px rgba(255, 130, 0, 0.28);
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 130, 0, 0.35); }
     .btn-primary:active { transform: translateY(0); }
-    .error-msg { color: #E11D48; margin-top: 14px; font-size: 13px; font-weight: 700; }
+    
+    .btn-text { background: none; border: none; color: var(--ci-blue); font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 16px; transition: var(--transition); }
+    .btn-text:hover { text-decoration: underline; color: var(--ci-blue-dark); }
+
+    .error-msg { color: #E11D48; margin-top: 12px; font-size: 13px; font-weight: 700; }
+    .success-box { background: var(--ci-green-soft); border: 1.5px solid var(--ci-green-border); border-radius: var(--radius-lg); padding: 18px; margin-top: 16px; text-align: left; }
 
     /* --- 1. EN-TÊTE PREMIUM --- */
     .app-header {
@@ -145,7 +149,7 @@
     
     .profile-pill {
       display: flex; align-items: center; gap: 10px;
-      padding: 8px 16px; background: var(--slate-50);
+      padding: 8px 16px; background: var(--slate-50); cursor: pointer;
       border-radius: 40px; font-size: 13px; font-weight: 700; color: var(--slate-800);
       border: 1px solid #E2E8F0; transition: var(--transition);
     }
@@ -153,7 +157,7 @@
     .profile-avatar {
       width: 26px; height: 26px; border-radius: 50%;
       background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
-      color: #FFF; display: flex; align-items: center; justify-content: justify;
+      color: #FFF; display: flex; align-items: center;
       justify-content: center; font-size: 11px; font-weight: 800;
     }
 
@@ -162,7 +166,7 @@
       padding: 32px;
       display: flex;
       flex-direction: column;
-      gap: 24px; /* Espacement vertical généreux et uniforme */
+      gap: 24px;
     }
 
     /* 2. DISPOSITION PARFAITE DES TRIMESTRES */
@@ -179,12 +183,10 @@
       width: 100%;
     }
 
-    /* La carte centrée a exactement la même largeur que celles du haut */
     .trimestres-centered-row .premium-card {
       width: calc(50% - 10px);
     }
 
-    /* Responsive Smartphone */
     @media (max-width: 680px) {
       .dashboard-container { padding: 20px 16px; gap: 18px; }
       .app-header { padding: 16px 20px; }
@@ -211,7 +213,6 @@
       border-color: #CBD5E1;
     }
 
-    /* Thèmes spécifiques des cartes trimestres */
     .card-t1 { border-top: 4px solid var(--ci-blue); }
     .card-t1:hover { border-color: var(--ci-blue-border); border-top-color: var(--ci-blue); }
 
@@ -221,7 +222,6 @@
     .card-t3 { border-top: 4px solid var(--ci-green); }
     .card-t3:hover { border-color: var(--ci-green-border); border-top-color: var(--ci-green); }
 
-    /* Carte Annuelle */
     .card-annual {
       background: linear-gradient(135deg, #FFFBF5 0%, #F0FDF4 100%);
       border: 1.5px solid rgba(255, 130, 0, 0.3);
@@ -259,7 +259,7 @@
     .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; margin: 10px 0; }
     .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 1s ease, background-color 0.4s ease; }
 
-    /* 5. CARTES D'ANALYSE (CÔTE À CÔTE) */
+    /* 5. CARTES D'ANALYSE */
     .analysis-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -291,7 +291,7 @@
       font-weight: 800; font-size: 12px;
     }
 
-    /* --- FENÊTRE MODALE DÉTAILS --- */
+    /* --- FENÊTRE MODALE & PROFIL --- */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(6px);
       z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
@@ -346,42 +346,157 @@
     input.coef-input { width: 55px; background: #FFF; }
     input.note-input { width: 70px; background: var(--slate-50); }
     input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
+
+    /* --- BOUTON ASSISTANCE FLOTTANT WHATSAPP --- */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5);
+    }
+    .whatsapp-btn svg { width: 34px; height: 34px; fill: white; }
   </style>
 </head>
 <body>
 
   <div class="app-shell">
     
-    <!-- ================= 🔐 CONNEXION ================= -->
-    <div id="login-section">
-      <div class="login-wrapper">
+    <!-- ================= 1. CREATION DE COMPTE ================= -->
+    <div id="register-section" class="auth-section" style="display:none;">
+      <div class="auth-wrapper">
         <div class="brand-icon">
           <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
         </div>
-        <h2>Portail Zakaria</h2>
-        <p>Système National d'Évaluation Scolaire</p>
+        <h2>Créer un compte</h2>
+        <p>Inscrivez-vous pour accéder à votre espace personnalisé</p>
         
         <div class="field-group">
-          <input type="text" id="username" placeholder="Identifiant" autocomplete="username" />
-          <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <label>Nom</label>
+          <input type="text" id="reg-nom" placeholder="Ex: Kouadio" />
         </div>
         <div class="field-group">
-          <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password" />
-          <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <label>Prénom</label>
+          <input type="text" id="reg-prenom" placeholder="Ex: Jean" />
         </div>
         <div class="field-group">
-          <input type="number" id="idcode" placeholder="Code d'accès" />
-          <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3 0 00-3 3h6a3 0 00-3-3z"/></svg>
+          <label>Ville</label>
+          <input type="text" id="reg-ville" placeholder="Ex: Abidjan" />
         </div>
-        <button class="btn-primary" onclick="verifierConnexion()">Accéder au Portail</button>
-        <div class="error-msg" id="error"></div>
+        <div class="field-group">
+          <label>Pays</label>
+          <select id="reg-pays">
+            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Bénin">Bénin</option>
+            <option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cameroun">Cameroun</option>
+            <option value="Congo">Congo</option>
+            <option value="Mali">Mali</option>
+
+            <option value="Sénégal">Sénégal</option>
+            <option value="Togo">Togo</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Numéro WhatsApp</label>
+          <input type="tel" id="reg-whatsapp" placeholder="Ex: 0700000000" />
+        </div>
+        <div class="field-group">
+          <label>Mot de passe (4 chiffres)</label>
+          <input type="password" id="reg-pass" maxlength="4" placeholder="••••" pattern="[0-9]{4}" />
+        </div>
+
+        <button class="btn-primary" onclick="creerCompte()">Terminer</button>
+        <div class="error-msg" id="reg-error"></div>
       </div>
     </div>
 
-    <!-- ================= 🏠 TABLEAU DE BORD (DISPOSITION PARFAITE) ================= -->
+    <!-- ================= 2. CONNEXION ================= -->
+    <div id="login-section" class="auth-section" style="display:none;">
+      <div class="auth-wrapper">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <h2>Connexion</h2>
+        <p>Portail National d'Excellence Éducative</p>
+        
+        <div class="field-group">
+          <label>Nom complet</label>
+          <input type="text" id="login-fullname" placeholder="Ex: Kouadio Jean" />
+        </div>
+        <div class="field-group">
+          <label>Mot de passe (4 chiffres)</label>
+          <input type="password" id="login-pass" maxlength="4" placeholder="••••" />
+        </div>
+
+        <button class="btn-primary" onclick="seConnecter()">Se connecter</button>
+        <br>
+        <button class="btn-text" onclick="afficherMotDePasseOublie()">Mot de passe oublié ?</button>
+        <div class="error-msg" id="login-error"></div>
+      </div>
+    </div>
+
+    <!-- ================= 3. MOT DE PASSE OUBLIÉ ================= -->
+    <div id="forgot-section" class="auth-section" style="display:none;">
+      <div class="auth-wrapper">
+        <h2>Récupération</h2>
+        <p>Saisissez votre numéro WhatsApp pour identifier votre compte</p>
+        
+        <div class="field-group" id="forgot-step1">
+          <label>Numéro WhatsApp</label>
+          <input type="tel" id="forgot-whatsapp" placeholder="Ex: 0700000000" />
+          <button class="btn-primary" onclick="rechercherCompteWhatsApp()">Rechercher le compte</button>
+        </div>
+
+        <!-- Confirmation compte trouvé -->
+        <div id="forgot-step2" style="display:none;" class="success-box">
+          <p style="font-weight:800; color:var(--slate-900); margin-bottom:10px;">Est-ce bien votre compte ?</p>
+          <p><strong>Nom :</strong> <span id="conf-nom"></span></p>
+          <p><strong>Prénom :</strong> <span id="conf-prenom"></span></p>
+          <p><strong>Ville :</strong> <span id="conf-ville"></span></p>
+          <p><strong>Pays :</strong> <span id="conf-pays"></span></p>
+          
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button class="btn-primary" style="background:var(--ci-green);" onclick="confirmerDemandeReinit()">✅ Oui, c'est moi</button>
+            <button class="btn-primary" style="background:var(--slate-600);" onclick="annulerForgot()">❌ Annuler</button>
+          </div>
+        </div>
+
+        <!-- Message post-confirmation -->
+        <div id="forgot-step3" style="display:none;" class="success-box" style="background:#FFF;">
+          <p style="font-size:14px; color:var(--slate-800); line-height:1.6; font-weight:600;">
+            Votre demande a été envoyée avec succès.<br><br>
+            Veuillez contacter l'assistance pour la réinitialisation de votre mot de passe. Après validation de votre demande, votre mot de passe sera réinitialisé et vous serez informé via WhatsApp.
+          </p>
+          <a href="https://wa.me/2250799591024?text=Bonjour,%20je%20souhaite%20réinitialiser%20mon%20mot%20de%20passe." target="_blank" class="btn-primary" style="background:#25D366; display:inline-block; text-decoration:none; text-align:center; margin-top:14px;">
+            💬 Contacter l'assistance WhatsApp
+          </a>
+        </div>
+
+        <button class="btn-text" onclick="afficherConnexion()">⬅️ Retour à la connexion</button>
+        <div class="error-msg" id="forgot-error"></div>
+      </div>
+    </div>
+
+    <!-- ================= 🏠 TABLEAU DE BORD ================= -->
     <div id="dashboard-section" style="display:none;">
       
-      <!-- 1. EN-TÊTE PREMIUM (LOGO GAUCHE + PROFIL DROITE) -->
       <header class="app-header">
         <div class="header-logo">
           <div class="logo-badge">🎓</div>
@@ -390,20 +505,16 @@
             <div class="logo-text-sub">République de Côte d'Ivoire</div>
           </div>
         </div>
-        <div class="profile-pill">
-          <div class="profile-avatar">E</div>
-          <span>Élève / Parent</span>
+        <div class="profile-pill" onclick="ouvrirProfil()">
+          <div class="profile-avatar" id="header-avatar">E</div>
+          <span id="header-user-name">Mon Profil</span>
         </div>
       </header>
 
       <div class="dashboard-container">
         
-        <!-- 2. PREMIÈRE SECTION : TRIMESTRES (GRILLE PARFAITEMENT ÉQUILIBRÉE) -->
         <div style="display:flex; flex-direction:column; gap:20px;">
-          
-          <!-- Ligne du haut : 1er et 2ᵉ Trimestre côte à côte -->
           <div class="trimestres-grid">
-            <!-- 📘 En haut à gauche : 1er Trimestre -->
             <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
               <div class="card-header-flex">
                 <span class="card-title">📘 1er Trimestre</span>
@@ -413,7 +524,6 @@
               <div class="card-sub">Moyenne du trimestre</div>
             </div>
 
-            <!-- 📙 En haut à droite : 2ᵉ Trimestre -->
             <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
               <div class="card-header-flex">
                 <span class="card-title">📙 2ᵉ Trimestre</span>
@@ -424,9 +534,7 @@
             </div>
           </div>
 
-          <!-- Ligne du bas : 3ᵉ Trimestre parfaitement centré -->
           <div class="trimestres-centered-row">
-            <!-- 📗 Centré juste en dessous -->
             <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
               <div class="card-header-flex">
                 <span class="card-title">📗 3ᵉ Trimestre</span>
@@ -436,10 +544,8 @@
               <div class="card-sub">Moyenne du trimestre</div>
             </div>
           </div>
-
         </div>
 
-        <!-- 3. DEUXIÈME SECTION : MOYENNE ANNUELLE (GRANDE CARTE HORIZONTALE) -->
         <div class="premium-card card-annual">
           <div class="card-header-flex">
             <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle & Bilan</span>
@@ -456,10 +562,8 @@
           </div>
         </div>
 
-        <!-- 4. TROISIÈME SECTION : PROGRESSION GÉNÉRALE (CIRCULAIRE GAUCHE + TEXTE DROITE) -->
         <div class="premium-card" style="cursor:default;">
           <div class="progress-wrapper">
-            <!-- Cercle % à gauche -->
             <div class="circle-mini-container">
               <svg>
                 <circle class="circle-bg" cx="46" cy="46" r="40"></circle>
@@ -468,7 +572,6 @@
               <div class="circle-mini-text" id="circle-val">0%</div>
             </div>
 
-            <!-- Texte à droite -->
             <div class="progress-info">
               <div class="card-title" style="margin-bottom:4px;">📊 Progression Générale</div>
               <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; margin-top:2px;">
@@ -483,7 +586,6 @@
           </div>
         </div>
 
-        <!-- 5. QUATRIÈME SECTION : CARTES D'ANALYSE CÔTE À CÔTE -->
         <div class="analysis-grid">
           <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
             <div>
@@ -502,7 +604,6 @@
           </div>
         </div>
 
-        <!-- 6. CINQUIÈME SECTION : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE -->
         <div class="objective-card">
           <div class="card-header-flex">
             <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
@@ -516,6 +617,47 @@
       </div>
     </div>
 
+    <!-- ================= 👤 MODALE PROFIL & MODIFICATION MOT DE PASSE ================= -->
+    <div class="modal-overlay" id="profile-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title">Mon Profil</div>
+          <button class="btn-close" onclick="fermerProfil()">✕</button>
+        </div>
+        <div style="font-size:14px; line-height:1.8; color:var(--slate-800); margin-bottom:20px;">
+          <p><strong>Nom :</strong> <span id="prof-nom"></span></p>
+          <p><strong>Prénom :</strong> <span id="prof-prenom"></span></p>
+          <p><strong>Ville :</strong> <span id="prof-ville"></span></p>
+          <p><strong>Pays :</strong> <span id="prof-pays"></span></p>
+          <p><strong>WhatsApp :</strong> <span id="prof-whatsapp"></span></p>
+        </div>
+
+        <hr style="border:0; border-top:1px solid #E2E8F0; margin:16px 0;">
+
+        <button class="btn-secondary" style="width:100%; justify-content:center;" onclick="afficherChangementPass()">🔑 Modifier le mot de passe</button>
+
+        <!-- Formulaire Changement Mot de Passe -->
+        <div id="change-pass-form" style="display:none; margin-top:16px; background:var(--slate-50); padding:16px; border-radius:var(--radius-lg);">
+          <div class="field-group">
+            <label>Mot de passe actuel</label>
+            <input type="password" id="pass-curr" maxlength="4" placeholder="••••">
+          </div>
+          <div class="field-group">
+            <label>Nouveau mot de passe (4 chiffres)</label>
+            <input type="password" id="pass-new" maxlength="4" placeholder="••••">
+          </div>
+          <div class="field-group">
+            <label>Confirmer le nouveau mot de passe</label>
+            <input type="password" id="pass-conf" maxlength="4" placeholder="••••">
+          </div>
+          <button class="btn-primary" style="margin-top:6px;" onclick="enregistrerNouveauPass()">Enregistrer</button>
+          <div class="error-msg" id="pass-change-error"></div>
+        </div>
+
+        <button class="btn-primary" style="background:#EF4444; margin-top:20px;" onclick="seDeconnecter()">Se déconnecter</button>
+      </div>
+    </div>
+
     <!-- ================= 🪟 FENÊTRE MODALE DÉTAILS ================= -->
     <div class="modal-overlay" id="details-modal">
       <div class="modal-card">
@@ -523,9 +665,7 @@
           <div class="modal-title" id="modal-title-text">Détails</div>
           <button class="btn-close" onclick="fermerModale()">✕</button>
         </div>
-        <ul class="modal-list" id="modal-list-content">
-          <!-- Contenu injecté dynamiquement -->
-        </ul>
+        <ul class="modal-list" id="modal-list-content"></ul>
       </div>
     </div>
 
@@ -584,25 +724,189 @@
 
   </div>
 
+  <!-- ================= 💬 BOUTON ASSISTANCE WHATSAPP FLOTTANT ================= -->
+  <a href="https://wa.me/2250799591024" target="_blank" class="whatsapp-btn" title="Contacter l'Assistance WhatsApp">
+    <svg viewBox="0 0 32 32">
+      <path d="M16 2a13.94 13.94 0 0 0-12 21l-2 7.33 7.52-1.97A13.92 13.92 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.87-1.6l-.42-.25-4.36 1.14 1.16-4.25-.28-.44a11.52 11.52 0 1 1 9.77 5.4zm6.31-8.62c-.35-.17-2.06-1-2.38-1.12s-.55-.17-.79.18-.93 1.12-1.14 1.35-.42.26-.77.09a9.75 9.75 0 0 1-2.86-1.77 10.74 10.74 0 0 1-1.98-2.47c-.2-.35 0-.54.17-.71s.35-.41.52-.61a2.36 2.36 0 0 0 .35-.58.64.64 0 0 0 0-.61c-.09-.17-.79-1.91-1.08-2.61s-.58-.59-.79-.6h-.68a1.31 1.31 0 0 0-.95.44 4 4 0 0 0-1.25 3 6.91 6.91 0 0 0 1.48 3.66A15.85 15.85 0 0 0 15 20.76a17.71 17.71 0 0 0 2.11.78 5.08 5.08 0 0 0 2.33.15 3.8 3.8 0 0 0 2.5-1.76 3.07 3.07 0 0 0 .21-1.76c-.08-.13-.33-.21-.68-.38z"/>
+    </svg>
+  </a>
+
   <script>
+    let compteUtilisateur = null;
+
+    // Vérification initiale du compte au chargement
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = localStorage.getItem("userAccount");
+      if (data) {
+        compteUtilisateur = JSON.parse(data);
+        afficherConnexion();
+      } else {
+        afficherInscription();
+      }
+    });
+
+    function afficherInscription() {
+      masquerToutesSections();
+      document.getElementById("register-section").style.display = "block";
+    }
+
+    function afficherConnexion() {
+      masquerToutesSections();
+      document.getElementById("login-section").style.display = "block";
+    }
+
+    function afficherMotDePasseOublie() {
+      masquerToutesSections();
+      document.getElementById("forgot-section").style.display = "block";
+      document.getElementById("forgot-step1").style.display = "block";
+      document.getElementById("forgot-step2").style.display = "none";
+      document.getElementById("forgot-step3").style.display = "none";
+    }
+
+    function masquerToutesSections() {
+      document.getElementById("register-section").style.display = "none";
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("forgot-section").style.display = "none";
+      document.getElementById("dashboard-section").style.display = "none";
+      document.getElementById("trimestre-page").style.display = "none";
+    }
+
+    // 1. CRÉATION DU COMPTE
+    function creerCompte() {
+      const nom = document.getElementById("reg-nom").value.trim();
+      const prenom = document.getElementById("reg-prenom").value.trim();
+      const ville = document.getElementById("reg-ville").value.trim();
+      const pays = document.getElementById("reg-pays").value;
+      const whatsapp = document.getElementById("reg-whatsapp").value.trim();
+      const pass = document.getElementById("reg-pass").value.trim();
+      const err = document.getElementById("reg-error");
+
+      if (!nom || !prenom || !ville || !pays || !whatsapp || !pass) {
+        err.innerText = "⛔ Tous les champs sont obligatoires.";
+        return;
+      }
+
+      if (!/^\d{4}$/.test(pass)) {
+        err.innerText = "⛔ Le mot de passe doit comporter exactement 4 chiffres.";
+        return;
+      }
+
+      compteUtilisateur = { nom, prenom, ville, pays, whatsapp, pass };
+      localStorage.setItem("userAccount", JSON.stringify(compteUtilisateur));
+      
+      err.innerText = "";
+      afficherConnexion();
+    }
+
+    // 2. CONNEXION
+    function seConnecter() {
+      const fullname = document.getElementById("login-fullname").value.trim().toLowerCase();
+      const pass = document.getElementById("login-pass").value.trim();
+      const err = document.getElementById("login-error");
+
+      if (!compteUtilisateur) {
+        err.innerText = "Aucun compte trouvé sur cet appareil.";
+        return;
+      }
+
+      const exactFull = (compteUtilisateur.nom + " " + compteUtilisateur.prenom).toLowerCase();
+      const invertFull = (compteUtilisateur.prenom + " " + compteUtilisateur.nom).toLowerCase();
+
+      if ((fullname === exactFull || fullname === invertFull) && pass === compteUtilisateur.pass) {
+        err.innerText = "";
+        masquerToutesSections();
+        document.getElementById("dashboard-section").style.display = "block";
+        
+        // Mettre à jour l'en-tête profil
+        document.getElementById("header-user-name").innerText = compteUtilisateur.prenom;
+        document.getElementById("header-avatar").innerText = compteUtilisateur.prenom.charAt(0).toUpperCase();
+      } else {
+        err.innerText = "⛔ Nom complet ou mot de passe incorrect.";
+      }
+    }
+
+    // 3. RECHERCHE MOT DE PASSE OUBLIÉ
+    function rechercherCompteWhatsApp() {
+      const num = document.getElementById("forgot-whatsapp").value.trim();
+      const err = document.getElementById("forgot-error");
+
+      if (compteUtilisateur && compteUtilisateur.whatsapp === num) {
+        err.innerText = "";
+        document.getElementById("conf-nom").innerText = compteUtilisateur.nom;
+        document.getElementById("conf-prenom").innerText = compteUtilisateur.prenom;
+        document.getElementById("conf-ville").innerText = compteUtilisateur.ville;
+        document.getElementById("conf-pays").innerText = compteUtilisateur.pays;
+
+        document.getElementById("forgot-step1").style.display = "none";
+        document.getElementById("forgot-step2").style.display = "block";
+      } else {
+        err.innerText = "⛔ Aucun compte trouvé avec ce numéro WhatsApp.";
+      }
+    }
+
+    function confirmerDemandeReinit() {
+      document.getElementById("forgot-step2").style.display = "none";
+      document.getElementById("forgot-step3").style.display = "block";
+    }
+
+    function annulerForgot() {
+      afficherConnexion();
+    }
+
+    // PROFIL & SÉCURITÉ
+    function ouvrirProfil() {
+      document.getElementById("prof-nom").innerText = compteUtilisateur.nom;
+      document.getElementById("prof-prenom").innerText = compteUtilisateur.prenom;
+      document.getElementById("prof-ville").innerText = compteUtilisateur.ville;
+      document.getElementById("prof-pays").innerText = compteUtilisateur.pays;
+      document.getElementById("prof-whatsapp").innerText = compteUtilisateur.whatsapp;
+
+      document.getElementById("change-pass-form").style.display = "none";
+      document.getElementById("profile-modal").style.display = "flex";
+    }
+
+    function fermerProfil() {
+      document.getElementById("profile-modal").style.display = "none";
+    }
+
+    function afficherChangementPass() {
+      document.getElementById("change-pass-form").style.display = "block";
+    }
+
+    function enregistrerNouveauPass() {
+      const curr = document.getElementById("pass-curr").value.trim();
+      const newP = document.getElementById("pass-new").value.trim();
+      const conf = document.getElementById("pass-conf").value.trim();
+      const err = document.getElementById("pass-change-error");
+
+      if (curr !== compteUtilisateur.pass) {
+        err.innerText = "⛔ Le mot de passe actuel est incorrect.";
+        return;
+      }
+      if (!/^\d{4}$/.test(newP)) {
+        err.innerText = "⛔ Le nouveau mot de passe doit comporter 4 chiffres.";
+        return;
+      }
+      if (newP !== conf) {
+        err.innerText = "⛔ La confirmation ne correspond pas.";
+        return;
+      }
+
+      compteUtilisateur.pass = newP;
+      localStorage.setItem("userAccount", JSON.stringify(compteUtilisateur));
+      alert("✅ Mot de passe modifié avec succès !");
+      fermerProfil();
+    }
+
+    function seDeconnecter() {
+      fermerProfil();
+      afficherConnexion();
+    }
+
+    /* ================= 🧮 LOGIQUE DES CALCULS (INCHANGÉE) ================= */
     let trimestreActif = 1;
     let moyennesTrimestres = { 1: null, 2: null, 3: null };
     let donneesTrimestres = { 1: [], 2: [], 3: [] };
-
-    function verifierConnexion() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      const idcode = document.getElementById("idcode").value.trim();
-      const errorDiv = document.getElementById("error");
-
-      if (user === "Niampa" && pass === "23214622C" && idcode === "55") {
-        errorDiv.innerText = "";
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("dashboard-section").style.display = "block";
-      } else {
-        errorDiv.innerText = "⛔ Identifiants incorrects. Veuillez réessayer.";
-      }
-    }
 
     function ouvrirSaisieTrimestre(num) {
       trimestreActif = num;
@@ -709,7 +1013,6 @@
         annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
         annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
 
-        // COULEURS DYNAMIQUES DE PROGRESSION (<10 Rouge, 10-11.99 Orange, >=12 Vert)
         let activeColor = "var(--ci-red)";
         let statusTitle = "Insuffisant";
         
@@ -730,12 +1033,10 @@
         progressStatus.innerText = statusTitle;
         progressFeedback.innerText = `Moyenne globale actualisée sur l'ensemble des trimestres.`;
 
-        // Périmètre Cercle (r=40 -> 2 * PI * 40 ≈ 251.3)
         const offset = 251.3 - (251.3 * percent / 100);
         circleBar.style.strokeDashoffset = offset;
         targetFill.style.width = percent + "%";
 
-        // CALCULS AUTOMATIQUES OBJECTIF D'ADMISSION
         const passageTarget = 10.00;
         let toutesLesNotes = [];
         Object.values(donneesTrimestres).forEach(list => toutesLesNotes.push(...list));
