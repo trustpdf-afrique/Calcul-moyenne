@@ -2,1318 +2,845 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portail National d'Excellence Éducative - Côte d'Ivoire</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ZTV EXCELLENCE SCOLAIRE CÔTE D'IVOIRE</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Couleurs Nationales Côte d'Ivoire */
-      --ci-orange: #FF8200;
-      --ci-orange-dark: #D96B00;
-      --ci-orange-soft: rgba(255, 130, 0, 0.08);
-      --ci-orange-border: rgba(255, 130, 0, 0.25);
-      
-      --ci-green: #009A44;
-      --ci-green-dark: #007A36;
-      --ci-green-soft: rgba(0, 154, 68, 0.08);
-      --ci-green-border: rgba(0, 154, 68, 0.25);
-      
-      --ci-blue: #2563EB;
-      --ci-blue-dark: #1D4ED8;
-      --ci-blue-soft: rgba(37, 99, 235, 0.08);
-      --ci-blue-border: rgba(37, 99, 235, 0.25);
-      
-      --ci-gold: #D97706;
-      --ci-gold-light: #FEF3C7;
+      /* Palette Thème Sombre d'après la Maquette */
+      --bg-dark: #070D18;
+      --bg-card-dark: #0F172A;
+      --bg-input: #131C2E;
+      --border-dark: #1E293B;
 
-      --slate-900: #0F172A;
-      --slate-800: #1E293B;
-      --slate-700: #334155;
-      --slate-600: #475569;
-      --slate-400: #94A3B8;
-      --slate-100: #F1F5F9;
-      --slate-50:  #F8FAFC;
-
-      /* Design Tokens */
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
-      --shadow-lg: 0 16px 32px -8px rgba(15, 23, 42, 0.1), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+      /* Couleurs Vives Identiques Maquette */
+      --orange-ztv: #FF6B00;
+      --orange-dark: #E05D00;
+      --green-ztv: #00A651;
+      --green-dark: #008741;
+      --green-card: #008D4C;
+      --blue-ztv: #1E40AF;
       
-      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      --text-white: #FFFFFF;
+      --text-gray: #94A3B8;
+      --text-dark: #0F172A;
+
+      /* Radius & Shadows */
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #F1F5F9;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(255, 130, 0, 0.03) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 154, 68, 0.03) 0px, transparent 50%);
-      min-height: 100vh;
+      background-color: #030712;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      padding: 32px 16px;
-      color: var(--slate-900);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* CONTENEUR PRINCIPAL APPLICATIF */
-    .app-shell {
-      max-width: 880px;
-      width: 100%;
-      background: #FFFFFF;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-lg);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-    }
-
-    .app-shell::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 6px;
-      background: linear-gradient(90deg, var(--ci-orange) 0%, var(--ci-orange) 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, var(--ci-green) 66.6%, var(--ci-green) 100%);
-      z-index: 20;
-    }
-
-    /* AUTHENTIFICATION & COMPTES */
-    .auth-section { padding: 48px 24px; text-align: center; }
-    .auth-wrapper { max-width: 420px; margin: 0 auto; }
-    .brand-icon {
-      width: 72px; height: 72px;
-      background: linear-gradient(135deg, var(--ci-orange-soft), var(--ci-green-soft));
-      border: 2px solid var(--ci-orange); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-      box-shadow: 0 8px 20px rgba(255, 130, 0, 0.15);
-    }
-    .brand-icon svg { width: 36px; height: 36px; fill: var(--ci-orange); }
-    .auth-wrapper h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); }
-    .auth-wrapper p { color: var(--slate-600); font-size: 14px; margin-top: 4px; margin-bottom: 24px; font-weight: 500; }
-    
-    .field-group { position: relative; margin-bottom: 14px; text-align: left; }
-    .field-group label { display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .field-group input, .field-group select {
-      width: 100%; padding: 12px 16px; border: 1.5px solid #E2E8F0;
-      border-radius: var(--radius-lg); font-size: 14px; outline: none; background: var(--slate-50);
-      transition: var(--transition); font-weight: 600; color: var(--slate-900); font-family: inherit;
-    }
-    .field-group input:focus, .field-group select:focus { background: #FFF; border-color: var(--ci-orange); box-shadow: 0 0 0 4px rgba(255, 130, 0, 0.12); }
-    
-    .btn-primary {
-      width: 100%; padding: 15px; background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
-      color: white; font-weight: 700; border: none; border-radius: var(--radius-lg);
-      cursor: pointer; font-size: 15px; transition: var(--transition); margin-top: 10px;
-      box-shadow: 0 6px 18px rgba(255, 130, 0, 0.28);
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 130, 0, 0.35); }
-    .btn-primary:active { transform: translateY(0); }
-    
-    .btn-text { background: none; border: none; color: var(--ci-blue); font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 16px; transition: var(--transition); }
-    .btn-text:hover { text-decoration: underline; color: var(--ci-blue-dark); }
-
-    .error-msg { color: #E11D48; margin-top: 12px; font-size: 13px; font-weight: 700; }
-    .success-box { background: var(--ci-green-soft); border: 1.5px solid var(--ci-green-border); border-radius: var(--radius-lg); padding: 18px; margin-top: 16px; text-align: left; }
-
-    /* EN-TÊTE PREMIUM */
-    .app-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 22px 32px;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-      background: #FFFFFF;
-    }
-    .header-logo { display: flex; align-items: center; gap: 14px; }
-    .logo-badge {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--ci-orange), var(--ci-green));
-      border-radius: var(--radius-md);
-      display: flex; align-items: center; justify-content: center;
-      color: #FFF; font-size: 20px;
-      box-shadow: 0 6px 14px rgba(0, 154, 68, 0.2);
-    }
-    .logo-text-title { font-size: 17px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.4px; }
-    .logo-text-sub { font-size: 12px; color: var(--slate-600); font-weight: 600; margin-top: 1px; }
-    
-    .profile-pill {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 16px; background: var(--slate-50); cursor: pointer;
-      border-radius: 40px; font-size: 13px; font-weight: 700; color: var(--slate-800);
-      border: 1px solid #E2E8F0; transition: var(--transition);
-    }
-    .profile-pill:hover { background: #FFF; border-color: var(--slate-400); }
-    .profile-avatar {
-      width: 26px; height: 26px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--ci-orange), var(--ci-orange-dark));
-      color: #FFF; display: flex; align-items: center;
-      justify-content: center; font-size: 11px; font-weight: 800;
+      min-height: 100vh;
+      color: var(--text-white);
     }
 
-    /* DASHBOARD LAYOUT */
-    .dashboard-container {
-      padding: 32px;
+    /* CHÂSSIS APPLICATIF MOBILE FIDÈLE A LA MAQUETTE */
+    .app-frame {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      max-height: 880px;
+      background-color: var(--bg-dark);
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      border-radius: 0px;
     }
 
-    /* BOUTON D'HONNEUR BANNIÈRE PREMIUM */
-    .honor-banner-card {
-      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-      border: 2px solid #F59E0B;
+    @media (min-width: 440px) {
+      .app-frame {
+        border-radius: 32px;
+        height: 92vh;
+        border: 2px solid #1E293B;
+      }
+    }
+
+    /* animations transitions */
+    .page-view {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      min-height: 100%;
+      padding-bottom: 80px;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    .page-view.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* EN-TÊTE ET LOGO ZTV */
+    .ztv-brand-header {
+      text-align: center;
+      padding: 30px 20px 10px;
+    }
+    .ztv-logo-img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 8px;
+    }
+    .ztv-title-text {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #FFF;
+    }
+    .ztv-sub-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--orange-ztv);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* FORMULAIRES & INPUTS */
+    .form-container { padding: 20px 24px; }
+    .input-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-dark);
       border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.2);
+      gap: 12px;
       transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
     }
-    .honor-banner-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px -5px rgba(245, 158, 11, 0.3);
-      border-color: #D97706;
+    .input-box:focus-within {
+      border-color: var(--orange-ztv);
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
     }
-    .honor-banner-card::before {
-      content: ""; position: absolute; top:-50%; left:-50%; width:200%; height:200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: rotate(45deg); transition: 0.8s;
-    }
-    .honor-banner-card:hover::before { left: 100%; }
-
-    .honor-btn-content { display: flex; align-items: center; gap: 16px; z-index: 2; }
-    .honor-icon-wrapper {
-      width: 52px; height: 52px; background: #D97706; color: white;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 26px; box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
-    }
-    .honor-title { font-size: 18px; font-weight: 800; color: #78350F; }
-    .honor-sub { font-size: 13px; color: #92400E; font-weight: 600; }
-
-    /* TRIMESTRES GRID */
-    .trimestres-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      width: 100%;
-    }
-
-    .trimestres-centered-row {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .trimestres-centered-row .premium-card {
-      width: calc(50% - 10px);
-    }
-
-    @media (max-width: 680px) {
-      .dashboard-container { padding: 20px 16px; gap: 18px; }
-      .app-header { padding: 16px 20px; }
-      .trimestres-grid { grid-template-columns: 1fr; gap: 16px; }
-      .trimestres-centered-row .premium-card { width: 100%; }
-      .honor-banner-card { flex-direction: column; text-align: center; gap: 14px; }
-      .honor-btn-content { flex-direction: column; }
-    }
-
-    /* CARTES PREMIUM */
-    .premium-card {
-      background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      border-radius: var(--radius-lg);
-      padding: 22px 24px;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .premium-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: #CBD5E1;
-    }
-
-    .card-t1 { border-top: 4px solid var(--ci-blue); }
-    .card-t1:hover { border-color: var(--ci-blue-border); border-top-color: var(--ci-blue); }
-
-    .card-t2 { border-top: 4px solid var(--ci-orange); }
-    .card-t2:hover { border-color: var(--ci-orange-border); border-top-color: var(--ci-orange); }
-
-    .card-t3 { border-top: 4px solid var(--ci-green); }
-    .card-t3:hover { border-color: var(--ci-green-border); border-top-color: var(--ci-green); }
-
-    .card-annual {
-      background: linear-gradient(135deg, #FFFBF5 0%, #F0FDF4 100%);
-      border: 1.5px solid rgba(255, 130, 0, 0.3);
-      cursor: default;
-    }
-    .card-annual:hover { transform: none; box-shadow: var(--shadow-md); }
-
-    .card-interactive {
-      display: flex; justify-content: space-between; align-items: center;
-    }
-
-    .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .card-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--slate-600); }
-    .card-val { font-size: 30px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.8px; line-height: 1.1; }
-    .card-sub { font-size: 13px; color: var(--slate-600); font-weight: 600; margin-top: 4px; }
-
-    /* PROGRESSION GÉNÉRALE */
-    .progress-wrapper {
-      display: flex; align-items: center; gap: 28px;
-    }
-    .circle-mini-container { position: relative; width: 92px; height: 92px; flex-shrink: 0; }
-    .circle-mini-container svg { width: 92px; height: 92px; transform: rotate(-90deg); }
-    .circle-bg { fill: none; stroke: var(--slate-100); stroke-width: 9; }
-    .circle-progress {
-      fill: none; stroke: var(--ci-red); stroke-width: 9;
-      stroke-dasharray: 251; stroke-dashoffset: 251;
-      transition: stroke-dashoffset 1s ease, stroke 0.4s ease; stroke-linecap: round;
-    }
-    .circle-mini-text {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 18px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px;
-    }
-
-    .progress-info { flex: 1; }
-    .target-bar-bg { width: 100%; height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; margin: 10px 0; }
-    .target-bar-fill { height: 100%; width: 0%; background: var(--ci-red); transition: width 1s ease, background-color 0.4s ease; }
-
-    /* CARTES D'ANALYSE */
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    @media (max-width: 680px) {
-      .analysis-grid { grid-template-columns: 1fr; }
-    }
-
-    /* OBJECTIF PASSAGE */
-    .objective-card {
-      background: #FFFFFF;
-      border: 1.5px solid rgba(0, 154, 68, 0.3);
-      border-radius: var(--radius-lg);
-      padding: 26px;
-      box-shadow: var(--shadow-md);
-      position: relative;
-    }
-    .objective-content {
-      margin-top: 14px;
+    .input-box input, .input-box select {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #FFF;
       font-size: 14px;
-      color: var(--slate-700);
-      line-height: 1.65;
+      width: 100%;
       font-weight: 500;
     }
-    .highlight-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 14px; border-radius: 30px;
-      font-weight: 800; font-size: 12px;
-    }
+    .input-box select option { background: var(--bg-dark); color: #FFF; }
+    .input-icon { font-size: 16px; opacity: 0.6; }
 
-    /* MODALES & PROFIL */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(6px);
-      z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
-    }
-    .modal-card {
-      background: #FFF; width: 100%; max-width: 500px; border-radius: var(--radius-xl);
-      padding: 28px; box-shadow: var(--shadow-lg); border: 1px solid #E2E8F0;
-      animation: modalPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes modalPop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .modal-title { font-size: 17px; font-weight: 800; color: var(--slate-900); }
-    .btn-close {
-      background: var(--slate-100); border: none; width: 36px; height: 36px;
-      border-radius: 50%; font-weight: 800; cursor: pointer; color: var(--slate-600);
+    /* BOUTONS NATIVE STYLE */
+    .btn-orange {
+      background: linear-gradient(135deg, var(--orange-ztv), var(--orange-dark));
+      color: #FFF;
+      font-weight: 800;
+      font-size: 15px;
+      border: none;
+      border-radius: 30px;
+      padding: 15px;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.35);
       transition: var(--transition);
     }
-    .btn-close:hover { background: var(--slate-200); color: var(--slate-900); }
-    .modal-list { list-style: none; max-height: 280px; overflow-y: auto; }
-    .modal-list li {
-      padding: 12px 16px; border-bottom: 1px solid var(--slate-100); font-size: 14px; font-weight: 600;
-      display: flex; justify-content: space-between; align-items: center;
-    }
+    .btn-orange:active { transform: scale(0.98); }
 
-    /* PAGE DE SAISIE PAR TRIMESTRE */
-    #trimestre-page { min-height: 500px; display: flex; flex-direction: column; }
-    .trim-header {
-      padding: 20px 32px; border-bottom: 1px solid var(--slate-100); background: #FAFBFD;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    .btn-green {
+      background: linear-gradient(135deg, var(--green-ztv), var(--green-dark));
+      color: #FFF;
+      font-weight: 800;
+      font-size: 15px;
+      border: none;
+      border-radius: 30px;
+      padding: 15px;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(0, 166, 81, 0.3);
+      transition: var(--transition);
     }
-    .btn-secondary {
-      background: #FFF; border: 1.5px solid #CBD5E1; color: var(--slate-800);
-      padding: 10px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 700;
-      cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px;
-      box-shadow: var(--shadow-sm);
-    }
-    .btn-secondary:hover { background: var(--slate-100); border-color: var(--slate-400); }
+    .btn-green:active { transform: scale(0.98); }
 
-    .table-scroll-area { padding: 28px 32px; overflow-x: auto; }
-    .styled-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #E2E8F0; }
-    .styled-table th, .styled-table td { padding: 12px 16px; border-bottom: 1px solid #E2E8F0; font-size: 13.5px; }
-    .styled-table th { background: var(--slate-50); color: var(--slate-600); font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
-    .styled-table th:nth-child(n+2), .styled-table td:nth-child(n+2) { text-align: center; }
-    
-    tr.category-row td { background: var(--ci-orange-soft); color: var(--ci-orange-dark); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-    
-    input.coef-input, input.note-input {
-      padding: 8px; text-align: center; border: 1.5px solid #E2E8F0;
-      border-radius: var(--radius-sm); font-weight: 700; outline: none; transition: var(--transition);
-      font-family: inherit; font-size: 14px;
+    /* BARRE DE NAVIGATION EN BAS (4 ONGLETS) */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 68px;
+      background: #0B132B;
+      border-top: 1px solid #1E293B;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+      padding: 0 10px;
     }
-    input.coef-input { width: 55px; background: #FFF; }
-    input.note-input { width: 70px; background: var(--slate-50); }
-    input.note-input:focus { border-color: var(--ci-orange); background: #FFF; box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.12); }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: #64748B;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 25%;
+    }
+    .nav-item.active { color: var(--orange-ztv); }
+    .nav-item span.icon { font-size: 20px; }
 
-    /* BOUTON ASSISTANCE FLOTTANT WHATSAPP */
-    .whatsapp-btn {
-      position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
-      background: #25D366; color: white; border-radius: 50%;
+    /* HEADER DASHBOARD UTILISATEUR */
+    .dash-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .user-profile-info { display: flex; align-items: center; gap: 12px; }
+    .user-avatar-circle {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--orange-ztv);
+      object-fit: cover;
+    }
+    .header-icons-right { display: flex; gap: 10px; }
+    .icon-btn-dark {
+      width: 38px; height: 38px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-dark);
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4); z-index: 999;
-      cursor: pointer; text-decoration: none; transition: var(--transition);
+      cursor: pointer; font-size: 16px;
+      position: relative;
     }
-    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5); }
-    .whatsapp-btn svg { width: 34px; height: 34px; fill: white; }
+    .notif-badge {
+      position: absolute; top: 4px; right: 4px;
+      width: 8px; height: 8px; background: #EF4444; border-radius: 50%;
+    }
 
-    /* 🏆 STYLES TABLEAU D'HONNEUR CERTIFICAT PREMIUM */
-    .certificate-modal-card {
-      background: #FFF; width: 100%; max-width: 750px; border-radius: var(--radius-xl);
-      padding: 36px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
-      max-height: 90vh; overflow-y: auto;
-    }
-    .cert-frame {
-      border: 4px double #D97706; padding: 32px; border-radius: 16px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF7 100%);
-      position: relative; text-align: center; box-shadow: inset 0 0 20px rgba(217, 119, 6, 0.05);
-    }
-    .cert-flag-strip {
-      height: 6px; width: 100%; position: absolute; top: 0; left: 0;
-      background: linear-gradient(90deg, var(--ci-orange) 0%, var(--ci-orange) 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, var(--ci-green) 66.6%, var(--ci-green) 100%);
-    }
-    .cert-header { margin-bottom: 24px; }
-    .cert-logo { font-size: 38px; margin-bottom: 6px; }
-    .cert-republique { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--slate-600); }
-    .cert-title { font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-weight: 900; color: #78350F; margin: 12px 0 4px; }
-    .cert-subtitle { font-size: 13px; font-weight: 700; color: #D97706; text-transform: uppercase; letter-spacing: 1.5px; }
-    .cert-body { margin: 28px 0; }
-    .cert-student-name { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--slate-900); border-bottom: 2px solid var(--ci-gold-light); display: inline-block; padding: 0 16px 4px; margin: 8px 0; }
-    .cert-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; background: #FEF3C7; padding: 14px; border-radius: var(--radius-md); text-align: center; }
-    .cert-detail-item { font-size: 12px; color: #78350F; }
-    .cert-detail-item strong { display: block; font-size: 14px; color: #92400E; margin-top: 2px; }
-    .cert-message { font-size: 14px; color: var(--slate-700); line-height: 1.7; font-weight: 500; max-width: 580px; margin: 0 auto; }
-    .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 36px; padding-top: 20px; border-top: 1px dashed #F59E0B; }
-    .cert-seal { width: 70px; height: 70px; border: 2px dashed #D97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #D97706; }
-    .cert-signature { text-align: right; font-size: 12px; font-weight: 700; color: var(--slate-600); }
+    /* TRIMESTRES DISPOSITION MAQUETTE (2 EN HAUT, 1 EN BAS CENTRÉ) */
+    .trimestres-section { padding: 0 16px; margin-bottom: 16px; }
+    .trimestres-row-top { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .trimestres-row-bottom { display: flex; justify-content: center; }
+    .trimestres-row-bottom .trim-card { width: 55%; }
 
-    /* STYLES SPÉCIFIQUES POUR L'IMPRESSION */
-    @media print {
-      body * { visibility: hidden; }
-      #honor-modal, #honor-modal * { visibility: visible; }
-      #honor-modal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #FFF; padding: 0; display: block !important; }
-      .certificate-modal-card { box-shadow: none; max-width: 100%; border: none; padding: 0; }
-      .cert-frame { border: 4px double #D97706; padding: 40px; }
-      .no-print { display: none !important; }
+    .trim-card {
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      color: #FFF;
+      cursor: pointer;
+      position: relative;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+    }
+    .trim-card:active { transform: scale(0.97); }
+    .trim-card-1 { background: linear-gradient(135deg, #FF6B00, #D95300); }
+    .trim-card-2 { background: #FFFFFF; color: var(--text-dark); }
+    .trim-card-3 { background: linear-gradient(135deg, #00A651, #00803E); }
+
+    .trim-header-flex { display: flex; justify-content: space-between; align-items: flex-start; }
+    .trim-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; }
+    .trim-val { font-size: 20px; font-weight: 900; margin-top: 6px; }
+    .trim-arrow-circle {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); display: flex;
+      align-items: center; justify-content: center; font-size: 11px;
+    }
+    .trim-card-2 .trim-arrow-circle { background: rgba(0,0,0,0.08); }
+
+    /* CARTE MOYENNE ANNUELLE MAQUETTE */
+    .annual-card-ztv {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      margin: 0 16px 16px;
+      color: var(--text-dark);
+      box-shadow: var(--shadow-card);
+    }
+    .annual-top-title {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      color: var(--green-card); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .annual-stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      text-align: center; border-top: 1px solid #E2E8F0; padding-top: 12px;
+    }
+    .annual-stat-lbl { font-size: 10px; color: #64748B; font-weight: 700; text-transform: uppercase; }
+    .annual-stat-val { font-size: 18px; font-weight: 900; margin-top: 4px; color: #0F172A; }
+
+    /* CARTE PROGRESSION GÉNÉRALE */
+    .progression-card-ztv {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 16px 20px;
+      margin: 0 16px 16px;
+      color: var(--text-dark);
+      display: flex; align-items: center; gap: 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .prog-circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 5px solid var(--orange-ztv);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 14px; color: var(--text-dark); flex-shrink: 0;
+    }
+    .prog-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+    .prog-bar-fill { height: 100%; width: 85%; background: var(--green-ztv); border-radius: 4px; }
+
+    /* DUAL ACTION CARDS (MATIÈRES À REVOIR / POINTS FORTS) */
+    .dual-cards-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      padding: 0 16px; margin-bottom: 16px;
+    }
+    .action-card-orange {
+      background: linear-gradient(135deg, #FF6B00, #E05D00);
+      border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer;
+    }
+    .action-card-green {
+      background: linear-gradient(135deg, #00A651, #00803E);
+      border-radius: var(--radius-lg); padding: 14px; color: #FFF; cursor: pointer;
+    }
+    .action-card-title { font-size: 12px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+    .action-card-sub { font-size: 10px; opacity: 0.85; margin-top: 4px; font-weight: 500; }
+
+    /* BANNIÈRE OBJECTIF & BOTTOM BUTTONS */
+    .objective-banner {
+      background: linear-gradient(135deg, #FF6B00, #D95300);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px; margin: 0 16px 16px; color: #FFF;
+      display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    }
+    .bottom-dual-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-bottom: 20px; }
+    .btn-card-dark {
+      background: var(--bg-card-dark); border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg); padding: 14px; color: #FFF;
+      display: flex; align-items: center; gap: 10px; cursor: pointer;
+    }
+
+    /* ÉCRAN DU CRÉATEUR (NIAMPA ZAKARIA) */
+    .creator-card-box {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 24px 20px;
+      margin: 20px 16px;
+      text-align: center;
+    }
+    .creator-img {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 3px solid var(--orange-ztv); margin-bottom: 12px; object-fit: cover;
+    }
+    .creator-info-list {
+      text-align: left; font-size: 12px; line-height: 2;
+      background: #09101D; padding: 14px; border-radius: var(--radius-md); margin: 16px 0;
+    }
+
+    /* CERTIFICAT DU TABLEAU D'HONNEUR PARCHEMIN ET OR */
+    .certificate-frame {
+      background: #FFFDF5;
+      border: 6px double #D97706;
+      border-radius: 16px;
+      padding: 24px 16px;
+      margin: 16px;
+      color: #334155;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .cert-badge-top { font-size: 32px; margin-bottom: 4px; }
+    .cert-main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 900; color: #78350F; text-transform: uppercase;
+    }
+    .cert-student-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 900; color: var(--green-ztv); margin: 10px 0;
+      border-bottom: 2px solid #FDE68A; display: inline-block; padding: 0 12px;
+    }
+    .cert-seal-gold {
+      width: 60px; height: 60px; border-radius: 50%; border: 2px dashed #D97706;
+      display: flex; align-items: center; justify-content: center; margin: 14px auto 0;
+      font-size: 24px; color: #D97706;
+    }
+
+    /* MODALE DE SAISIE ET TABLES */
+    .modal-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
+      z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-body-dark {
+      background: var(--bg-card-dark); border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl); width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px;
+    }
+    .grade-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .grade-table th, .grade-table td { padding: 10px 6px; font-size: 12px; border-bottom: 1px solid var(--border-dark); text-align: center; }
+    .grade-table th:first-child, .grade-table td:first-child { text-align: left; }
+    .table-input {
+      width: 50px; background: var(--bg-input); border: 1px solid var(--border-dark);
+      color: #FFF; text-align: center; border-radius: 6px; padding: 6px; font-weight: 700;
     }
   </style>
 </head>
 <body>
 
-  <div class="app-shell">
-    
-    <!-- ================= 1. CREATION DE COMPTE ================= -->
-    <div id="register-section" class="auth-section" style="display:none;">
-      <div class="auth-wrapper">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+  <!-- CHÂSSIS APPLICATION -->
+  <div class="app-frame">
+
+    <!-- ================= 1. PAGE DE CONNEXION ================= -->
+    <div id="view-login" class="page-view active">
+      <div class="ztv-brand-header" style="margin-top: 40px;">
+        <div style="font-size: 42px;">🎓</div>
+        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
+        <div class="ztv-sub-text">Côte d'Ivoire 🇨🇮</div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="font-size: 18px; font-weight: 800;">Bienvenue !</h2>
+        <p style="font-size: 12px; color: var(--text-gray);">Connectez-vous pour continuer</p>
+      </div>
+
+      <div class="form-container">
+        <div class="input-box">
+          <span class="input-icon">👤</span>
+          <input type="text" id="login-fullname" placeholder="Nom complet" />
         </div>
-        <h2>Créer un compte</h2>
-        <p>Inscrivez-vous pour accéder à votre espace personnalisé</p>
-        
-        <div class="field-group">
-          <label>Nom</label>
-          <input type="text" id="reg-nom" placeholder="Ex: Kouadio" />
+        <div class="input-box">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="login-pass" maxlength="4" placeholder="Mot de passe (4 chiffres)" />
+          <span class="input-icon" style="cursor:pointer;" onclick="togglePassVisibility('login-pass')">👁️</span>
         </div>
-        <div class="field-group">
-          <label>Prénom</label>
-          <input type="text" id="reg-prenom" placeholder="Ex: Jean" />
+
+        <div style="text-align: right; margin-bottom: 20px;">
+          <a href="#" style="color: var(--orange-ztv); font-size: 11px; font-weight: 700; text-decoration: none;" onclick="showForgotModal()">Mot de passe oublié ?</a>
         </div>
-        <div class="field-group">
-          <label>Classe</label>
-          <input type="text" id="reg-classe" placeholder="Ex: 3ème 1 / Tle A" />
+
+        <button class="btn-orange" onclick="actionLogin()">SE CONNECTER ➔</button>
+
+        <div style="display:flex; align-items:center; margin: 24px 0; color: var(--text-gray); font-size: 12px;">
+          <div style="flex:1; height:1px; background:var(--border-dark);"></div>
+          <span style="padding: 0 10px; font-weight: 700;">OU</span>
+          <div style="flex:1; height:1px; background:var(--border-dark);"></div>
         </div>
-        <div class="field-group">
-          <label>Établissement (Optionnel)</label>
-          <input type="text" id="reg-ecole" placeholder="Ex: Lycée Moderne d'Abidjan" />
-        </div>
-        <div class="field-group">
-          <label>Ville</label>
-          <input type="text" id="reg-ville" placeholder="Ex: Abidjan" />
-        </div>
-        <div class="field-group">
-          <label>Pays</label>
+
+        <button class="btn-green" onclick="switchPage('view-register')">➕ CRÉER UN COMPTE</button>
+      </div>
+
+      <div style="margin-top: auto; text-align: center; padding: 20px; font-size: 10px; color: var(--text-gray);">
+        🔒 Vos données sont sécurisées
+      </div>
+    </div>
+
+    <!-- ================= 2. PAGE CRÉER UN COMPTE ================= -->
+    <div id="view-register" class="page-view">
+      <div style="padding: 16px;">
+        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-login')">⬅️</button>
+      </div>
+
+      <div class="ztv-brand-header" style="padding-top:0;">
+        <div style="font-size: 36px;">🎓</div>
+        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
+        <div class="ztv-sub-text">Créer un compte</div>
+      </div>
+
+      <div class="form-container">
+        <div class="input-box"><span class="input-icon">👤</span><input type="text" id="reg-nom" placeholder="Nom" /></div>
+        <div class="input-box"><span class="input-icon">👤</span><input type="text" id="reg-prenom" placeholder="Prénom" /></div>
+        <div class="input-box"><span class="input-icon">📍</span><input type="text" id="reg-ville" placeholder="Ville" /></div>
+        <div class="input-box"><span class="input-icon">💬</span><input type="tel" id="reg-whatsapp" placeholder="Numéro WhatsApp" /></div>
+        <div class="input-box">
+          <span class="input-icon">🌍</span>
           <select id="reg-pays">
-            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-            <option value="Bénin">Bénin</option>
-            <option value="Burkina Faso">Burkina Faso</option>
-            <option value="Cameroun">Cameroun</option>
-            <option value="Congo">Congo</option>
-            <option value="Mali">Mali</option>
-            <option value="Sénégal">Sénégal</option>
-            <option value="Togo">Togo</option>
-            <option value="Autre">Autre</option>
+            <option value="Côte d'Ivoire">Côte d'Ivoire 🇨🇮</option>
+            <option value="Bénin">Bénin 🇧🇯</option>
+            <option value="Burkina Faso">Burkina Faso 🇧🇫</option>
+            <option value="Sénégal">Sénégal 🇸🇳</option>
           </select>
         </div>
-        <div class="field-group">
-          <label>Numéro WhatsApp</label>
-          <input type="tel" id="reg-whatsapp" placeholder="Ex: 0700000000" />
-        </div>
-        <div class="field-group">
-          <label>Mot de passe (4 chiffres)</label>
-          <input type="password" id="reg-pass" maxlength="4" placeholder="••••" pattern="[0-9]{4}" />
-        </div>
+        <div class="input-box"><span class="input-icon">🔒</span><input type="password" id="reg-pass" maxlength="4" placeholder="Mot de passe (4 chiffres)" /></div>
 
-        <button class="btn-primary" onclick="creerCompte()">Terminer</button>
-        <div class="error-msg" id="reg-error"></div>
+        <button class="btn-green" style="margin-top: 10px;" onclick="actionRegister()">TERMINER ✅</button>
+        <p style="font-size: 10px; color: var(--text-gray); text-align: center; margin-top: 12px;">Le mot de passe doit contenir 4 chiffres uniquement</p>
       </div>
     </div>
 
-    <!-- ================= 2. CONNEXION ================= -->
-    <div id="login-section" class="auth-section" style="display:none;">
-      <div class="auth-wrapper">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-        </div>
-        <h2>Connexion</h2>
-        <p>Portail National d'Excellence Éducative</p>
-        
-        <div class="field-group">
-          <label>Nom complet</label>
-          <input type="text" id="login-fullname" placeholder="Ex: Kouadio Jean" />
-        </div>
-        <div class="field-group">
-          <label>Mot de passe (4 chiffres)</label>
-          <input type="password" id="login-pass" maxlength="4" placeholder="••••" />
-        </div>
-
-        <button class="btn-primary" onclick="seConnecter()">Se connecter</button>
-        <br>
-        <button class="btn-text" onclick="afficherMotDePasseOublie()">Mot de passe oublié ?</button>
-        <div class="error-msg" id="login-error"></div>
-      </div>
-    </div>
-
-    <!-- ================= 3. MOT DE PASSE OUBLIÉ ================= -->
-    <div id="forgot-section" class="auth-section" style="display:none;">
-      <div class="auth-wrapper">
-        <h2>Récupération</h2>
-        <p>Saisissez votre numéro WhatsApp pour identifier votre compte</p>
-        
-        <div class="field-group" id="forgot-step1">
-          <label>Numéro WhatsApp</label>
-          <input type="tel" id="forgot-whatsapp" placeholder="Ex: 0700000000" />
-          <button class="btn-primary" onclick="rechercherCompteWhatsApp()">Rechercher le compte</button>
-        </div>
-
-        <!-- Confirmation compte trouvé -->
-        <div id="forgot-step2" style="display:none;" class="success-box">
-          <p style="font-weight:800; color:var(--slate-900); margin-bottom:10px;">Est-ce bien votre compte ?</p>
-          <p><strong>Nom :</strong> <span id="conf-nom"></span></p>
-          <p><strong>Prénom :</strong> <span id="conf-prenom"></span></p>
-          <p><strong>Ville :</strong> <span id="conf-ville"></span></p>
-          <p><strong>Pays :</strong> <span id="conf-pays"></span></p>
-          
-          <div style="display:flex; gap:10px; margin-top:16px;">
-            <button class="btn-primary" style="background:var(--ci-green);" onclick="confirmerDemandeReinit()">✅ Oui, c'est moi</button>
-            <button class="btn-primary" style="background:var(--slate-600);" onclick="annulerForgot()">❌ Annuler</button>
-          </div>
-        </div>
-
-        <!-- Message post-confirmation -->
-        <div id="forgot-step3" style="display:none;" class="success-box" style="background:#FFF;">
-          <p style="font-size:14px; color:var(--slate-800); line-height:1.6; font-weight:600;">
-            Votre demande a été envoyée avec succès.<br><br>
-            Veuillez contacter l'assistance pour la réinitialisation de votre mot de passe. Après validation de votre demande, votre mot de passe sera réinitialisé et vous serez informé via WhatsApp.
-          </p>
-          <a href="https://wa.me/2250799591024?text=Bonjour,%20je%20souhaite%20réinitialiser%20mon%20mot%20de%20passe." target="_blank" class="btn-primary" style="background:#25D366; display:inline-block; text-decoration:none; text-align:center; margin-top:14px;">
-            💬 Contacter l'assistance WhatsApp
-          </a>
-        </div>
-
-        <button class="btn-text" onclick="afficherConnexion()">⬅️ Retour à la connexion</button>
-        <div class="error-msg" id="forgot-error"></div>
-      </div>
-    </div>
-
-    <!-- ================= 🏠 TABLEAU DE BORD ================= -->
-    <div id="dashboard-section" style="display:none;">
-      
-      <header class="app-header">
-        <div class="header-logo">
-          <div class="logo-badge">🎓</div>
+    <!-- ================= 3. TABLEAU DE BORD (ACCUEIL) ================= -->
+    <div id="view-dashboard" class="page-view">
+      <!-- En-tête Utilisateur -->
+      <div class="dash-header">
+        <div class="user-profile-info">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-avatar-circle" id="dash-avatar-img" />
           <div>
-            <div class="logo-text-title">Portail Zakaria</div>
-            <div class="logo-text-sub">République de Côte d'Ivoire</div>
+            <div style="font-size: 11px; color: var(--text-gray);">Bonjour,</div>
+            <div style="font-size: 15px; font-weight: 800;" id="dash-user-name">Niampa Zakaria 👋</div>
           </div>
         </div>
-        <div class="profile-pill" onclick="ouvrirProfil()">
-          <div class="profile-avatar" id="header-avatar">E</div>
-          <span id="header-user-name">Mon Profil</span>
+        <div class="header-icons-right">
+          <div class="icon-btn-dark">🔔<div class="notif-badge"></div></div>
+          <div class="icon-btn-dark" onclick="switchPage('view-creator')">☰</div>
         </div>
-      </header>
+      </div>
 
-      <div class="dashboard-container">
-        
-        <!-- 🏆 BOUTON / BANNIÈRE PREMIUM TABLEAU D'HONNEUR -->
-        <div class="honor-banner-card" onclick="ouvrirTableauHonneur()">
-          <div class="honor-btn-content">
-            <div class="honor-icon-wrapper">🏆</div>
-            <div>
-              <div class="honor-title">Tableau d'Honneur Premium</div>
-              <div class="honor-sub">Découvrez si vous êtes admissible à la distinction officielle d'excellence</div>
+      <!-- Les 3 Cartes Trimestres (Layout Maquette) -->
+      <div class="trimestres-section">
+        <div class="trimestres-row-top">
+          <div class="trim-card trim-card-1" onclick="openTrimModal(1)">
+            <div class="trim-header-flex">
+              <div class="trim-title">1er Trimestre</div>
+              <div class="trim-arrow-circle">➔</div>
             </div>
-          </div>
-          <span style="font-size: 14px; font-weight: 800; color: #78350F; background: #FDE68A; padding: 8px 16px; border-radius: 20px; z-index:2;">Consulter ➔</span>
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="trimestres-grid">
-            <div class="premium-card card-t1" onclick="ouvrirSaisieTrimestre(1)">
-              <div class="card-header-flex">
-                <span class="card-title">📘 1er Trimestre</span>
-                <span style="font-size:12px; color:var(--ci-blue-dark); font-weight:800;">Saisir ➔</span>
-              </div>
-              <div class="card-val" id="dash-t1">-</div>
-              <div class="card-sub">Moyenne du trimestre</div>
-            </div>
-
-            <div class="premium-card card-t2" onclick="ouvrirSaisieTrimestre(2)">
-              <div class="card-header-flex">
-                <span class="card-title">📙 2ᵉ Trimestre</span>
-                <span style="font-size:12px; color:var(--ci-orange-dark); font-weight:800;">Saisir ➔</span>
-              </div>
-              <div class="card-val" id="dash-t2">-</div>
-              <div class="card-sub">Moyenne du trimestre</div>
-            </div>
+            <div style="font-size:10px; opacity:0.8; margin-top:6px;">Moyenne</div>
+            <div class="trim-val" id="val-t1">16,19/20</div>
           </div>
 
-          <div class="trimestres-centered-row">
-            <div class="premium-card card-t3" onclick="ouvrirSaisieTrimestre(3)">
-              <div class="card-header-flex">
-                <span class="card-title">📗 3ᵉ Trimestre</span>
-                <span style="font-size:12px; color:var(--ci-green-dark); font-weight:800;">Saisir ➔</span>
-              </div>
-              <div class="card-val" id="dash-t3">-</div>
-              <div class="card-sub">Moyenne du trimestre</div>
+          <div class="trim-card trim-card-2" onclick="openTrimModal(2)">
+            <div class="trim-header-flex">
+              <div class="trim-title">2ᵉ Trimestre</div>
+              <div class="trim-arrow-circle">➔</div>
             </div>
+            <div style="font-size:10px; opacity:0.8; margin-top:6px;">Moyenne</div>
+            <div class="trim-val" id="val-t2">16,15/20</div>
           </div>
         </div>
 
-        <div class="premium-card card-annual">
-          <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-orange-dark);">🎓 Moyenne Annuelle Officielle</span>
-            <span style="font-size:22px;">🏅</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
-            <div>
-              <div class="card-val" id="dash-annual" style="color:var(--ci-orange-dark); font-size:36px;">-</div>
-              <div class="card-sub" id="dash-mention" style="font-size:14px; font-weight:700;">Mention : En attente</div>
+        <div class="trimestres-row-bottom">
+          <div class="trim-card trim-card-3" onclick="openTrimModal(3)">
+            <div class="trim-header-flex">
+              <div class="trim-title">3ᵉ Trimestre</div>
+              <div class="trim-arrow-circle">➔</div>
             </div>
-            <div id="annual-badge" style="background:var(--slate-100); color:var(--slate-600); padding:8px 16px; border-radius:30px; font-weight:800; font-size:12px;">
-              Statut : Non évalué
-            </div>
+            <div style="font-size:10px; opacity:0.8; margin-top:6px;">Moyenne</div>
+            <div class="trim-val" id="val-t3">16,63/20</div>
           </div>
         </div>
+      </div>
 
-        <div class="premium-card" style="cursor:default;">
-          <div class="progress-wrapper">
-            <div class="circle-mini-container">
-              <svg>
-                <circle class="circle-bg" cx="46" cy="46" r="40"></circle>
-                <circle class="circle-progress" id="circle-bar" cx="46" cy="46" r="40"></circle>
-              </svg>
-              <div class="circle-mini-text" id="circle-val">0%</div>
-            </div>
-
-            <div class="progress-info">
-              <div class="card-title" style="margin-bottom:4px;">📊 Progression Générale</div>
-              <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; margin-top:2px;">
-                <span id="progress-status-text">Évaluation globale</span>
-                <span id="progress-percentage-label">0 / 20</span>
-              </div>
-              <div class="target-bar-bg">
-                <div class="target-bar-fill" id="target-bar-fill"></div>
-              </div>
-              <div class="card-sub" id="progress-feedback-text">Calculé selon la méthode officielle du Ministère de l'Éducation Nationale.</div>
-            </div>
+      <!-- Carte Moyenne Annuelle -->
+      <div class="annual-card-ztv">
+        <div class="annual-top-title">🎓 Moyenne Annuelle</div>
+        <div class="annual-stats-grid">
+          <div>
+            <div class="annual-stat-lbl">Moyenne</div>
+            <div class="annual-stat-val" id="val-annual" style="color:var(--orange-ztv);">16,35/20</div>
+          </div>
+          <div>
+            <div class="annual-stat-lbl">Mention</div>
+            <div class="annual-stat-val" style="color:var(--green-ztv);">BIEN</div>
+          </div>
+          <div>
+            <div class="annual-stat-lbl">Décision</div>
+            <div class="annual-stat-val" style="color:var(--green-ztv); font-size:14px; margin-top:6px;">ADMIS(E) ✅</div>
           </div>
         </div>
+      </div>
 
-        <div class="analysis-grid">
-          <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('weak')">
-            <div>
-              <div class="card-title" style="color:#E11D48;">📚 Matières à revoir</div>
-              <div class="card-sub" style="margin-top:6px;">Cliquer pour afficher les détails</div>
-            </div>
-            <span style="font-size:24px;">⚠️</span>
-          </div>
+      <!-- Progression Générale -->
+      <div class="progression-card-ztv">
+        <div class="prog-circle" id="circle-pct">85%</div>
+        <div style="flex:1;">
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase;">Progression Générale</div>
+          <div style="font-size: 11px; color: #64748B; margin-top:2px;">Très bonne progression !</div>
+          <div class="prog-bar-bg"><div class="prog-bar-fill" id="bar-fill"></div></div>
+        </div>
+      </div>
 
-          <div class="premium-card card-interactive" onclick="ouvrirModaleDetails('best')">
-            <div>
-              <div class="card-title" style="color:var(--ci-green-dark);">⭐ Points forts</div>
-              <div class="card-sub" style="margin-top:6px;">Cliquer pour afficher les détails</div>
-            </div>
-            <span style="font-size:24px;">🌟</span>
+      <!-- Double Cartes Actions -->
+      <div class="dual-cards-grid">
+        <div class="action-card-orange" onclick="alert('Matières à renforcer: Mathématiques, Physique')">
+          <div class="action-card-title">📖 Matières à revoir</div>
+          <div class="action-card-sub">Consulter les matières nécessitant plus d'efforts</div>
+        </div>
+        <div class="action-card-green" onclick="alert('Points forts: Français, SVT, Anglais')">
+          <div class="action-card-title">⭐ Points forts</div>
+          <div class="action-card-sub">Consulter vos matières et compétences solides</div>
+        </div>
+      </div>
+
+      <!-- Bannière Objectif -->
+      <div class="objective-banner" onclick="alert('Objectif : Obtenir au moins 10.00/20 pour passer en classe supérieure.')">
+        <div>
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase;">🎯 Objectif : Passer en classe supérieure</div>
+          <div style="font-size: 10px; opacity: 0.9;">Voir les détails et conseils personnalisés</div>
+        </div>
+        <div style="font-size:14px;">➔</div>
+      </div>
+
+      <!-- Bottom Dual Buttons -->
+      <div class="bottom-dual-btns">
+        <div class="btn-card-dark" onclick="switchPage('view-certif')">
+          <span style="font-size: 18px;">🏆</span>
+          <div>
+            <div style="font-size:11px; font-weight:800;">Tableau d'Honneur</div>
+            <div style="font-size:9px; color:var(--text-gray);">Voir mon tableau</div>
           </div>
         </div>
-
-        <div class="objective-card">
-          <div class="card-header-flex">
-            <span class="card-title" style="color:var(--ci-green-dark);">🎯 Objectif pour passer en classe supérieure</span>
-            <span class="highlight-badge" id="obj-badge" style="background:var(--ci-green-soft); color:var(--ci-green-dark);">Moyenne minimale : 10.00 / 20</span>
-          </div>
-          <div class="objective-content" id="objective-dynamic-text">
-            Saisissez les notes de vos trimestres pour activer le calcul officiel de votre objectif d'admission.
+        <div class="btn-card-dark" onclick="switchPage('view-creator')">
+          <span style="font-size: 18px;">👤</span>
+          <div>
+            <div style="font-size:11px; font-weight:800;">Mon Profil</div>
+            <div style="font-size:9px; color:var(--text-gray);">Gérer mon compte</div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- ================= 🏆 FENÊTRE MODALE TABLEAU D'HONNEUR ================= -->
-    <div class="modal-overlay" id="honor-modal">
-      <div class="certificate-modal-card">
-        <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <button class="btn-secondary" onclick="imprimerCertificat()">🖨️ Imprimer le Tableau d'honneur</button>
-          <button class="btn-close" onclick="fermerTableauHonneur()">✕</button>
+    <!-- ================= 4. ÉCRAN DU CRÉATEUR ================= -->
+    <div id="view-creator" class="page-view">
+      <div style="padding:16px;">
+        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-dashboard')">⬅️</button>
+      </div>
+      <div class="ztv-brand-header" style="padding-top:0;">
+        <div style="font-size:28px;">🎓</div>
+        <div class="ztv-title-text"><span style="color:var(--orange-ztv);">ZTV</span> EXCELLENCE</div>
+      </div>
+
+      <div class="creator-card-box">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="creator-img" />
+        <h3 style="font-size: 18px; font-weight: 800;">Niampa Zakaria</h3>
+        <p style="font-size: 12px; color: var(--green-ztv); font-weight: 700;">Créateur de ZTV</p>
+
+        <div class="creator-info-list">
+          <div>🎓 <strong>Statut :</strong> Élève en classe de 3ᵉ</div>
+          <div>🏫 <strong>Établissement :</strong> Lycée Moderne de Bangolo (CÔTE D'IVOIRE 🇨🇮)</div>
+          <div>🎂 <strong>Âge :</strong> 15 ans</div>
+          <div>🎬 <strong>Activité :</strong> Créateur de contenus sur les phénomènes mystérieux</div>
+          <div>🏷️ <strong>Nom de marque :</strong> ZTV</div>
+          <div>🎵 <strong>Compte TikTok :</strong> zakaria.tv</div>
         </div>
 
-        <!-- CERTIFICAT ACCORDÉ (≥ 14) -->
-        <div id="cert-success" class="cert-frame" style="display:none;">
-          <div class="cert-flag-strip"></div>
-          <div class="cert-header">
-            <div class="cert-logo">🎓</div>
-            <div class="cert-republique">RÉPUBLIQUE DE CÔTE D'IVOIRE</div>
-            <div style="font-size:10px; font-weight:700; color:var(--ci-orange-dark);">Union - Discipline - Travail</div>
-            <div class="cert-title">Tableau d'Honneur</div>
-            <div class="cert-subtitle">Certificat de Mérite et d'Excellence Scolaire</div>
-          </div>
-
-          <div class="cert-body">
-            <p style="font-size:13px; color:var(--slate-600); font-weight:600;">Ce certificat officiel est décerné à :</p>
-            <div class="cert-student-name" id="cert-student-fullname">Kouadio Jean</div>
-
-            <div class="cert-details-grid">
-              <div class="cert-detail-item">Classe<strong id="cert-classe">3ème A</strong></div>
-              <div class="cert-detail-item">Établissement<strong id="cert-ecole">Lycée Moderne</strong></div>
-              <div class="cert-detail-item">Année Scolaire<strong id="cert-annee">2025 - 2026</strong></div>
-            </div>
-
-            <p class="cert-message" id="cert-message-text">
-              Félicitations ! Grâce à votre excellent travail et à votre sérieux, vous obtenez une moyenne annuelle officielle de <strong id="cert-moyenne-val">16.35</strong>/20 et êtes inscrit(e) au Tableau d'honneur. Continuez à viser l'excellence.
-            </p>
-          </div>
-
-          <div class="cert-footer">
-            <div class="cert-seal">🏅</div>
-            <div style="text-align:center;">
-              <span style="font-size:12px; font-weight:800; color:#78350F;">MENTION</span><br>
-              <strong id="cert-mention-val" style="font-size:16px; color:var(--ci-green-dark);">TRÈS BIEN</strong>
-            </div>
-            <div class="cert-signature">
-              Portail National d'Excellence<br>
-              <em>Le Comité d'Évaluation</em>
-            </div>
-          </div>
-        </div>
-
-        <!-- MESSAGE ENCOURAGEMENT (< 14) -->
-        <div id="cert-fail" style="display:none; text-align:center; padding:30px 10px;">
-          <div style="font-size:50px; margin-bottom:12px;">💪</div>
-          <h3 style="font-size:20px; font-weight:800; color:var(--slate-900); margin-bottom:10px;">Continuez vos efforts !</h3>
-          <p style="font-size:15px; color:var(--slate-700); line-height:1.6; max-width:440px; margin:0 auto;">
-            Votre moyenne annuelle actuelle (<strong id="fail-moyenne-val">-</strong>/20) ne permet pas encore d'accéder au Tableau d'honneur (minimum 14.00/20).<br><br>
-            Continuez vos efforts, vous pouvez y parvenir !
-          </p>
-          <button class="btn-primary" style="max-width:240px; margin:24px auto 0;" onclick="fermerTableauHonneur()">D'accord, je continue !</button>
-        </div>
-
+        <a href="https://wa.me/2250799591024" target="_blank" class="btn-green" style="text-decoration:none;">💬 ME CONTACTER</a>
       </div>
     </div>
 
-    <!-- ================= 👤 MODALE PROFIL & MODIFICATION MOT DE PASSE ================= -->
-    <div class="modal-overlay" id="profile-modal">
-      <div class="modal-card">
-        <div class="modal-header">
-          <div class="modal-title">Mon Profil</div>
-          <button class="btn-close" onclick="fermerProfil()">✕</button>
-        </div>
-        <div style="font-size:14px; line-height:1.8; color:var(--slate-800); margin-bottom:20px;">
-          <p><strong>Nom :</strong> <span id="prof-nom"></span></p>
-          <p><strong>Prénom :</strong> <span id="prof-prenom"></span></p>
-          <p><strong>Classe :</strong> <span id="prof-classe"></span></p>
-          <p><strong>Établissement :</strong> <span id="prof-ecole"></span></p>
-          <p><strong>Ville :</strong> <span id="prof-ville"></span></p>
-          <p><strong>Pays :</strong> <span id="prof-pays"></span></p>
-          <p><strong>WhatsApp :</strong> <span id="prof-whatsapp"></span></p>
-        </div>
+    <!-- ================= 5. CERTIFICAT TABLEAU D'HONNEUR ================= -->
+    <div id="view-certif" class="page-view">
+      <div style="padding:16px;">
+        <button style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer;" onclick="switchPage('view-dashboard')">⬅️</button>
+      </div>
 
-        <hr style="border:0; border-top:1px solid #E2E8F0; margin:16px 0;">
+      <div class="certificate-frame">
+        <div class="cert-badge-top">🏆</div>
+        <div class="cert-main-title">Tableau d'Honneur</div>
+        <p style="font-size:11px; color:#D97706; font-weight:700; margin-top:2px;">FÉLICITATIONS À</p>
 
-        <button class="btn-secondary" style="width:100%; justify-content:center;" onclick="afficherChangementPass()">🔑 Modifier le mot de passe</button>
+        <div class="cert-student-name" id="cert-fullname">Niampa Zakaria</div>
+        <p style="font-size:12px; font-weight:700;">Élève en classe de 3ᵉ</p>
+        <p style="font-size:11px; color:#64748B;">Lycée Moderne de Bangolo</p>
 
-        <div id="change-pass-form" style="display:none; margin-top:16px; background:var(--slate-50); padding:16px; border-radius:var(--radius-lg);">
-          <div class="field-group">
-            <label>Mot de passe actuel</label>
-            <input type="password" id="pass-curr" maxlength="4" placeholder="••••">
-          </div>
-          <div class="field-group">
-            <label>Nouveau mot de passe (4 chiffres)</label>
-            <input type="password" id="pass-new" maxlength="4" placeholder="••••">
-          </div>
-          <div class="field-group">
-            <label>Confirmer le nouveau mot de passe</label>
-            <input type="password" id="pass-conf" maxlength="4" placeholder="••••">
-          </div>
-          <button class="btn-primary" style="margin-top:6px;" onclick="enregistrerNouveauPass()">Enregistrer</button>
-          <div class="error-msg" id="pass-change-error"></div>
+        <p style="font-size:11px; margin: 14px 0 6px;">Pour son excellent travail et ses résultats remarquables</p>
+
+        <div style="background:#FEF3C7; padding:8px; border-radius:8px; margin:10px auto; max-width:200px;">
+          <div style="font-size:10px; color:#92400E; font-weight:800;">MOYENNE ANNUELLE</div>
+          <div style="font-size:20px; font-weight:900; color:#B45309;" id="cert-annual-val">16,35 / 20</div>
+          <div style="font-size:11px; font-weight:800; color:var(--green-ztv);">MENTION : BIEN</div>
         </div>
 
-        <button class="btn-primary" style="background:#EF4444; margin-top:20px;" onclick="seDeconnecter()">Se déconnecter</button>
+        <p style="font-size:10px; color:#475569; line-height:1.4; padding:0 10px;">
+          Grâce à ton sérieux, ta persévérance et ton travail régulier, tu mérites pleinement ta place dans le TABLEAU D'HONNEUR.
+        </p>
+
+        <div class="cert-seal-gold">🎖️</div>
+        <div style="font-size:9px; font-weight:800; color:#92400E; margin-top:8px;">ZTV EXCELLENCE SCOLAIRE</div>
       </div>
     </div>
 
-    <!-- ================= 🪟 FENÊTRE MODALE DÉTAILS ================= -->
-    <div class="modal-overlay" id="details-modal">
-      <div class="modal-card">
-        <div class="modal-header">
-          <div class="modal-title" id="modal-title-text">Détails</div>
-          <button class="btn-close" onclick="fermerModale()">✕</button>
+    <!-- ================= MODALE SAISIE DE NOTES ================= -->
+    <div class="modal-overlay" id="trim-modal">
+      <div class="modal-body-dark">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h3 id="modal-trim-title" style="font-size:16px; font-weight:800;">Saisie 1er Trimestre</h3>
+          <button style="background:none; border:none; color:#FFF; font-size:18px; cursor:pointer;" onclick="closeTrimModal()">✕</button>
         </div>
-        <ul class="modal-list" id="modal-list-content"></ul>
-      </div>
-    </div>
 
-    <!-- ================= 📝 PAGE DE SAISIE PAR TRIMESTRE ================= -->
-    <div id="trimestre-page" style="display:none;">
-      <div class="trim-header">
-        <button class="btn-secondary" onclick="retourTableauDeBord()">⬅️ Retour au tableau de bord</button>
-        <h3 id="trimestre-page-title" style="font-weight:800; font-size:17px; color:var(--slate-900);">Notes du 1er Trimestre</h3>
-      </div>
-
-      <div class="table-scroll-area">
-        <table class="styled-table" id="bulletin">
+        <table class="grade-table">
           <thead>
             <tr>
-              <th>Discipline</th>
-              <th>Coefficient</th>
-              <th>Note / 20</th>
-              <th>Total pondéré</th>
+              <th>Matière</th>
+              <th>Coef</th>
+              <th>Note/20</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="category-row"><td colspan="4">--- LETTRES ET HISTOIRE ---</td></tr>
-            <tr><td>Français</td><td><input type="number" min="0" class="coef-input" value="3"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="3"></td><td class="total"></td></tr>
-            <tr><td>Anglais</td><td><input type="number" min="0" class="coef-input" value="2"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="2"></td><td class="total"></td></tr>
-            <tr><td>Histoire - Géographie</td><td><input type="number" min="0" class="coef-input" value="2"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="2"></td><td class="total"></td></tr>
-
-            <tr class="category-row"><td colspan="4">--- SCIENCES ET TECHNOLOGIES ---</td></tr>
-            <tr><td>Mathématiques</td><td><input type="number" min="0" class="coef-input" value="3"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="3"></td><td class="total"></td></tr>
-            <tr><td>Physique - Chimie</td><td><input type="number" min="0" class="coef-input" value="2"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="2"></td><td class="total"></td></tr>
-            <tr><td>SVT</td><td><input type="number" min="0" class="coef-input" value="2"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="2"></td><td class="total"></td></tr>
-
-            <tr class="category-row"><td colspan="4">--- DÉVELOPPEMENT & CULTURE ---</td></tr>
-            <tr><td>EDHC</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>EPS</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>Arts plastiques</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>Musique</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>TICE à l'école</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>Conduite</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-            <tr><td>Entrepreneuriat</td><td><input type="number" min="0" class="coef-input" value="1"></td><td><input type="number" min="0" max="20" class="note-input" data-coef="1"></td><td class="total"></td></tr>
-
-            <tr style="background:#FFF4E5; font-weight:bold;">
-              <td colspan="2">Cumul des coefficients & points</td>
-              <td id="total-coefs">-</td>
-              <td id="total-points">-</td>
-            </tr>
-            <tr style="background:#E6F5EC; font-weight:800; font-size:15px;">
-              <td colspan="3">🎯 Moyenne du Trimestre</td>
-              <td id="moyenne-generale" style="color:var(--ci-green-dark);">-</td>
-            </tr>
+          <tbody id="modal-table-body">
+            <!-- Injecté par JS -->
           </tbody>
         </table>
 
-        <button class="btn-primary" onclick="retourTableauDeBord()" style="margin-top:24px; padding:16px;">✅ Valider et revenir au tableau de bord</button>
+        <button class="btn-orange" style="margin-top:20px;" onclick="saveTrimNotes()">ENREGISTRER LES NOTES</button>
+      </div>
+    </div>
+
+    <!-- BARRE DE NAVIGATION EN BAS (4 ONGLETS NATIVE) -->
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="switchPage('view-dashboard')">
+        <span class="icon">🏠</span>
+        <span>Accueil</span>
+      </div>
+      <div class="nav-item" onclick="alert('Rubrique Concours bientôt disponible !')">
+        <span class="icon">🏆</span>
+        <span>Concours</span>
+      </div>
+      <div class="nav-item" onclick="alert('Classements généraux en cours d\'actualisation.')">
+        <span class="icon">📊</span>
+        <span>Classements</span>
+      </div>
+      <div class="nav-item" onclick="switchPage('view-creator')">
+        <span class="icon">👤</span>
+        <span>Profil</span>
       </div>
     </div>
 
   </div>
 
-  <!-- 💬 BOUTON ASSISTANCE WHATSAPP FLOTTANT -->
-  <a href="https://wa.me/2250799591024" target="_blank" class="whatsapp-btn" title="Contacter l'Assistance WhatsApp">
-    <svg viewBox="0 0 32 32">
-      <path d="M16 2a13.94 13.94 0 0 0-12 21l-2 7.33 7.52-1.97A13.92 13.92 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.87-1.6l-.42-.25-4.36 1.14 1.16-4.25-.28-.44a11.52 11.52 0 1 1 9.77 5.4zm6.31-8.62c-.35-.17-2.06-1-2.38-1.12s-.55-.17-.79.18-.93 1.12-1.14 1.35-.42.26-.77.09a9.75 9.75 0 0 1-2.86-1.77 10.74 10.74 0 0 1-1.98-2.47c-.2-.35 0-.54.17-.71s.35-.41.52-.61a2.36 2.36 0 0 0 .35-.58.64.64 0 0 0 0-.61c-.09-.17-.79-1.91-1.08-2.61s-.58-.59-.79-.6h-.68a1.31 1.31 0 0 0-.95.44 4 4 0 0 0-1.25 3 6.91 6.91 0 0 0 1.48 3.66A15.85 15.85 0 0 0 15 20.76a17.71 17.71 0 0 0 2.11.78 5.08 5.08 0 0 0 2.33.15 3.8 3.8 0 0 0 2.5-1.76 3.07 3.07 0 0 0 .21-1.76c-.08-.13-.33-.21-.68-.38z"/>
-    </svg>
-  </a>
-
   <script>
-    let compteUtilisateur = null;
-
-    // Structure de stockage par trimestre
-    let trimestreActif = 1;
-    let donneesTrimestres = {
-      1: { points: 0, coefs: 0, moyenne: null, notes: [] },
-      2: { points: 0, coefs: 0, moyenne: null, notes: [] },
-      3: { points: 0, coefs: 0, moyenne: null, notes: [] }
+    // Données par défaut conforme à la maquette
+    let currentTrim = 1;
+    let studentData = {
+      fullname: "Niampa Zakaria",
+      pass: "1234",
+      trimestres: {
+        1: { points: 161.9, coefs: 10, moyenne: 16.19 },
+        2: { points: 161.5, coefs: 10, moyenne: 16.15 },
+        3: { points: 166.3, coefs: 10, moyenne: 16.63 }
+      }
     };
-    let moyenneAnnuelleOfficielle = null;
 
-    window.addEventListener("DOMContentLoaded", () => {
-      const data = localStorage.getItem("userAccount");
-      if (data) {
-        compteUtilisateur = JSON.parse(data);
-        afficherConnexion();
-      } else {
-        afficherInscription();
+    const matieresDefaut = [
+      { name: "Français", coef: 3, note: 16 },
+      { name: "Anglais", coef: 2, note: 15 },
+      { name: "Mathématiques", coef: 3, note: 17 },
+      { name: "Physique-Chimie", coef: 2, note: 16 }
+    ];
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+
+      // Update Nav
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      if(pageId === 'view-dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
+      if(pageId === 'view-creator') document.querySelectorAll('.nav-item')[3].classList.add('active');
+    }
+
+    function togglePassVisibility(inputId) {
+      const el = document.getElementById(inputId);
+      el.type = el.type === 'password' ? 'text' : 'password';
+    }
+
+    function actionLogin() {
+      const name = document.getElementById('login-fullname').value.trim();
+      const pass = document.getElementById('login-pass').value.trim();
+
+      if(name !== "") {
+        studentData.fullname = name;
+        document.getElementById('dash-user-name').innerText = name + " 👋";
+        document.getElementById('cert-fullname').innerText = name;
       }
-    });
-
-    function afficherInscription() {
-      masquerToutesSections();
-      document.getElementById("register-section").style.display = "block";
+      switchPage('view-dashboard');
+      recalculerMoyennes();
     }
 
-    function afficherConnexion() {
-      masquerToutesSections();
-      document.getElementById("login-section").style.display = "block";
-    }
-
-    function afficherMotDePasseOublie() {
-      masquerToutesSections();
-      document.getElementById("forgot-section").style.display = "block";
-      document.getElementById("forgot-step1").style.display = "block";
-      document.getElementById("forgot-step2").style.display = "none";
-      document.getElementById("forgot-step3").style.display = "none";
-    }
-
-    function masquerToutesSections() {
-      document.getElementById("register-section").style.display = "none";
-      document.getElementById("login-section").style.display = "none";
-      document.getElementById("forgot-section").style.display = "none";
-      document.getElementById("dashboard-section").style.display = "none";
-      document.getElementById("trimestre-page").style.display = "none";
-    }
-
-    // CRÉATION DE COMPTE
-    function creerCompte() {
-      const nom = document.getElementById("reg-nom").value.trim();
-      const prenom = document.getElementById("reg-prenom").value.trim();
-      const classe = document.getElementById("reg-classe").value.trim() || "Classe non précisée";
-      const ecole = document.getElementById("reg-ecole").value.trim() || "Établissement non précisé";
-      const ville = document.getElementById("reg-ville").value.trim();
-      const pays = document.getElementById("reg-pays").value;
-      const whatsapp = document.getElementById("reg-whatsapp").value.trim();
-      const pass = document.getElementById("reg-pass").value.trim();
-      const err = document.getElementById("reg-error");
-
-      if (!nom || !prenom || !ville || !pays || !whatsapp || !pass) {
-        err.innerText = "⛔ Tous les champs principaux sont obligatoires.";
-        return;
+    function actionRegister() {
+      const nom = document.getElementById('reg-nom').value.trim();
+      const prenom = document.getElementById('reg-prenom').value.trim();
+      if(nom && prenom) {
+        studentData.fullname = nom + " " + prenom;
+        document.getElementById('dash-user-name').innerText = studentData.fullname + " 👋";
+        document.getElementById('cert-fullname').innerText = studentData.fullname;
       }
+      switchPage('view-dashboard');
+      recalculerMoyennes();
+    }
 
-      if (!/^\d{4}$/.test(pass)) {
-        err.innerText = "⛔ Le mot de passe doit comporter exactement 4 chiffres.";
-        return;
-      }
-
-      compteUtilisateur = { nom, prenom, classe, ecole, ville, pays, whatsapp, pass };
-      localStorage.setItem("userAccount", JSON.stringify(compteUtilisateur));
+    function openTrimModal(trimNum) {
+      currentTrim = trimNum;
+      document.getElementById('modal-trim-title').innerText = "Saisie Notes - " + trimNum + "er Trimestre";
       
-      err.innerText = "";
-      afficherConnexion();
-    }
-
-    // CONNEXION
-    function seConnecter() {
-      const fullname = document.getElementById("login-fullname").value.trim().toLowerCase();
-      const pass = document.getElementById("login-pass").value.trim();
-      const err = document.getElementById("login-error");
-
-      if (!compteUtilisateur) {
-        err.innerText = "Aucun compte trouvé sur cet appareil.";
-        return;
-      }
-
-      const exactFull = (compteUtilisateur.nom + " " + compteUtilisateur.prenom).toLowerCase();
-      const invertFull = (compteUtilisateur.prenom + " " + compteUtilisateur.nom).toLowerCase();
-
-      if ((fullname === exactFull || fullname === invertFull) && pass === compteUtilisateur.pass) {
-        err.innerText = "";
-        masquerToutesSections();
-        document.getElementById("dashboard-section").style.display = "block";
-        
-        document.getElementById("header-user-name").innerText = compteUtilisateur.prenom;
-        document.getElementById("header-avatar").innerText = compteUtilisateur.prenom.charAt(0).toUpperCase();
-      } else {
-        err.innerText = "⛔ Nom complet ou mot de passe incorrect.";
-      }
-    }
-
-    // RÉCUPÉRATION COMPTE
-    function rechercherCompteWhatsApp() {
-      const num = document.getElementById("forgot-whatsapp").value.trim();
-      const err = document.getElementById("forgot-error");
-
-      if (compteUtilisateur && compteUtilisateur.whatsapp === num) {
-        err.innerText = "";
-        document.getElementById("conf-nom").innerText = compteUtilisateur.nom;
-        document.getElementById("conf-prenom").innerText = compteUtilisateur.prenom;
-        document.getElementById("conf-ville").innerText = compteUtilisateur.ville;
-        document.getElementById("conf-pays").innerText = compteUtilisateur.pays;
-
-        document.getElementById("forgot-step1").style.display = "none";
-        document.getElementById("forgot-step2").style.display = "block";
-      } else {
-        err.innerText = "⛔ Aucun compte trouvé avec ce numéro WhatsApp.";
-      }
-    }
-
-    function confirmerDemandeReinit() {
-      document.getElementById("forgot-step2").style.display = "none";
-      document.getElementById("forgot-step3").style.display = "block";
-    }
-
-    function annulerForgot() { afficherConnexion(); }
-
-    // PROFIL
-    function ouvrirProfil() {
-      document.getElementById("prof-nom").innerText = compteUtilisateur.nom;
-      document.getElementById("prof-prenom").innerText = compteUtilisateur.prenom;
-      document.getElementById("prof-classe").innerText = compteUtilisateur.classe;
-      document.getElementById("prof-ecole").innerText = compteUtilisateur.ecole;
-      document.getElementById("prof-ville").innerText = compteUtilisateur.ville;
-      document.getElementById("prof-pays").innerText = compteUtilisateur.pays;
-      document.getElementById("prof-whatsapp").innerText = compteUtilisateur.whatsapp;
-
-      document.getElementById("change-pass-form").style.display = "none";
-      document.getElementById("profile-modal").style.display = "flex";
-    }
-
-    function fermerProfil() { document.getElementById("profile-modal").style.display = "none"; }
-    function afficherChangementPass() { document.getElementById("change-pass-form").style.display = "block"; }
-
-    function enregistrerNouveauPass() {
-      const curr = document.getElementById("pass-curr").value.trim();
-      const newP = document.getElementById("pass-new").value.trim();
-      const conf = document.getElementById("pass-conf").value.trim();
-      const err = document.getElementById("pass-change-error");
-
-      if (curr !== compteUtilisateur.pass) {
-        err.innerText = "⛔ Le mot de passe actuel est incorrect.";
-        return;
-      }
-      if (!/^\d{4}$/.test(newP)) {
-        err.innerText = "⛔ Le nouveau mot de passe doit comporter 4 chiffres.";
-        return;
-      }
-      if (newP !== conf) {
-        err.innerText = "⛔ La confirmation ne correspond pas.";
-        return;
-      }
-
-      compteUtilisateur.pass = newP;
-      localStorage.setItem("userAccount", JSON.stringify(compteUtilisateur));
-      alert("✅ Mot de passe modifié avec succès !");
-      fermerProfil();
-    }
-
-    function seDeconnecter() { fermerProfil(); afficherConnexion(); }
-
-    /* ================= 🧮 LOGIQUE DES CALCULS OFFICIELS ================= */
-    function ouvrirSaisieTrimestre(num) {
-      trimestreActif = num;
-      const noms = ["1er Trimestre", "2ᵉ Trimestre", "3ᵉ Trimestre"];
-      document.getElementById("trimestre-page-title").innerText = "Saisie des Notes - " + noms[num - 1];
+      const tbody = document.getElementById('modal-table-body');
+      tbody.innerHTML = "";
       
-      document.getElementById("dashboard-section").style.display = "none";
-      document.getElementById("trimestre-page").style.display = "block";
-
-      restaurerSaisie(num);
-      calculer();
-    }
-
-    function retourTableauDeBord() {
-      document.getElementById("trimestre-page").style.display = "none";
-      document.getElementById("dashboard-section").style.display = "block";
-      misesAJourDashboard();
-    }
-
-    const notesInputs = document.querySelectorAll(".note-input");
-    const coefInputs = document.querySelectorAll(".coef-input");
-    const totalCells = document.querySelectorAll("#bulletin .total");
-    const totalCoefs = document.getElementById("total-coefs");
-    const totalPoints = document.getElementById("total-points");
-    const moyenneGenerale = document.getElementById("moyenne-generale");
-
-    function syncCoefficients() {
-      coefInputs.forEach((coefInput, index) => {
-        const val = parseFloat(coefInput.value);
-        notesInputs[index].dataset.coef = (!isNaN(val) && val >= 0) ? val : 0;
+      matieresDefaut.forEach((m, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${m.name}</td>
+            <td><input type="number" class="table-input" value="${m.coef}" readonly /></td>
+            <td><input type="number" class="table-input val-note" value="${m.note}" min="0" max="20" /></td>
+          </tr>
+        `;
       });
+
+      document.getElementById('trim-modal').style.display = 'flex';
     }
 
-    // 1. CALCUL TRIMESTRIEL OFFICIEL : Moyenne = Total Points / Total Coefs
-    function calculer() {
-      syncCoefficients();
+    function closeTrimModal() {
+      document.getElementById('trim-modal').style.display = 'none';
+    }
+
+    function saveTrimNotes() {
+      const inputs = document.querySelectorAll('.val-note');
       let totalPts = 0;
-      let totalCoeffs = 0;
-      let notesCurrent = [];
-      
-      notesInputs.forEach((input, index) => {
-        const coef = parseFloat(input.dataset.coef);
-        const note = parseFloat(input.value);
-        const subjectName = input.closest('tr').children[0].innerText;
+      let totalCoef = 0;
 
-        if (coef > 0 && !isNaN(note) && note >= 0 && note <= 20) {
-          const ptPondere = note * coef;
-          totalCells[index].innerText = ptPondere.toFixed(2);
-          totalPts += ptPondere;
-          totalCoeffs += coef;
-          notesCurrent.push({ subject: subjectName, note: note, inputVal: input.value });
-        } else {
-          totalCells[index].innerText = "";
-        }
+      inputs.forEach((input, i) => {
+        let val = parseFloat(input.value) || 0;
+        let coef = matieresDefaut[i].coef;
+        totalPts += val * coef;
+        totalCoef += coef;
       });
 
-      totalPoints.innerText = totalPts.toFixed(2);
-      totalCoefs.innerText = totalCoeffs;
-      
-      // Formule Officielle Trimestrielle
-      const moyCalculated = totalCoeffs > 0 ? (totalPts / totalCoeffs).toFixed(2) : null;
-      moyenneGenerale.innerText = moyCalculated ? moyCalculated : "-";
+      let moy = totalCoef > 0 ? (totalPts / totalCoef) : 0;
+      studentData.trimestres[currentTrim] = { points: totalPts, coefs: totalCoef, moyenne: moy };
 
-      // Sauvegarde officielle des totaux bruts du trimestre
-      donneesTrimestres[trimestreActif] = {
-        points: totalPts,
-        coefs: totalCoeffs,
-        moyenne: moyCalculated ? parseFloat(moyCalculated) : null,
-        notes: notesCurrent
-      };
+      closeTrimModal();
+      recalculerMoyennes();
     }
 
-    function restaurerSaisie(num) {
-      const savedNotes = donneesTrimestres[num].notes || [];
-      notesInputs.forEach((input) => {
-        const subjectName = input.closest('tr').children[0].innerText;
-        const match = savedNotes.find(d => d.subject === subjectName);
-        input.value = match ? match.inputVal : "";
-      });
+    // FORMULE OFFICIELLE DE CÔTE D'IVOIRE
+    function recalculerMoyennes() {
+      const t1 = studentData.trimestres[1];
+      const t2 = studentData.trimestres[2];
+      const t3 = studentData.trimestres[3];
+
+      document.getElementById('val-t1').innerText = t1.moyenne.toFixed(2).replace('.', ',') + "/20";
+      document.getElementById('val-t2').innerText = t2.moyenne.toFixed(2).replace('.', ',') + "/20";
+      document.getElementById('val-t3').innerText = t3.moyenne.toFixed(2).replace('.', ',') + "/20";
+
+      // Calcul Officiel Annuel = Somme des points des 3 trimestres / Somme des coefficients
+      let totalPoints3T = t1.points + t2.points + t3.points;
+      let totalCoefs3T = t1.coefs + t2.coefs + t3.coefs;
+      let moyAnnuelle = totalCoefs3T > 0 ? (totalPoints3T / totalCoefs3T) : 0;
+
+      document.getElementById('val-annual').innerText = moyAnnuelle.toFixed(2).replace('.', ',') + "/20";
+      document.getElementById('cert-annual-val').innerText = moyAnnuelle.toFixed(2).replace('.', ',') + " / 20";
+
+      let pct = Math.min(100, Math.round((moyAnnuelle / 20) * 100));
+      document.getElementById('circle-pct').innerText = pct + "%";
+      document.getElementById('bar-fill').style.width = pct + "%";
     }
 
-    // 2. CALCUL ANNUEL OFFICIEL : Total Points 3 Trimestres / Total Coefs 3 Trimestres
-    function misesAJourDashboard() {
-      const t1 = donneesTrimestres[1];
-      const t2 = donneesTrimestres[2];
-      const t3 = donneesTrimestres[3];
-
-      document.getElementById("dash-t1").innerText = t1.moyenne !== null ? t1.moyenne.toFixed(2) : "-";
-      document.getElementById("dash-t2").innerText = t2.moyenne !== null ? t2.moyenne.toFixed(2) : "-";
-      document.getElementById("dash-t3").innerText = t3.moyenne !== null ? t3.moyenne.toFixed(2) : "-";
-
-      // Somme officielle des points et des coefficients
-      const grandTotalPoints = t1.points + t2.points + t3.points;
-      const grandTotalCoefs = t1.coefs + t2.coefs + t3.coefs;
-
-      if (grandTotalCoefs > 0) {
-        // Moyenne Annuelle Officielle
-        moyenneAnnuelleOfficielle = parseFloat((grandTotalPoints / grandTotalCoefs).toFixed(2));
-      } else {
-        moyenneAnnuelleOfficielle = null;
-      }
-
-      const mA = moyenneAnnuelleOfficielle;
-      document.getElementById("dash-annual").innerText = mA !== null ? mA.toFixed(2) + " / 20" : "-";
-
-      const mentionEl = document.getElementById("dash-mention");
-      const annualBadge = document.getElementById("annual-badge");
-      const circleBar = document.getElementById("circle-bar");
-      const targetFill = document.getElementById("target-bar-fill");
-      const circleVal = document.getElementById("circle-val");
-      const progressStatus = document.getElementById("progress-status-text");
-      const progressLabel = document.getElementById("progress-percentage-label");
-      const progressFeedback = document.getElementById("progress-feedback-text");
-      const objText = document.getElementById("objective-dynamic-text");
-
-      if (mA !== null) {
-        let mention = "Passable";
-        if (mA >= 16) mention = "Très Bien";
-        else if (mA >= 14) mention = "Bien";
-        else if (mA >= 12) mention = "Assez Bien";
-        else if (mA < 10) mention = "Ajourné";
-
-        mentionEl.innerText = "Mention : " + mention;
-        annualBadge.innerText = mA >= 10 ? "Admis(e)" : "Résultat Fragile";
-        annualBadge.style.background = mA >= 10 ? "var(--ci-green-soft)" : "var(--ci-red-soft)";
-        annualBadge.style.color = mA >= 10 ? "var(--ci-green-dark)" : "var(--ci-red)";
-
-        let activeColor = "var(--ci-red)";
-        let statusTitle = "Insuffisant";
-        
-        if (mA >= 12) {
-          activeColor = "var(--ci-green)";
-          statusTitle = "Bonne performance";
-        } else if (mA >= 10) {
-          activeColor = "var(--ci-orange)";
-          statusTitle = "Encore des progrès à faire";
-        }
-
-        circleBar.style.stroke = activeColor;
-        targetFill.style.backgroundColor = activeColor;
-
-        const percent = Math.min(100, Math.max(0, (mA / 20) * 100));
-        circleVal.innerText = Math.round(percent) + "%";
-        progressLabel.innerText = mA.toFixed(2) + " / 20";
-        progressStatus.innerText = statusTitle;
-        progressFeedback.innerText = `Calcul officiel basé sur le cumul exact des points et coefficients des 3 trimestres.`;
-
-        const offset = 251.3 - (251.3 * percent / 100);
-        circleBar.style.strokeDashoffset = offset;
-        targetFill.style.width = percent + "%";
-
-        const passageTarget = 10.00;
-        let toutesNotes = [...t1.notes, ...t2.notes, ...t3.notes];
-        let matieresAAmeliorer = toutesNotes.filter(n => n.note < 10).map(n => n.subject);
-        let matieresUniques = [...new Set(matieresAAmeliorer)].slice(0, 3);
-        let matieresStr = matieresUniques.length > 0 ? matieresUniques.join(", ") : "vos disciplines fondamentales";
-
-        if (mA >= passageTarget) {
-          objText.innerHTML = `Il vous faut une moyenne minimale de <strong>10,00/20</strong> pour être admis(e). Votre moyenne annuelle officielle étant de <strong>${mA.toFixed(2)}/20</strong>, vous avez dépassé cet objectif ! Continuez vos efforts.`;
-        } else {
-          const ecart = (passageTarget - mA).toFixed(2);
-          objText.innerHTML = `Il vous manque <strong>${ecart} point(s)</strong> sur votre moyenne officielle pour atteindre l'objectif de <strong>10,00/20</strong> requis. En améliorant principalement vos résultats en <strong>${matieresStr}</strong>, vous augmenterez fortement vos chances d'admission.`;
-        }
-
-      } else {
-        mentionEl.innerText = "Mention : En attente";
-        annualBadge.innerText = "Statut : Non évalué";
-        circleVal.innerText = "0%";
-        circleBar.style.strokeDashoffset = 251.3;
-        targetFill.style.width = "0%";
-        progressLabel.innerText = "0 / 20";
-      }
+    function showForgotModal() {
+      alert("Veuillez contacter l'assistance WhatsApp pour récupérer votre accès.");
     }
-
-    // 🏆 TABLEAU D'HONNEUR & CERTIFICAT
-    function ouvrirTableauHonneur() {
-      const modal = document.getElementById("honor-modal");
-      const successBox = document.getElementById("cert-success");
-      const failBox = document.getElementById("cert-fail");
-
-      if (moyenneAnnuelleOfficielle !== null && moyenneAnnuelleOfficielle >= 14.00) {
-        // Étudiant Admissible
-        document.getElementById("cert-student-fullname").innerText = compteUtilisateur.nom + " " + compteUtilisateur.prenom;
-        document.getElementById("cert-classe").innerText = compteUtilisateur.classe || "Scolaire";
-        document.getElementById("cert-ecole").innerText = compteUtilisateur.ecole || compteUtilisateur.ville;
-        document.getElementById("cert-annee").innerText = "2025 - 2026";
-        document.getElementById("cert-moyenne-val").innerText = moyenneAnnuelleOfficielle.toFixed(2);
-
-        let mention = "ASSEZ BIEN";
-        if (moyenneAnnuelleOfficielle >= 16) mention = "TRÈS BIEN";
-        else if (moyenneAnnuelleOfficielle >= 14) mention = "BIEN";
-        document.getElementById("cert-mention-val").innerText = mention;
-
-        document.getElementById("cert-message-text").innerHTML = `Félicitations ! Grâce à votre excellent travail et à votre sérieux, vous obtenez une moyenne annuelle officielle de <strong>${moyenneAnnuelleOfficielle.toFixed(2)}/20</strong> et êtes inscrit(e) au Tableau d'honneur. Continuez à viser l'excellence.`;
-
-        successBox.style.display = "block";
-        failBox.style.display = "none";
-      } else {
-        // Étudiant Non Admissible
-        const valStr = moyenneAnnuelleOfficielle !== null ? moyenneAnnuelleOfficielle.toFixed(2) : "non calculée";
-        document.getElementById("fail-moyenne-val").innerText = valStr;
-
-        successBox.style.display = "none";
-        failBox.style.display = "block";
-      }
-
-      modal.style.display = "flex";
-    }
-
-    function fermerTableauHonneur() {
-      document.getElementById("honor-modal").style.display = "none";
-    }
-
-    function imprimerCertificat() {
-      window.print();
-    }
-
-    // FENÊTRE MODALE DÉTAILS
-    function ouvrirModaleDetails(type) {
-      let toutesNotes = [
-        ...donneesTrimestres[1].notes,
-        ...donneesTrimestres[2].notes,
-        ...donneesTrimestres[3].notes
-      ];
-
-      const modal = document.getElementById("details-modal");
-      const title = document.getElementById("modal-title-text");
-      const list = document.getElementById("modal-list-content");
-
-      list.innerHTML = "";
-
-      if (toutesNotes.length === 0) {
-        list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Veuillez d'abord saisir des notes dans un trimestre.</li>`;
-      } else if (type === 'weak') {
-        title.innerText = "📚 Matières à revoir (< 10/20)";
-        const faibles = toutesNotes.filter(n => n.note < 10);
-        if (faibles.length === 0) {
-          list.innerHTML = `<li style="justify-content:center; color:var(--ci-green-dark);">Félicitations ! Aucune matière sous la moyenne.</li>`;
-        } else {
-          faibles.forEach(item => {
-            list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-red); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
-          });
-        }
-      } else if (type === 'best') {
-        title.innerText = "⭐ Points forts (≥ 12/20)";
-        const fortes = toutesNotes.filter(n => n.note >= 12);
-        if (fortes.length === 0) {
-          list.innerHTML = `<li style="justify-content:center; color:var(--slate-400);">Aucune note ≥ 12/20 enregistrée.</li>`;
-        } else {
-          fortes.forEach(item => {
-            list.innerHTML += `<li><span>${item.subject}</span><span style="color:var(--ci-green-dark); font-weight:800;">${item.note.toFixed(2)} / 20</span></li>`;
-          });
-        }
-      }
-
-      modal.style.display = "flex";
-    }
-
-    function fermerModale() {
-      document.getElementById("details-modal").style.display = "none";
-    }
-
-    notesInputs.forEach(input => input.addEventListener("input", calculer));
-    coefInputs.forEach(input => input.addEventListener("input", calculer));
   </script>
 </body>
 </html>
