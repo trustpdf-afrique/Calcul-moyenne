@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTV Moyenne — Espace Administrateur</title>
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #0f1015;
+      --card-bg: #181a20;
+      --card-border: #262932;
+      --accent-orange: #ff6b00;
+      --accent-orange-hover: #e05e00;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --green-success: #10b981;
+      --red-error: #ef4444;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 15px; }
+
+    /* Interface de connexion */
+    .login-container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 30px 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .brand-title { font-size: 1.8rem; font-weight: 700; color: var(--accent-orange); }
+    .brand-subtitle { font-size: 1rem; color: var(--text-muted); margin-bottom: 25px; }
+    
+    .input-group { margin-bottom: 18px; text-align: left; }
+    .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .input-group input {
+      width: 100%; padding: 12px 15px; background: #0f1015; border: 1px solid var(--card-border);
+      border-radius: 10px; color: #fff; font-size: 0.95rem; outline: none; transition: 0.3s;
+    }
+    .input-group input:focus { border-color: var(--accent-orange); }
+
+    .btn-orange {
+      width: 100%; padding: 14px; background: var(--accent-orange); color: #fff; border: none;
+      border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-orange:hover { background: var(--accent-orange-hover); }
+
+    .error-banner {
+      background: rgba(239, 68, 68, 0.15); border: 1px solid var(--red-error); color: var(--red-error);
+      padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-top: 15px; display: none;
+    }
+
+    /* Dashboard Layout */
+    .dashboard { display: none; max-width: 1200px; margin: 0 auto; }
+    .header-dashboard {
+      display: flex; justify-content: space-between; align-items: center; padding: 20px 0;
+      border-bottom: 1px solid var(--card-border); margin-bottom: 25px;
+    }
+    .admin-profile { display: flex; align-items: center; gap: 12px; }
+    .admin-profile img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent-orange); }
+
+    /* Grille de Statistiques */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .stat-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius);
+      padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .stat-icon {
+      width: 50px; height: 50px; border-radius: 12px; background: rgba(255, 107, 0, 0.15);
+      color: var(--accent-orange); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .stat-info h4 { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; }
+    .stat-info p { font-size: 1.4rem; font-weight: 700; color: #fff; }
+
+    /* Panneau de Navigation */
+    .nav-buttons { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 25px; }
+    .nav-btn {
+      background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main);
+      padding: 10px 18px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; white-space: nowrap; transition: 0.3s;
+    }
+    .nav-btn.active, .nav-btn:hover { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; }
+
+    /* Section Content */
+    .section-content { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 20px; }
+    .table-responsive { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+    th, td { padding: 12px 15px; border-bottom: 1px solid var(--card-border); }
+    th { color: var(--text-muted); font-weight: 500; }
+
+    .search-bar {
+      width: 100%; padding: 10px 15px; background: #0f1015; border: 1px solid var(--card-border);
+      border-radius: 8px; color: #fff; margin-bottom: 15px; outline: none;
+    }
+
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+    .badge-pending { background: rgba(255, 165, 0, 0.2); color: orange; }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--green-success); }
+    .badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--red-error); }
+
+    .btn-logout {
+      margin-top: 30px; background: transparent; border: 1px solid var(--red-error); color: var(--red-error);
+      width: 100%; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s;
+    }
+    .btn-logout:hover { background: var(--red-error); color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. FORMULAIRE DE CONNEXION ADMIN -->
+  <div id="loginSection" class="login-container">
+    <h1 class="brand-title">ZTV Moyenne</h1>
+    <p class="brand-subtitle">Espace Administrateur</p>
+    
+    <div class="input-group">
+      <label><i class="fa-solid fa-user"></i> Nom d'utilisateur ou Email Admin</label>
+      <input type="text" id="adminUser" placeholder="Ex: ZakariaTV">
+    </div>
+    
+    <div class="input-group">
+      <label><i class="fa-solid fa-lock"></i> Mot de passe</label>
+      <input type="password" id="adminPass" placeholder="••••••••">
+    </div>
+
+    <button class="btn-orange" onclick="loginAdmin()">
+      <i class="fa-solid fa-lock-open"></i> Se connecter
+    </button>
+
+    <div id="loginError" class="error-banner">
+      ❌ Identifiants incorrects. Veuillez vérifier vos informations et réessayer.
+    </div>
+  </div>
+
+  <!-- 2. TABLEAU DE BORD ADMINISTRATEUR -->
+  <div id="dashboardSection" class="dashboard">
+    <!-- Header -->
+    <div class="header-dashboard">
+      <div>
+        <h1 class="brand-title" style="font-size: 1.5rem;">ZTV Moyenne</h1>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Administration</p>
+      </div>
+      <div class="admin-profile">
+        <img src="https://via.placeholder.com/45" alt="Logo ZTV" id="adminLogo">
+        <div>
+          <strong style="display: block; font-size: 0.9rem;" id="adminDisplayName">ZakariaTV</strong>
+          <span class="badge badge-success">Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistiques Principales -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="stat-info">
+          <h4>Comptes élèves</h4>
+          <p id="statStudents">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-calculator"></i></div>
+        <div class="stat-info">
+          <h4>Calculs effectués</h4>
+          <p id="statCalculations">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="stat-info">
+          <h4>Tableaux d'honneur</h4>
+          <p id="statHonor">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-compass"></i></div>
+        <div class="stat-info">
+          <h4>Orientations (3e)</h4>
+          <p id="statOrientation">0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menus de navigation -->
+    <div class="nav-buttons">
+      <button class="nav-btn active" onclick="switchTab('students')">👥 Comptes élèves</button>
+      <button class="nav-btn" onclick="switchTab('resets')">🔐 Mots de passe oubliés</button>
+      <button class="nav-btn" onclick="switchTab('reviews')">⭐ Avis</button>
+      <button class="nav-btn" onclick="switchTab('top')">🥇 Meilleurs élèves</button>
+      <button class="nav-btn" onclick="switchTab('links')">🔗 Liens & Params</button>
+      <button class="nav-btn" onclick="switchTab('contests')">📝 Concours</button>
+    </div>
+
+    <!-- Zone de Contenu Dynamique -->
+    <div class="section-content" id="mainTabContent">
+      <!-- Le contenu est injecté via JavaScript -->
+    </div>
+
+    <button class="btn-logout" onclick="logoutAdmin()">
+      <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
+    </button>
+  </div>
+
+  <script>
+    // Configuration Firebase (Insérer vos identifiants réels)
+    const firebaseConfig = {
+      apiKey: "VOTRE_API_KEY",
+      authDomain: "votre-app.firebaseapp.com",
+      projectId: "votre-app-id",
+      storageBucket: "votre-app.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Authentification Admin
+    async function loginAdmin() {
+      const emailInput = document.getElementById('adminUser').value.trim();
+      const pass = document.getElementById('adminPass').value;
+      const errorBanner = document.getElementById('loginError');
+
+      // Si l'utilisateur tape juste "ZakariaTV", adapter vers un format email configuré dans Firebase Auth
+      const email = emailInput.includes('@') ? emailInput : `${emailInput.toLowerCase()}@ztvmoyenne.admin`;
+
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, pass);
+        const user = userCredential.user;
+
+        // Vérification de sécurité dans Firestore pour s'assurer du rôle 'admin'
+        const adminDoc = await db.collection('admins').doc(user.uid).get();
+        if (adminDoc.exists && adminDoc.data().role === 'admin') {
+          errorBanner.style.display = 'none';
+          showDashboard();
+        } else {
+          await auth.signOut();
+          errorBanner.style.display = 'block';
+        }
+      } catch (err) {
+        errorBanner.style.display = 'block';
+      }
+    }
+
+    // Gestion de l'état de connexion
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const adminDoc = await db.collection('admins').doc(user.uid).get();
+        if (adminDoc.exists && adminDoc.data().role === 'admin') {
+          showDashboard();
+        }
+      }
+    });
+
+    function showDashboard() {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('dashboardSection').style.display = 'block';
+      loadRealtimeStats();
+      switchTab('students');
+    }
+
+    function logoutAdmin() {
+      auth.signOut().then(() => {
+        document.getElementById('dashboardSection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+      });
+    }
+
+    // Chargement des Statistiques Réelles depuis Firebase
+    function loadRealtimeStats() {
+      // 1. Nombre d'élèves
+      db.collection('users').onSnapshot(snap => {
+        document.getElementById('statStudents').innerText = snap.size.toLocaleString('fr-FR');
+      });
+
+      // 2. Nombre de calculs
+      db.collection('results').onSnapshot(snap => {
+        document.getElementById('statCalculations').innerText = snap.size.toLocaleString('fr-FR');
+      });
+
+      // 3. Tableaux d'honneur
+      db.collection('honorBoards').onSnapshot(snap => {
+        document.getElementById('statHonor').innerText = snap.size.toLocaleString('fr-FR');
+      });
+
+      // 4. Calculs d'orientation (3e)
+      db.collection('results').where('type', '==', 'orientation').onSnapshot(snap => {
+        document.getElementById('statOrientation').innerText = snap.size.toLocaleString('fr-FR');
+      });
+    }
+
+    // Affichage des onglets
+    function switchTab(tabName) {
+      const container = document.getElementById('mainTabContent');
+      
+      // Mise à jour des boutons actifs
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (tabName === 'students') {
+        container.innerHTML = `
+          <h3>👥 Liste des élèves</h3>
+          <input type="text" id="searchStudent" class="search-bar" placeholder="Rechercher par nom, prénom, WhatsApp..." onkeyup="filterStudents()">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom & Prénom</th>
+                  <th>WhatsApp</th>
+                  <th>Établissement</th>
+                  <th>Classe</th>
+                  <th>Ville / Pays</th>
+                  <th>Inscription</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <!-- Rempli par Firebase -->
+              </tbody>
+            </table>
+          </div>
+        `;
+        fetchStudents();
+      } else if (tabName === 'resets') {
+        container.innerHTML = `
+          <h3>🔐 Demandes de réinitialisation</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Élève</th>
+                  <th>WhatsApp</th>
+                  <th>Date</th>
+                  <th>Statut</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="resetsTableBody"></tbody>
+            </table>
+          </div>
+        `;
+        fetchResetRequests();
+      } else if (tabName === 'links') {
+        container.innerHTML = `
+          <h3>🔗 Gestion des Liens de l'application</h3>
+          <div class="input-group" style="margin-top:15px;">
+            <label>Lien actuel du concours / application</label>
+            <input type="text" id="appLinkInput" value="https://ztvmoyenne.com">
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn-orange" onclick="updateAppLink()"><i class="fa-solid fa-rotate"></i> Mettre à jour</button>
+          </div>
+        `;
+      } else if (tabName === 'contests') {
+        container.innerHTML = `
+          <h3>📝 Gestion des Concours</h3>
+          <p style="color:var(--text-muted); margin-bottom:15px;">Module préparé pour les futures fonctionnalités de concours.</p>
+          <button class="btn-orange" style="width:auto;"><i class="fa-solid fa-plus"></i> Créer un concours</button>
+        `;
+      }
+    }
+
+    // Récupération des Élèves (Pas de mot de passe affiché)
+    function fetchStudents() {
+      db.collection('users').get().then(snapshot => {
+        const tbody = document.getElementById('studentsTableBody');
+        tbody.innerHTML = '';
+        snapshot.forEach(doc => {
+          const u = doc.data();
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${u.nom || ''} ${u.prenom || ''}</strong></td>
+              <td>${u.whatsapp || 'N/A'}</td>
+              <td>${u.etablissement || 'N/A'}</td>
+              <td>${u.classe || 'N/A'}</td>
+              <td>${u.ville || ''}, ${u.pays || ''}</td>
+              <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString('fr-FR') : 'N/A'}</td>
+            </tr>
+          `;
+        });
+      });
+    }
+
+    // Récupération des Demandes de Mot de Passe
+    function fetchResetRequests() {
+      db.collection('passwordResetRequests').get().then(snapshot => {
+        const tbody = document.getElementById('resetsTableBody');
+        tbody.innerHTML = '';
+        snapshot.forEach(doc => {
+          const req = doc.data();
+          const badgeClass = req.status === 'Traité' ? 'badge-success' : 'badge-pending';
+          tbody.innerHTML += `
+            <tr>
+              <td>${req.nom || ''} ${req.prenom || ''}</td>
+              <td>${req.whatsapp || ''}</td>
+              <td>${req.createdAt ? new Date(req.createdAt.toDate()).toLocaleDateString('fr-FR') : ''}</td>
+              <td><span class="badge ${badgeClass}">${req.status || 'En attente'}</span></td>
+              <td>
+                ${req.status !== 'Traité' ? `<button class="btn-orange" style="padding:5px 10px; font-size:0.75rem;" onclick="processReset('${doc.id}', '${req.email}')">Réinitialiser</button>` : '—'}
+              </td>
+            </tr>
+          `;
+        });
+      });
+    }
+
+    // Traitement Sécurisé du Mot de Passe via Firebase Auth Mail
+    async function processReset(requestId, email) {
+      if (confirm("Envoyer un email de réinitialisation sécurisé à cet élève ?")) {
+        await auth.sendPasswordResetEmail(email);
+        await db.collection('passwordResetRequests').doc(requestId).update({ status: 'Traité' });
+        alert("✅ Demande traitée et email envoyé !");
+        fetchResetRequests();
+      }
+    }
+  </script>
+</body>
+</html>
