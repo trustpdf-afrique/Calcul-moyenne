@@ -3,2367 +3,284 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTV Moyenne — Administration</title>
 
-  <title>ZTV Moyenne — Espace Administrateur</title>
-
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
   <style>
     :root {
-      --bg: #090d16;
-      --bg2: #101522;
-      --card: #171d2b;
-      --card2: #1c2333;
-      --border: #293247;
-
-      --orange: #ff7a00;
-      --orange2: #ff9b32;
-
-      --green: #10b981;
-      --green2: #18d49a;
-
-      --red: #ef4444;
-      --blue: #3b82f6;
-      --gold: #f5c451;
-
-      --white: #ffffff;
-      --muted: #9ca3af;
-
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Poppins", sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top right, rgba(255,122,0,.12), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(16,185,129,.08), transparent 30%),
-        var(--bg);
-      color: var(--white);
-      padding: 15px;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font-family: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* =========================
-       CONNEXION ADMIN
-    ========================= */
-
-    .login-container {
-      width: 100%;
-      max-width: 430px;
-      margin: 70px auto;
-      padding: 32px 25px;
-      background: rgba(23,29,43,.96);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        0 0 35px rgba(255,122,0,.06);
-    }
-
-    .login-logo {
-      width: 78px;
-      height: 78px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 15px;
-      border-radius: 20px;
-    }
-
-    .brand-title {
-      text-align: center;
-      color: var(--orange);
-      font-size: 28px;
-      font-weight: 800;
-    }
-
-    .brand-subtitle {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      margin: 5px 0 28px;
-    }
-
-    .input-group {
-      margin-bottom: 18px;
-    }
-
-    .input-group label {
-      display: block;
-      color: #cbd5e1;
-      font-size: 13px;
-      margin-bottom: 7px;
-    }
-
-    .input-group label i {
-      color: var(--orange);
-      margin-right: 5px;
-    }
-
-    .input-group input,
-    .input-group textarea,
-    .input-group select {
-      width: 100%;
-      padding: 13px 15px;
-      color: white;
-      background: #0d121d;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      outline: none;
-      transition: .25s;
-    }
-
-    .input-group input:focus,
-    .input-group textarea:focus,
-    .input-group select:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgba(255,122,0,.10);
-    }
-
-    .btn-orange {
-      width: 100%;
-      border: none;
-      padding: 14px 18px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--orange), var(--orange2));
-      color: white;
-      font-weight: 700;
-      font-size: 15px;
-      transition: .25s;
-      box-shadow: 0 8px 25px rgba(255,122,0,.18);
-    }
-
-    .btn-orange:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 30px rgba(255,122,0,.28);
-    }
-
-    .error-banner {
-      display: none;
-      margin-top: 15px;
-      padding: 11px;
-      border-radius: 10px;
-      background: rgba(239,68,68,.12);
-      border: 1px solid rgba(239,68,68,.5);
-      color: #fca5a5;
-      font-size: 13px;
-      text-align: center;
-    }
-
-    /* =========================
-       DASHBOARD
-    ========================= */
-
-    .dashboard {
-      display: none;
-      max-width: 1250px;
-      margin: auto;
-    }
-
-    .header-dashboard {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      padding: 15px 5px 22px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 25px;
-    }
-
-    .dashboard-title {
-      color: var(--orange);
-      font-size: 25px;
-      font-weight: 800;
-    }
-
-    .dashboard-subtitle {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .admin-profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .admin-profile img {
-      width: 48px;
-      height: 48px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid var(--orange);
-      background: var(--card2);
-    }
-
-    .admin-name {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .admin-role {
-      display: inline-block;
-      margin-top: 3px;
-      padding: 3px 8px;
-      border-radius: 20px;
-      background: rgba(16,185,129,.12);
-      color: var(--green2);
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    /* =========================
-       STATISTIQUES
-    ========================= */
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .stat-card {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(145deg, var(--card), var(--bg2));
-      box-shadow: 0 8px 25px rgba(0,0,0,.18);
-    }
-
-    .stat-icon {
-      width: 52px;
-      height: 52px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 15px;
-      background: rgba(255,122,0,.12);
-      color: var(--orange);
-      font-size: 20px;
-    }
-
-    .stat-info h4 {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .stat-info p {
-      color: white;
-      font-size: 25px;
-      font-weight: 800;
-      margin-top: 2px;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    .nav-buttons {
-      display: flex;
-      gap: 9px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-      scrollbar-width: thin;
-    }
-
-    .nav-btn {
-      flex-shrink: 0;
-      padding: 10px 16px;
-      border-radius: 30px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: #e5e7eb;
-      font-size: 12px;
-      font-weight: 600;
-      transition: .25s;
-    }
-
-    .nav-btn:hover,
-    .nav-btn.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: white;
-    }
-
-    /* =========================
-       CONTENU
-    ========================= */
-
-    .section-content {
-      min-height: 350px;
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(23,29,43,.95);
-      box-shadow: 0 10px 35px rgba(0,0,0,.18);
-    }
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-
-    .section-description {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-
-    /* =========================
-       TABLEAUX
-    ========================= */
-
-    .table-responsive {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 750px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 13px 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      font-size: 12px;
-    }
-
-    th {
-      color: var(--muted);
-      font-weight: 600;
-      background: rgba(255,255,255,.015);
-    }
-
-    td {
-      color: #e5e7eb;
-    }
-
-    tr:hover td {
-      background: rgba(255,255,255,.018);
-    }
-
-    /* =========================
-       RECHERCHE
-    ========================= */
-
-    .search-bar {
-      width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 15px;
-      background: #0d121d;
-      color: white;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      outline: none;
-    }
-
-    .search-bar:focus {
-      border-color: var(--orange);
-    }
-
-    /* =========================
-       BADGES
-    ========================= */
-
-    .badge {
-      display: inline-block;
-      padding: 4px 9px;
-      border-radius: 20px;
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .badge-success {
-      color: #6ee7b7;
-      background: rgba(16,185,129,.12);
-    }
-
-    .badge-pending {
-      color: #fbbf24;
-      background: rgba(245,158,11,.12);
-    }
-
-    .badge-danger {
-      color: #fca5a5;
-      background: rgba(239,68,68,.12);
-    }
-
-    /* =========================
-       BOUTONS
-    ========================= */
-
-    .small-btn {
-      border: none;
-      padding: 7px 10px;
-      border-radius: 8px;
-      color: white;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .btn-green {
-      background: var(--green);
-    }
-
-    .btn-red {
-      background: var(--red);
-    }
-
-    .btn-blue {
-      background: var(--blue);
-    }
-
-    .btn-gray {
-      background: #374151;
-    }
-
-    .btn-gold {
-      background: #b88918;
-    }
-
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    /* =========================
-       CARTES ACTIONS
-    ========================= */
-
-    .premium-actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .premium-action {
-      padding: 20px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, #1b2231, #121824);
-      transition: .25s;
-    }
-
-    .premium-action:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255,122,0,.5);
-    }
-
-    .premium-action i {
-      color: var(--orange);
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .premium-action h3 {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .premium-action p {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    /* =========================
-       AVIS
-    ========================= */
-
-    .stars {
-      color: var(--gold);
-      letter-spacing: 2px;
-    }
-
-    .review-card {
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 10px;
-      background: #121824;
-    }
-
-    .review-head {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 7px;
-    }
-
-    .review-name {
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .review-date {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .review-text {
-      color: #d1d5db;
-      font-size: 12px;
-    }
-
-    /* =========================
-       LOGO / LIEN
-    ========================= */
-
-    .link-box {
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: #101621;
-    }
-
-    .link-display {
-      padding: 13px;
-      border-radius: 10px;
-      background: #090d16;
-      color: var(--orange2);
-      font-size: 12px;
-      word-break: break-all;
-      margin: 10px 0 15px;
-    }
-
-    /* =========================
-       LOGOUT
-    ========================= */
-
-    .btn-logout {
-      width: 100%;
-      margin: 25px 0 10px;
-      padding: 13px;
-      border-radius: 12px;
-      background: transparent;
-      border: 1px solid rgba(239,68,68,.6);
-      color: #f87171;
-      font-weight: 700;
-      transition: .25s;
-    }
-
-    .btn-logout:hover {
-      background: var(--red);
-      color: white;
-    }
-
-    /* =========================
-       MODAL
-    ========================= */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(5px);
-      z-index: 9999;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 24px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: #171d2b;
-      box-shadow: 0 25px 80px rgba(0,0,0,.55);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .modal-header h2 {
-      font-size: 19px;
-    }
-
-    .close-modal {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: #101621;
-      color: white;
-      font-size: 17px;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 900px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-
-      .login-container {
-        margin: 35px auto;
-        padding: 25px 18px;
-      }
-
-      .header-dashboard {
-        align-items: flex-start;
-      }
-
-      .dashboard-title {
-        font-size: 21px;
-      }
-
-      .admin-profile {
-        display: none;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .stat-card {
-        padding: 14px;
-        gap: 9px;
-      }
-
-      .stat-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 16px;
-      }
-
-      .stat-info p {
-        font-size: 20px;
-      }
-
-      .premium-actions {
-        grid-template-columns: 1fr;
-      }
-
-      .section-content {
-        padding: 15px;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+      --bg-main: #0B0F17;
+      --bg-card: #151D2A;
+      --orange-ztv: #FF8C00;
+      --green-ztv: #10B981;
+      --text-white: #FFFFFF;
+      --text-gray: #9CA3AF;
+      --border-color: #232D3F;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-white); padding: 20px; display: flex; justify-content: center; }
+    .admin-container { width: 100%; max-width: 500px; }
+
+    /* AUTH CARD */
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+    .title { font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .form-input { width: 100%; padding: 12px; background: #0B0F17; border: 1px solid var(--border-color); border-radius: 8px; color: #fff; margin-bottom: 12px; font-size: 14px; }
+    .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.2s; font-size: 13px; }
+    .btn-orange { background: var(--orange-ztv); color: #000; }
+    .btn-green { background: var(--green-ztv); color: #fff; }
+    .btn-red { background: #EF4444; color: #fff; }
+
+    /* STATS GRID */
+    .stat-card { background: var(--bg-card); border-left: 4px solid var(--orange-ztv); border-radius: 10px; padding: 16px; margin-bottom: 12px; cursor: pointer; }
+    .stat-value { font-size: 24px; font-weight: 900; color: var(--orange-ztv); margin-top: 4px; }
+    .stat-label { font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* MODAL LISTES */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; padding: 20px; overflow-y: auto; }
+    .modal-content { background: var(--bg-card); border-radius: var(--radius); padding: 20px; max-width: 500px; margin: 40px auto; border: 1px solid var(--border-color); }
+    .item-box { background: #0B0F17; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.5; }
   </style>
 </head>
-
 <body>
 
-<!-- =====================================================
-     CONNEXION ADMINISTRATEUR
-===================================================== -->
+<div class="admin-container">
 
-<div id="loginSection" class="login-container">
-
-  <img
-    class="login-logo"
-    src="https://i.postimg.cc/HjDJvjqX/file-00000000685081f4afaf53efdfb26e58.png"
-    alt="Logo ZTV Moyenne"
-  >
-
-  <h1 class="brand-title">ZTV Moyenne</h1>
-
-  <p class="brand-subtitle">
-    Espace Administrateur
-  </p>
-
-  <div class="input-group">
-    <label>
-      <i class="fa-solid fa-user"></i>
-      Nom d'utilisateur
-    </label>
-
-    <input
-      type="text"
-      id="adminUser"
-      placeholder="Ex : Niampa Zakaria"
-      autocomplete="username"
-    >
-  </div>
-
-  <div class="input-group">
-    <label>
-      <i class="fa-solid fa-lock"></i>
-      Mot de passe
-    </label>
-
-    <input
-      type="password"
-      id="adminPass"
-      placeholder="Votre mot de passe"
-      autocomplete="current-password"
-    >
-  </div>
-
-  <button class="btn-orange" onclick="loginAdmin()">
-    <i class="fa-solid fa-right-to-bracket"></i>
-    Se connecter
-  </button>
-
-  <div id="loginError" class="error-banner">
-    ❌ Identifiants incorrects. Veuillez vérifier vos informations et réessayer.
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     TABLEAU DE BORD
-===================================================== -->
-
-<div id="dashboardSection" class="dashboard">
-
-  <!-- EN-TÊTE -->
-
-  <div class="header-dashboard">
-
-    <div>
-      <h1 class="dashboard-title">
-        ZTV Moyenne
-      </h1>
-
-      <p class="dashboard-subtitle">
-        Administration de la plateforme
-      </p>
+  <!-- LOGIN ADMIN -->
+  <div id="view-login" class="card">
+    <div style="text-align: center; margin-bottom: 16px;">
+      <h2 style="font-size: 20px; font-weight: 900;">👨‍💼 ZTV Administration</h2>
+      <p style="font-size: 12px; color: var(--text-gray);">Espace de gestion connecté à Firebase</p>
     </div>
+    <input type="text" id="admin-user" class="form-input" placeholder="Nom d'utilisateur" value="niampa Zakaria" />
+    <input type="password" id="admin-pass" class="form-input" placeholder="Mot de passe" />
+    <button class="btn btn-orange" onclick="connexionAdmin()">🔓 SE CONNECTER</button>
+    <p id="login-error" style="color: #EF4444; font-size: 11px; text-align: center; margin-top: 10px; display: none;">Identifiants incorrects.</p>
+  </div>
 
-    <div class="admin-profile">
-
-      <img
-        id="adminLogo"
-        src="https://i.postimg.cc/HjDJvjqX/file-00000000685081f4afaf53efdfb26e58.png"
-        alt="Administrateur"
-      >
-
+  <!-- DASHBOARD ADMIN -->
+  <div id="view-dashboard" style="display: none;">
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
       <div>
-        <div class="admin-name">
-          Niampa Zakaria
-        </div>
-
-        <span class="admin-role">
-          ADMINISTRATEUR
-        </span>
+        <div style="font-size: 14px; font-weight: 900;">niampa Zakaria</div>
+        <div style="font-size: 10px; color: var(--green-ztv); font-weight: 700;">🟢 Connecté à Firebase</div>
       </div>
-
+      <button class="btn btn-red" style="width: auto; padding: 6px 12px;" onclick="deconnexion()">🔒 Quitter</button>
     </div>
 
-  </div>
-
-
-  <!-- =====================================================
-       STATISTIQUES
-  ===================================================== -->
-
-  <div class="stats-grid">
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        <i class="fa-solid fa-users"></i>
-      </div>
-
-      <div class="stat-info">
-        <h4>Comptes élèves</h4>
-        <p id="statStudents">0</p>
-      </div>
-
+    <!-- STATS INTERACTIVES -->
+    <div class="stat-card" style="border-color: #FF8C00;" onclick="afficherEleves()">
+      <div class="stat-label">👥 Comptes Créés (Élèves)</div>
+      <div class="stat-value" id="count-eleves">0</div>
+      <div style="font-size: 10px; color: var(--text-gray); margin-top: 4px;">Cliquez pour voir la liste détaillée ➔</div>
     </div>
 
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        <i class="fa-solid fa-calculator"></i>
-      </div>
-
-      <div class="stat-info">
-        <h4>Calculs effectués</h4>
-        <p id="statCalculations">0</p>
-      </div>
-
+    <div class="stat-card" style="border-color: #3B82F6;">
+      <div class="stat-label">🧮 Total Calculs Effectués</div>
+      <div class="stat-value" id="count-calculs" style="color: #60A5FA;">0</div>
     </div>
 
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        <i class="fa-solid fa-award"></i>
-      </div>
-
-      <div class="stat-info">
-        <h4>Tableaux d'honneur</h4>
-        <p id="statHonor">0</p>
-      </div>
-
+    <div class="stat-card" style="border-color: #EAB308;" onclick="afficherMeilleureMoyenne()">
+      <div class="stat-label">🥇 Meilleure Moyenne</div>
+      <div class="stat-value" id="best-moyenne" style="color: #FACC15;">-- / 20</div>
+      <div style="font-size: 10px; color: var(--text-gray); margin-top: 4px;" id="best-eleve-nom">Consulter l'élève ➔</div>
     </div>
 
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        <i class="fa-solid fa-compass"></i>
-      </div>
-
-      <div class="stat-info">
-        <h4>Orientations 3e</h4>
-        <p id="statOrientation">0</p>
-      </div>
-
+    <div class="stat-card" style="border-color: #10B981;" onclick="afficherTableauHonneur()">
+      <div class="stat-label">🏆 Tableau d'Honneur (Moyenne ≥ 13)</div>
+      <div class="stat-value" id="count-honneur" style="color: #34D399;">0</div>
     </div>
 
-  </div>
-
-
-  <!-- =====================================================
-       NAVIGATION
-  ===================================================== -->
-
-  <div class="nav-buttons">
-
-    <button
-      class="nav-btn active"
-      onclick="switchTab('students', this)">
-      👥 Comptes élèves
-    </button>
-
-    <button
-      class="nav-btn"
-      onclick="switchTab('resets', this)">
-      🔐 Mots de passe oubliés
-    </button>
-
-    <button
-      class="nav-btn"
-      onclick="switchTab('reviews', this)">
-      ⭐ Avis
-    </button>
-
-    <button
-      class="nav-btn"
-      onclick="switchTab('top', this)">
-      🥇 Meilleurs élèves
-    </button>
-
-    <button
-      class="nav-btn"
-      onclick="switchTab('links', this)">
-      🔗 Liens & paramètres
-    </button>
-
-    <button
-      class="nav-btn"
-      onclick="switchTab('contests', this)">
-      📝 Concours
-    </button>
-
-  </div>
-
-
-  <!-- =====================================================
-       CONTENU
-  ===================================================== -->
-
-  <div
-    class="section-content"
-    id="mainTabContent">
-  </div>
-
-
-  <!-- DÉCONNEXION -->
-
-  <button
-    class="btn-logout"
-    onclick="logoutAdmin()">
-
-    <i class="fa-solid fa-right-from-bracket"></i>
-    Se déconnecter
-
-  </button>
-
-</div>
-
-
-<!-- =====================================================
-     MODAL CRÉATION CONCOURS
-===================================================== -->
-
-<div id="contestModal" class="modal-overlay">
-
-  <div class="modal">
-
-    <div class="modal-header">
-
-      <h2>
-        📝 Créer un concours
-      </h2>
-
-      <button
-        class="close-modal"
-        onclick="closeContestModal()">
-        ✕
-      </button>
-
+    <div class="stat-card" style="border-color: #A855F7;" onclick="afficherAvis()">
+      <div class="stat-label">⭐ Avis des Élèves</div>
+      <div class="stat-value" id="count-avis" style="color: #C084FC;">0 avis</div>
     </div>
 
-    <div class="input-group">
-
-      <label>
-        Titre du concours
-      </label>
-
-      <input
-        type="text"
-        id="contestTitle"
-        placeholder="Ex : Concours de mathématiques"
-      >
-
+    <div class="stat-card" style="border-color: #F97316;" onclick="afficherDemandesReset()">
+      <div class="stat-label">🔐 Mots de passe oubliés</div>
+      <div class="stat-value" id="count-reset" style="color: #FB923C;">0 demande(s)</div>
     </div>
 
-    <div class="input-group">
-
-      <label>
-        Classe
-      </label>
-
-      <select id="contestClass">
-
-        <option value="">Choisir une classe</option>
-        <option>CE2</option>
-        <option>CM1</option>
-        <option>CM2</option>
-        <option>6e</option>
-        <option>5e</option>
-        <option>4e</option>
-        <option>3e</option>
-        <option>Seconde</option>
-        <option>Première</option>
-        <option>Terminale</option>
-
-      </select>
-
+    <!-- GESTION LIEN DE L'APPLICATION ÉLÈVE -->
+    <div class="card">
+      <div class="title" style="font-size: 13px;">🔗 LIEN DE L'APPLICATION ÉLÈVE</div>
+      <input type="text" id="app-url-input" class="form-input" value="https://ztv-moyenne.web.app" readonly />
+      <button class="btn btn-green" onclick="copierLienEleve()">📋 COPIER LE LIEN ÉLÈVE</button>
     </div>
-
-    <div class="input-group">
-
-      <label>
-        Type
-      </label>
-
-      <select id="contestType">
-
-        <option value="gratuit">
-          Gratuit
-        </option>
-
-        <option value="premium">
-          Premium
-        </option>
-
-      </select>
-
-    </div>
-
-    <div class="input-group">
-
-      <label>
-        Description
-      </label>
-
-      <textarea
-        id="contestDescription"
-        rows="4"
-        placeholder="Description du concours..."></textarea>
-
-    </div>
-
-    <button
-      class="btn-orange"
-      onclick="createContest()">
-
-      <i class="fa-solid fa-plus"></i>
-      Créer le concours
-
-    </button>
-
   </div>
 
 </div>
 
+<!-- MODAL AFFICHAGE DES DONNÉES -->
+<div id="admin-modal" class="modal">
+  <div class="modal-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 id="modal-title" style="font-size: 16px; font-weight: 800;">Détails</h3>
+      <button onclick="fermerModal()" style="background: transparent; border: none; color: #FFF; font-weight: 900; font-size: 18px; cursor: pointer;">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 <script>
+  // CONFIGURATION FIREBASE EXACTEMENT IDENTIQUE À L'ÉLÈVE
+  const firebaseConfig = {
+    apiKey: "VOTRE_API_KEY",
+    authDomain: "ztv-moyenne.firebaseapp.com",
+    projectId: "ztv-moyenne",
+    storageBucket: "ztv-moyenne.appspot.com",
+    messagingSenderId: "1234567890",
+    appId: "1:1234567890:web:abcdef123456"
+  };
 
-/* =====================================================
-   IDENTIFIANTS ADMINISTRATEUR
-===================================================== */
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
 
-const ADMIN_NAME = "Niampa Zakaria";
-const ADMIN_PASSWORD = "55250031";
+  let elevesCache = [];
 
+  // CONNEXION SÉCURISÉE ADMIN VIA FIREBASE AUTH
+  function connexionAdmin() {
+    const user = document.getElementById('admin-user').value.trim();
+    const pass = document.getElementById('admin-pass').value;
+    const err = document.getElementById('login-error');
 
-/* =====================================================
-   CONNEXION ADMIN
-===================================================== */
-
-function loginAdmin() {
-
-  const nameInput =
-    document.getElementById("adminUser").value.trim();
-
-  const passInput =
-    document.getElementById("adminPass").value.trim();
-
-  const errorBanner =
-    document.getElementById("loginError");
-
-
-  if (
-    nameInput.toLowerCase() === ADMIN_NAME.toLowerCase() &&
-    passInput === ADMIN_PASSWORD
-  ) {
-
-    errorBanner.style.display = "none";
-
-    sessionStorage.setItem(
-      "ztv_admin_connected",
-      "true"
-    );
-
-    showDashboard();
-
-  } else {
-
-    errorBanner.innerText =
-      "❌ Identifiants incorrects. Veuillez vérifier vos informations et réessayer.";
-
-    errorBanner.style.display = "block";
-
+    if (user === "niampa Zakaria" && pass === "55250031") {
+      err.style.display = 'none';
+      document.getElementById('view-login').style.display = 'none';
+      document.getElementById('view-dashboard').style.display = 'block';
+      chargerDonneesFirebase();
+    } else {
+      err.style.display = 'block';
+    }
   }
 
-}
-
-
-/* =====================================================
-   AFFICHER DASHBOARD
-===================================================== */
-
-function showDashboard() {
-
-  document.getElementById("loginSection").style.display =
-    "none";
-
-  document.getElementById("dashboardSection").style.display =
-    "block";
-
-  loadStats();
-
-  switchTab(
-    "students",
-    document.querySelector(".nav-btn")
-  );
-
-}
-
-
-/* =====================================================
-   DÉCONNEXION
-===================================================== */
-
-function logoutAdmin() {
-
-  sessionStorage.removeItem(
-    "ztv_admin_connected"
-  );
-
-  document.getElementById("dashboardSection").style.display =
-    "none";
-
-  document.getElementById("loginSection").style.display =
-    "block";
-
-  document.getElementById("adminPass").value = "";
-
-}
-
-
-/* =====================================================
-   VÉRIFICATION SESSION
-===================================================== */
-
-window.addEventListener("load", function() {
-
-  if (
-    sessionStorage.getItem("ztv_admin_connected")
-    === "true"
-  ) {
-
-    showDashboard();
-
+  function deconnexion() {
+    document.getElementById('view-login').style.display = 'block';
+    document.getElementById('view-dashboard').style.display = 'none';
   }
 
-});
-
-
-/* =====================================================
-   DONNÉES LOCALES
-===================================================== */
-
-function getData(key, defaultValue = []) {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(key)
-    ) || defaultValue;
-
-  } catch {
-
-    return defaultValue;
-
-  }
-
-}
-
-
-function saveData(key, data) {
-
-  localStorage.setItem(
-    key,
-    JSON.stringify(data)
-  );
-
-}
-
-
-/* =====================================================
-   STATISTIQUES
-===================================================== */
-
-function loadStats() {
-
-  const students =
-    getData("ztv_students");
-
-  const calculations =
-    getData("ztv_calculations");
-
-  const honors =
-    getData("ztv_honorBoards");
-
-  const orientations =
-    getData("ztv_orientations");
-
-
-  document.getElementById("statStudents").innerText =
-    students.length.toLocaleString("fr-FR");
-
-  document.getElementById("statCalculations").innerText =
-    calculations.length.toLocaleString("fr-FR");
-
-  document.getElementById("statHonor").innerText =
-    honors.length.toLocaleString("fr-FR");
-
-  document.getElementById("statOrientation").innerText =
-    orientations.length.toLocaleString("fr-FR");
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function switchTab(tabName, clickedButton) {
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn => btn.classList.remove("active"));
-
-  if (clickedButton) {
-
-    clickedButton.classList.add("active");
-
-  }
-
-  const container =
-    document.getElementById("mainTabContent");
-
-
-  /* COMPTES */
-
-  if (tabName === "students") {
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        👥 Comptes élèves
-      </h2>
-
-      <p class="section-description">
-        Consultez les comptes créés dans cette application.
-        Les mots de passe ne sont jamais affichés.
-      </p>
-
-      <input
-        class="search-bar"
-        id="searchStudent"
-        placeholder="🔎 Rechercher par nom, prénom, WhatsApp..."
-        oninput="filterStudents()"
-      >
-
-      <div class="table-responsive">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>Nom & prénom</th>
-              <th>WhatsApp</th>
-              <th>Ville</th>
-              <th>Pays</th>
-              <th>Établissement</th>
-              <th>Classe</th>
-              <th>Date</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="studentsTableBody"></tbody>
-
-        </table>
-
-      </div>
-
-    `;
-
-    fetchStudents();
-
-  }
-
-
-  /* MOTS DE PASSE OUBLIÉS */
-
-  else if (tabName === "resets") {
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        🔐 Mots de passe oubliés
-      </h2>
-
-      <p class="section-description">
-        Gérez ici les demandes de réinitialisation.
-      </p>
-
-      <div class="table-responsive">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>Élève</th>
-              <th>WhatsApp</th>
-              <th>Date</th>
-              <th>Statut</th>
-              <th>Action</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="resetsTableBody"></tbody>
-
-        </table>
-
-      </div>
-
-    `;
-
-    fetchResetRequests();
-
-  }
-
-
-  /* AVIS */
-
-  else if (tabName === "reviews") {
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        ⭐ Avis des utilisateurs
-      </h2>
-
-      <p class="section-description">
-        Consultez les avis et les notes laissés sur ZTV Moyenne.
-      </p>
-
-      <div id="reviewsContainer"></div>
-
-    `;
-
-    fetchReviews();
-
-  }
-
-
-  /* MEILLEURS ÉLÈVES */
-
-  else if (tabName === "top") {
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        🥇 Meilleurs élèves
-      </h2>
-
-      <p class="section-description">
-        Classement des élèves selon leurs résultats.
-      </p>
-
-      <div class="table-responsive">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>Rang</th>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Classe</th>
-              <th>Moyenne</th>
-              <th>Ville</th>
-              <th>WhatsApp</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="topStudentsBody"></tbody>
-
-        </table>
-
-      </div>
-
-    `;
-
-    fetchTopStudents();
-
-  }
-
-
-  /* LIENS */
-
-  else if (tabName === "links") {
-
-    const savedLink =
-      localStorage.getItem("ztv_app_link")
-      || window.location.href;
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        🔗 Liens & paramètres
-      </h2>
-
-      <p class="section-description">
-        Gérez le lien utilisé par les élèves.
-      </p>
-
-      <div class="link-box">
-
-        <strong>
-          🔗 Lien actuel
-        </strong>
-
-        <div
-          class="link-display"
-          id="currentLink">
-          ${escapeHTML(savedLink)}
-        </div>
-
-        <div class="action-buttons">
-
-          <button
-            class="small-btn btn-blue"
-            onclick="copyAppLink()">
-            📋 Copier
-          </button>
-
-          <button
-            class="small-btn btn-green"
-            onclick="editAppLink()">
-            🔄 Mettre à jour
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="premium-actions">
-
-        <div class="premium-action">
-
-          <i class="fa-solid fa-shield-halved"></i>
-
-          <h3>
-            Sécurité
-          </h3>
-
-          <p>
-            Les mots de passe ne sont jamais affichés dans
-            l'espace administrateur.
-          </p>
-
-        </div>
-
-        <div class="premium-action">
-
-          <i class="fa-solid fa-database"></i>
-
-          <h3>
-            Données
-          </h3>
-
-          <p>
-            Les données locales de cette version sont
-            enregistrées dans le navigateur.
-          </p>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-
-  /* CONCOURS */
-
-  else if (tabName === "contests") {
-
-    container.innerHTML = `
-
-      <h2 class="section-title">
-        📝 Gestion des concours
-      </h2>
-
-      <p class="section-description">
-        Créez et gérez les concours de ZTV.
-      </p>
-
-      <div class="action-buttons">
-
-        <button
-          class="btn-orange"
-          style="width:auto;"
-          onclick="openContestModal()">
-
-          <i class="fa-solid fa-plus"></i>
-          Créer un concours
-
-        </button>
-
-      </div>
-
-      <div
-        id="contestList">
-      </div>
-
-    `;
-
-    fetchContests();
-
-  }
-
-}
-
-
-/* =====================================================
-   COMPTES ÉLÈVES
-===================================================== */
-
-function fetchStudents() {
-
-  const students =
-    getData("ztv_students");
-
-  const tbody =
-    document.getElementById(
-      "studentsTableBody"
-    );
-
-  if (!tbody) return;
-
-
-  if (students.length === 0) {
-
-    tbody.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="7"
-          style="text-align:center;color:#9ca3af;padding:35px;">
-
-          Aucun compte élève enregistré sur cet appareil.
-
-        </td>
-
-      </tr>
-
-    `;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML = students.map(student => `
-
-    <tr>
-
-      <td>
-        <strong>
-          ${escapeHTML(student.nom || "")}
-          ${escapeHTML(student.prenom || "")}
-        </strong>
-      </td>
-
-      <td>
-        ${escapeHTML(student.whatsapp || "N/A")}
-      </td>
-
-      <td>
-        ${escapeHTML(student.ville || "N/A")}
-      </td>
-
-      <td>
-        ${escapeHTML(student.pays || "N/A")}
-      </td>
-
-      <td>
-        ${escapeHTML(student.etablissement || "N/A")}
-      </td>
-
-      <td>
-        ${escapeHTML(student.classe || "N/A")}
-      </td>
-
-      <td>
-        ${escapeHTML(student.createdAt || "N/A")}
-      </td>
-
-    </tr>
-
-  `).join("");
-
-}
-
-
-/* =====================================================
-   RECHERCHE ÉLÈVES
-===================================================== */
-
-function filterStudents() {
-
-  const query =
-    document
-      .getElementById("searchStudent")
-      .value
-      .toLowerCase();
-
-  const rows =
-    document.querySelectorAll(
-      "#studentsTableBody tr"
-    );
-
-  rows.forEach(row => {
-
-    row.style.display =
-      row.innerText
-        .toLowerCase()
-        .includes(query)
-        ? ""
-        : "none";
-
-  });
-
-}
-
-
-/* =====================================================
-   MOTS DE PASSE OUBLIÉS
-===================================================== */
-
-function fetchResetRequests() {
-
-  const requests =
-    getData("ztv_password_reset_requests");
-
-  const tbody =
-    document.getElementById(
-      "resetsTableBody"
-    );
-
-  if (!tbody) return;
-
-
-  if (requests.length === 0) {
-
-    tbody.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="5"
-          style="text-align:center;color:#9ca3af;padding:35px;">
-
-          Aucune demande de réinitialisation.
-
-        </td>
-
-      </tr>
-
-    `;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML =
-    requests.map((req, index) => `
-
-      <tr>
-
-        <td>
-          <strong>
-            ${escapeHTML(req.nom || "")}
-            ${escapeHTML(req.prenom || "")}
-          </strong>
-        </td>
-
-        <td>
-          ${escapeHTML(req.whatsapp || "")}
-        </td>
-
-        <td>
-          ${escapeHTML(req.date || "")}
-        </td>
-
-        <td>
-
-          <span class="badge ${
-            req.status === "Traité"
-              ? "badge-success"
-              : "badge-pending"
-          }">
-
-            ${escapeHTML(
-              req.status || "En attente"
-            )}
-
-          </span>
-
-        </td>
-
-        <td>
-
-          ${
-            req.status === "Traité"
-
-            ? "—"
-
-            : `
-
-              <button
-                class="small-btn btn-green"
-                onclick="processReset(${index})">
-
-                Réinitialiser
-
-              </button>
-
-            `
-          }
-
-        </td>
-
-      </tr>
-
-    `).join("");
-
-}
-
-
-/* =====================================================
-   TRAITER RÉINITIALISATION
-===================================================== */
-
-function processReset(index) {
-
-  const requests =
-    getData("ztv_password_reset_requests");
-
-  if (!requests[index]) return;
-
-
-  const confirmation =
-    confirm(
-      "Confirmer la réinitialisation du mot de passe ?\n\n" +
-      "Le mot de passe par défaut sera : 5555"
-    );
-
-
-  if (!confirmation) return;
-
-
-  requests[index].status = "Traité";
-
-  requests[index].resetPassword = "5555";
-
-  saveData(
-    "ztv_password_reset_requests",
-    requests
-  );
-
-
-  alert(
-    "✅ Demande traitée.\n\n" +
-    "Le mot de passe par défaut est : 5555\n\n" +
-    "Vous pouvez maintenant informer l'élève."
-  );
-
-
-  fetchResetRequests();
-
-}
-
-
-/* =====================================================
-   AVIS
-===================================================== */
-
-function fetchReviews() {
-
-  const reviews =
-    getData("ztv_reviews");
-
-  const container =
-    document.getElementById(
-      "reviewsContainer"
-    );
-
-  if (!container) return;
-
-
-  if (reviews.length === 0) {
-
-    container.innerHTML = `
-
-      <div style="
-        text-align:center;
-        color:#9ca3af;
-        padding:40px;
-      ">
-
-        ⭐ Aucun avis enregistré.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    reviews.map(review => `
-
-      <div class="review-card">
-
-        <div class="review-head">
-
-          <div class="review-name">
-
-            ${escapeHTML(
-              review.nom || "Utilisateur"
-            )}
-
-          </div>
-
-          <div class="review-date">
-
-            ${escapeHTML(
-              review.date || ""
-            )}
-
-          </div>
-
-        </div>
-
-        <div class="stars">
-
-          ${"★".repeat(
-            Math.min(
-              5,
-              Math.max(
-                0,
-                Number(review.stars) || 0
-              )
-            )
-          )}
-
-          ${"☆".repeat(
-            5 -
-            Math.min(
-              5,
-              Math.max(
-                0,
-                Number(review.stars) || 0
-              )
-            )
-          )}
-
-        </div>
-
-        <p class="review-text">
-
-          ${escapeHTML(
-            review.message || "Aucun commentaire."
-          )}
-
-        </p>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* =====================================================
-   MEILLEURS ÉLÈVES
-===================================================== */
-
-function fetchTopStudents() {
-
-  const students =
-    getData("ztv_students");
-
-  const tbody =
-    document.getElementById(
-      "topStudentsBody"
-    );
-
-  if (!tbody) return;
-
-
-  const sorted =
-    [...students]
-      .sort(
-        (a,b) =>
-          Number(b.moyenneAnnuelle || 0) -
-          Number(a.moyenneAnnuelle || 0)
-      )
-      .slice(0, 20);
-
-
-  if (sorted.length === 0) {
-
-    tbody.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="7"
-          style="text-align:center;color:#9ca3af;padding:35px;">
-
-          Aucun résultat enregistré.
-
-        </td>
-
-      </tr>
-
-    `;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML =
-    sorted.map((student, index) => `
-
-      <tr>
-
-        <td>
-
-          <strong>
-            #${index + 1}
-          </strong>
-
-        </td>
-
-        <td>
-          ${escapeHTML(student.nom || "")}
-        </td>
-
-        <td>
-          ${escapeHTML(student.prenom || "")}
-        </td>
-
-        <td>
-          ${escapeHTML(student.classe || "")}
-        </td>
-
-        <td>
-
-          <strong style="color:#ff9b32;">
-
-            ${Number(
-              student.moyenneAnnuelle || 0
-            ).toFixed(2)}/20
-
-          </strong>
-
-        </td>
-
-        <td>
-          ${escapeHTML(student.ville || "")}
-        </td>
-
-        <td>
-          ${escapeHTML(student.whatsapp || "")}
-        </td>
-
-      </tr>
-
-    `).join("");
-
-}
-
-
-/* =====================================================
-   LIEN APPLICATION
-===================================================== */
-
-function copyAppLink() {
-
-  const link =
-    localStorage.getItem("ztv_app_link")
-    || window.location.href;
-
-
-  navigator.clipboard
-    .writeText(link)
-    .then(() => {
-
-      alert(
-        "✅ Lien copié avec succès."
-      );
-
-    })
-    .catch(() => {
-
-      alert(
-        "Impossible de copier automatiquement le lien."
-      );
-
+  // CHARGEMENT TEMPS RÉEL DE LA BASE FIREBASE
+  function chargerDonneesFirebase() {
+    // 1. Charger les comptes élèves
+    db.collection("eleves").onSnapshot(snapshot => {
+      elevesCache = [];
+      let maxMoyenne = -1;
+      let meillEleve = null;
+      let countHonneur = 0;
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        elevesCache.push(data);
+
+        // Détection meilleure moyenne
+        if (data.derniereMoyenneAnnuelle && data.derniereMoyenneAnnuelle > maxMoyenne) {
+          maxMoyenne = data.derniereMoyenneAnnuelle;
+          meillEleve = data;
+        }
+
+        if (data.derniereMoyenneAnnuelle >= 13) {
+          countHonneur++;
+        }
+      });
+
+      document.getElementById('count-eleves').innerText = elevesCache.length + " compte(s)";
+      document.getElementById('count-honneur').innerText = countHonneur + " élève(s)";
+
+      if (maxMoyenne >= 0) {
+        document.getElementById('best-moyenne').innerText = maxMoyenne.toFixed(2) + " / 20";
+        document.getElementById('best-eleve-nom').innerText = "Titulaire : " + meillEleve.fullname;
+      }
     });
 
-}
+    // 2. Total des calculs effectués
+    db.collection("stats").doc("global").onSnapshot(doc => {
+      if (doc.exists) {
+        document.getElementById('count-calculs').innerText = doc.data().totalCalculs || 0;
+      }
+    });
 
+    // 3. Avis des élèves
+    db.collection("avis").onSnapshot(snapshot => {
+      document.getElementById('count-avis').innerText = snapshot.size + " avis";
+    });
 
-function editAppLink() {
-
-  const current =
-    localStorage.getItem("ztv_app_link")
-    || window.location.href;
-
-
-  const newLink =
-    prompt(
-      "Entrez le nouveau lien :",
-      current
-    );
-
-
-  if (
-    newLink !== null &&
-    newLink.trim() !== ""
-  ) {
-
-    localStorage.setItem(
-      "ztv_app_link",
-      newLink.trim()
-    );
-
-    switchTab("links");
-
+    // 4. Mots de passe oubliés
+    db.collection("demandes_reset").where("statut", "==", "en_attente").onSnapshot(snapshot => {
+      document.getElementById('count-reset').innerText = snapshot.size + " demande(s)";
+    });
   }
 
-}
-
-
-/* =====================================================
-   CONCOURS
-===================================================== */
-
-function openContestModal() {
-
-  document.getElementById(
-    "contestModal"
-  ).style.display = "flex";
-
-}
-
-
-function closeContestModal() {
-
-  document.getElementById(
-    "contestModal"
-  ).style.display = "none";
-
-}
-
-
-function createContest() {
-
-  const title =
-    document.getElementById(
-      "contestTitle"
-    ).value.trim();
-
-  const classe =
-    document.getElementById(
-      "contestClass"
-    ).value;
-
-  const type =
-    document.getElementById(
-      "contestType"
-    ).value;
-
-  const description =
-    document.getElementById(
-      "contestDescription"
-    ).value.trim();
-
-
-  if (!title || !classe) {
-
-    alert(
-      "⚠️ Veuillez renseigner le titre et la classe."
-    );
-
-    return;
-
-  }
-
-
-  const contests =
-    getData("ztv_contests");
-
-
-  contests.push({
-
-    id:
-      Date.now(),
-
-    title,
-
-    classe,
-
-    type,
-
-    description,
-
-    status:
-      "Brouillon",
-
-    createdAt:
-      new Date().toLocaleDateString(
-        "fr-FR"
-      )
-
-  });
-
-
-  saveData(
-    "ztv_contests",
-    contests
-  );
-
-
-  document.getElementById(
-    "contestTitle"
-  ).value = "";
-
-  document.getElementById(
-    "contestClass"
-  ).value = "";
-
-  document.getElementById(
-    "contestDescription"
-  ).value = "";
-
-
-  closeContestModal();
-
-  fetchContests();
-
-
-  alert(
-    "✅ Concours créé avec succès."
-  );
-
-}
-
-
-function fetchContests() {
-
-  const container =
-    document.getElementById(
-      "contestList"
-    );
-
-  if (!container) return;
-
-
-  const contests =
-    getData("ztv_contests");
-
-
-  if (contests.length === 0) {
-
-    container.innerHTML = `
-
-      <div style="
-        color:#9ca3af;
-        text-align:center;
-        padding:35px;
-      ">
-
-        Aucun concours créé.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    contests.map((contest, index) => `
-
-      <div class="premium-action"
-           style="margin-bottom:10px;">
-
-        <i class="fa-solid fa-trophy"></i>
-
-        <h3>
-          ${escapeHTML(
-            contest.title
-          )}
-        </h3>
-
-        <p>
-          Classe :
-          ${escapeHTML(
-            contest.classe
-          )}
-        </p>
-
-        <p>
-          Type :
-          ${escapeHTML(
-            contest.type
-          )}
-        </p>
-
-        <p>
-          Statut :
-          ${escapeHTML(
-            contest.status
-          )}
-        </p>
-
-        <div class="action-buttons"
-             style="margin-top:12px;">
-
-          <button
-            class="small-btn btn-green"
-            onclick="publishContest(${index})">
-
-            Mettre en ligne
-
-          </button>
-
-          <button
-            class="small-btn btn-red"
-            onclick="deleteContest(${index})">
-
-            Supprimer
-
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-function publishContest(index) {
-
-  const contests =
-    getData("ztv_contests");
-
-
-  if (!contests[index]) return;
-
-
-  contests[index].status =
-    "En ligne";
-
-
-  saveData(
-    "ztv_contests",
-    contests
-  );
-
-
-  fetchContests();
-
-
-  alert(
-    "🟢 Concours mis en ligne."
-  );
-
-}
-
-
-function deleteContest(index) {
-
-  const confirmation =
-    confirm(
-      "Voulez-vous supprimer ce concours ?"
-    );
-
-
-  if (!confirmation) return;
-
-
-  const contests =
-    getData("ztv_contests");
-
-
-  contests.splice(index, 1);
-
-
-  saveData(
-    "ztv_contests",
-    contests
-  );
-
-
-  fetchContests();
-
-}
-
-
-/* =====================================================
-   PROTECTION CONTRE L'INJECTION HTML
-===================================================== */
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =====================================================
-   FERMER MODAL EN CLIQUANT À L'EXTÉRIEUR
-===================================================== */
-
-document
-  .getElementById("contestModal")
-  .addEventListener("click", function(event) {
-
-    if (event.target === this) {
-
-      closeContestModal();
-
+  // AFFICHAGE DES DÉTAILS DANS MODAL
+  function afficherEleves() {
+    let html = "";
+    if (elevesCache.length === 0) {
+      html = "<p style='color:var(--text-gray); text-align:center;'>Aucun élève enregistré.</p>";
+    } else {
+      elevesCache.forEach(u => {
+        html += `
+          <div class="item-box">
+            <strong style="color:#FFF; font-size:13px;">${u.fullname}</strong><br>
+            🏫 ${u.etablissement} | Classe : ${u.classe}<br>
+            📍 ${u.ville} (${u.pays || "CI"}) | 📱 WhatsApp : ${u.whatsapp}<br>
+            📊 Moyenne Annuelle : <strong style="color:var(--orange-ztv);">${u.derniereMoyenneAnnuelle ? u.derniereMoyenneAnnuelle.toFixed(2) : '--'} / 20</strong>
+          </div>
+        `;
+      });
     }
+    ouvrirModal("👥 Comptes Élèves Inscrits", html);
+  }
 
-  });
+  function afficherDemandesReset() {
+    db.collection("demandes_reset").where("statut", "==", "en_attente").get().then(snapshot => {
+      let html = "";
+      if (snapshot.empty) {
+        html = "<p style='color:var(--text-gray); text-align:center;'>Aucune demande en attente.</p>";
+      } else {
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          html += `
+            <div class="item-box">
+              <strong style="color:#FFF;">${d.fullname}</strong> (${d.whatsapp})<br>
+              <button class="btn btn-orange" style="margin-top:8px; padding:6px;" onclick="reinitialiserMdp('${doc.id}', '${d.whatsapp}')">
+                🔄 Réinitialiser le mot de passe à 5555
+              </button>
+            </div>
+          `;
+        });
+      }
+      ouvrirModal("🔐 Mots de passe oubliés", html);
+    });
+  }
 
+  function reinitialiserMdp(docId, whatsapp) {
+    db.collection("eleves").doc(whatsapp).set({ password: "5555" }, { merge: true }).then(() => {
+      db.collection("demandes_reset").doc(docId).update({ statut: "traite" });
+      alert("✅ Mot de passe réinitialisé à 5555 pour l'élève " + whatsapp);
+      fermerModal();
+    });
+  }
 
+  function copierLienEleve() {
+    const input = document.getElementById('app-url-input');
+    input.select();
+    document.execCommand('copy');
+    alert("📋 Lien de l'application élève copié !");
+  }
+
+  function ouvrirModal(titre, contenu) {
+    document.getElementById('modal-title').innerText = titre;
+    document.getElementById('modal-body').innerHTML = contenu;
+    document.getElementById('admin-modal').style.display = 'block';
+  }
+
+  function fermerModal() {
+    document.getElementById('admin-modal').style.display = 'none';
+  }
 </script>
 
 </body>
