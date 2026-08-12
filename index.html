@@ -646,7 +646,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-content: space-around; align-items: center;
+      display: flex; justify-space-around; align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -945,7 +945,7 @@
               </div>
               <div class="trim-arrow-circle">→</div>
             </div>
-            <div class="trim-sublbl">Moyenne</div>
+            <div class="trim-sublbl">Note</div>
             <div class="trim-val" id="val-t1">-- /20</div>
           </div>
 
@@ -958,7 +958,7 @@
               </div>
               <div class="trim-arrow-circle">→</div>
             </div>
-            <div class="trim-sublbl">Moyenne</div>
+            <div class="trim-sublbl">Note</div>
             <div class="trim-val" id="val-t2">-- /20</div>
           </div>
         </div>
@@ -973,7 +973,7 @@
               </div>
               <div class="trim-arrow-circle">→</div>
             </div>
-            <div class="trim-sublbl">Moyenne</div>
+            <div class="trim-sublbl">Note</div>
             <div class="trim-val" id="val-t3">-- /20</div>
           </div>
         </div>
@@ -985,8 +985,8 @@
           <div style="display:flex; align-items:center; gap:12px;">
             <span style="font-size:28px;">🎯</span>
             <div>
-              <div style="font-size:13px; font-weight:900;">Moyenne d'orientation</div>
-              <div style="font-size:10px; color:#A5B4FC; margin-top:2px;">Calculer ma moyenne d'orientation (3ᵉ)</div>
+              <div style="font-size:13px; font-weight:900;">Note d'orientation</div>
+              <div style="font-size:10px; color:#A5B4FC; margin-top:2px;">Calculer ma note d'orientation (3ᵉ)</div>
             </div>
           </div>
           <div style="font-size:16px;">➔</div>
@@ -1356,7 +1356,7 @@
 
       <div style="padding: 0 16px;">
         <div style="background: linear-gradient(135deg, #1E1B4B, #312E81); border-radius: var(--radius-xl); padding: 18px; border: 1.5px solid #818CF8; margin-bottom: 16px;">
-          <h2 style="font-size: 16px; font-weight: 900; color:#FFF; margin-bottom: 4px;">🎯 Calcul de la Moyenne d'Orientation</h2>
+          <h2 style="font-size: 16px; font-weight: 900; color:#FFF; margin-bottom: 4px;">🎯 Calcul de la Note d'Orientation</h2>
           <p style="font-size: 11px; color: #C7D2FE; line-height: 1.4;">
             Calcul officiel basé sur vos moyennes trimestrielles réelles et vos résultats au BEPC.
           </p>
@@ -1364,13 +1364,13 @@
 
         <!-- RESULTAT MO FINAL -->
         <div id="orient-result-card" style="background:#111827; border:2px solid var(--orange-ztv); border-radius:var(--radius-xl); padding:20px; text-align:center; margin-bottom:18px;">
-          <div style="font-size:11px; font-weight:800; color:var(--text-gray); text-transform:uppercase;">🎯 Moyenne d'Orientation Finale</div>
+          <div style="font-size:11px; font-weight:800; color:var(--text-gray); text-transform:uppercase;">🎯 Note d'Orientation Finale</div>
           <div style="font-size:32px; font-weight:900; color:var(--orange-ztv); margin:6px 0;" id="orient-score-val">-- / 20</div>
           <div style="font-size:11px; font-weight:700; color:#A5B4FC;" id="orient-appreciation-lbl">Veuillez renseigner vos notes BEPC ci-dessous</div>
         </div>
 
         <div id="orient-missing-warning" style="display:none; background:rgba(239, 68, 68, 0.15); border:1.5px solid #EF4444; border-radius:var(--radius-lg); padding:12px 16px; margin-bottom:16px; font-size:11px; color:#FCA5A5; line-height:1.4;">
-          ⚠️ <strong>Calcul impossible pour le moment :</strong> Les trois trimestres doivent être renseignés dans l'application pour calculer la moyenne d'orientation.
+          ⚠️ <strong>Calcul impossible pour le moment :</strong> Les trois trimestres doivent être renseignés dans l'application pour calculer la note d'orientation.
         </div>
 
         <!-- FORMULAIRE SAISIE NOTES BEPC -->
@@ -1501,7 +1501,7 @@
       <div class="dash-header">
         <div>
           <div style="font-size: 11px; color: var(--orange-ztv); font-weight: 800;">PANNEAU D'ADMINISTRATION</div>
-          <div style="font-size: 15px; font-weight: 900;">niampa Zakaria 👑</div>
+          <div style="font-size: 15px; font-weight: 900;">ZTV Admin 👑</div>
         </div>
         <button class="btn-back-link" style="padding: 6px 12px;" onclick="switchPage('view-admin-login')">Déconnexion</button>
       </div>
@@ -1548,7 +1548,7 @@
         </button>
         <button class="admin-nav-btn" onclick="renderAdminReset()">
           <span style="font-size:20px;">🔐</span>
-          <span>Mots de passe oubliés</span>
+          <span>Comptes Réseau</span>
         </button>
       </div>
 
@@ -1676,6 +1676,11 @@
       3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
     };
 
+    function nameToEmail(name) {
+      const clean = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+      return clean + "@ztv-moyenne.app";
+    }
+
     window.onload = function() {
       const d = new Date();
       const yr = d.getFullYear();
@@ -1686,67 +1691,62 @@
 
       // ROUTAGE INITIAL VIA URL
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('app') === 'eleve') {
+      const isEleveRoute = (urlParams.get('app') === 'eleve');
+      
+      if (isEleveRoute) {
         switchPage('view-auth');
       } else {
         switchPage('view-admin-login');
       }
 
-      // Récupération cache local rapide
-      const localData = localStorage.getItem('ztv_users_data');
-      if (localData) {
-        try { registeredUsers = JSON.parse(localData); } catch(e) {}
-      }
-
-      // Surveillance de l'état d'authentification Firebase
+      // SURVEILLANCE PERSISTANTE AUTHENTIFICATION FIREBASE
       auth.onAuthStateChanged((user) => {
         if (user) {
-          console.log("🔑 [Firebase Auth] Utilisateur authentifié:", user.uid);
+          console.log("🔑 [Firebase Auth] Utilisateur connecté (uid):", user.uid);
+          database.ref('eleves/' + user.uid).on('value', (snapshot) => {
+            const profile = snapshot.val();
+            if (profile) {
+              currentUser = profile;
+              currentUser.uid = user.uid;
+              trimestresData = currentUser.trimestresData || trimestresData;
+              updateProfileDisplay();
+              updateAppPhotos();
+              checkClasse3emeUI();
+              actualiserMoyennesGlobales();
+              if (isEleveRoute && !document.getElementById('view-dashboard').classList.contains('active') && !document.getElementById('view-trim-entry').classList.contains('active') && !document.getElementById('view-profile').classList.contains('active') && !document.getElementById('view-certif').classList.contains('active') && !document.getElementById('view-orientation').classList.contains('active')) {
+                switchPage('view-dashboard');
+              }
+            }
+          });
         } else {
-          console.log("🔑 [Firebase Auth] Aucun utilisateur authentifié.");
+          console.log("🔑 [Firebase Auth] Aucun utilisateur connecté.");
+          currentUser = null;
+          if (isEleveRoute) {
+            switchPage('view-auth');
+          }
         }
       });
 
-      // SYNCHRONISATION REALTIME DATABASE TEMPS REEL
+      // SYNCHRONISATION REALTIME DATABASE POUR LE PANNEAU D'ADMINISTRATION
       database.ref('eleves').on('value', (snapshot) => {
         let firebaseUsers = [];
         const data = snapshot.val();
         if (data) {
           Object.keys(data).forEach(key => {
-            firebaseUsers.push(data[key]);
+            let u = data[key];
+            u.uid = key;
+            firebaseUsers.push(u);
           });
         }
-        
         registeredUsers = firebaseUsers;
-        saveLocal();
         updateAdminStats();
-        
-        // Si un élève est connecté, réactualiser son profil en direct
-        if (currentUser) {
-          const freshUser = registeredUsers.find(u => u.fullname && currentUser.fullname && u.fullname.toLowerCase() === currentUser.fullname.toLowerCase());
-          if (freshUser) {
-            currentUser = freshUser;
-            trimestresData = currentUser.trimestresData || trimestresData;
-            updateProfileDisplay();
-            actualiserMoyennesGlobales();
-          }
-        }
-        console.log("🔥 [Realtime Database] Synchronisation effectuée. Élèves inscrits:", registeredUsers.length);
-      }, (error) => {
-        console.error("❌ [Realtime Database] Erreur de lecture temps réel:", error);
       });
     };
 
-    function saveLocal() {
-      localStorage.setItem('ztv_users_data', JSON.stringify(registeredUsers));
-    }
-
-    // SAUVEGARDE DANS REALTIME DATABASE
+    // SAUVEGARDE DANS REALTIME DATABASE VIA UID FIREBASE
     function syncUserToFirebase(user) {
-      if (!user || !user.fullname) return;
+      if (!user || !user.uid) return;
 
-      const docId = user.fullname.toLowerCase().trim().replace(/\s+/g, '_');
-      
       let totalCalculs = 0;
       if (user.trimestresData) {
         [1, 2, 3].forEach(t => {
@@ -1758,17 +1758,17 @@
       if (user.moyenneOrientation) totalCalculs++;
 
       const payload = {
+        uid: user.uid,
         nom: user.nom || "",
         prenom: user.prenom || "",
-        fullname: user.fullname,
-        pass: user.pass || "",
+        fullname: user.fullname || "",
         etablissement: user.etablissement || "",
         classe: user.classe || "",
         ville: user.ville || "",
         pays: user.pays || "Côte d'Ivoire 🇨🇮",
         whatsapp: user.whatsapp || "",
         dateCreation: user.dateCreation || new Date().toLocaleDateString('fr-FR'),
-        photo: user.photo || "",
+        photo: user.photo || "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png",
         trimestresData: user.trimestresData || trimestresData,
         moyenneOrientation: user.moyenneOrientation || null,
         notesBEPC: user.notesBEPC || null,
@@ -1776,12 +1776,12 @@
         derniereMiseAJour: Date.now()
       };
 
-      database.ref('eleves/' + docId).update(payload)
+      database.ref('eleves/' + user.uid).update(payload)
         .then(() => {
-          console.log("✅ [Realtime Database] Élève mis à jour:", docId);
+          console.log("✅ [Realtime Database] Élève mis à jour pour l'UID :", user.uid);
         })
         .catch((err) => { 
-          console.error("❌ [Realtime Database] Erreur lors de la sauvegarde:", err); 
+          console.error("❌ [Realtime Database] Erreur lors de la sauvegarde :", err); 
         });
     }
 
@@ -1831,7 +1831,6 @@
         reader.onload = function(e) {
           if (currentUser) {
             currentUser.photo = e.target.result;
-            saveLocal();
             syncUserToFirebase(currentUser);
           }
           document.getElementById('photo-preview-msg').innerText = "✓ Photo sélectionnée : " + file.name;
@@ -1871,7 +1870,7 @@
       return "Excellente / Félicitations";
     }
 
-    // CONNEXION ÉLÈVE DIRECTE DEPUIS REALTIME DATABASE
+    // CONNEXION ÉLÈVE VIA FIREBASE AUTHENTICATION
     function actionLogin() {
       const loginInput = document.getElementById('login-fullname').value.trim();
       const passInput = document.getElementById('login-pass').value.trim();
@@ -1885,53 +1884,34 @@
         return;
       }
 
-      const docId = loginInput.toLowerCase().replace(/\s+/g, '_');
-      
-      database.ref('eleves/' + docId).once('value').then((snapshot) => {
-        let existingUser = snapshot.val();
-        
-        if (!existingUser || existingUser.pass !== passInput) {
-          existingUser = registeredUsers.find(u => 
-            (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
-          );
-        }
+      const generatedEmail = nameToEmail(loginInput);
 
-        if (existingUser && existingUser.pass === passInput) {
-          currentUser = existingUser;
-          trimestresData = currentUser.trimestresData || trimestresData;
-          updateProfileDisplay();
-          updateAppPhotos();
-          checkClasse3emeUI();
-          switchPage('view-dashboard');
-          actualiserMoyennesGlobales();
-          syncUserToFirebase(currentUser);
-          showToast("Connexion réussie");
-        } else {
+      auth.signInWithEmailAndPassword(generatedEmail, passInput)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          database.ref('eleves/' + user.uid).once('value').then((snapshot) => {
+            const profile = snapshot.val();
+            if (profile) {
+              currentUser = profile;
+              currentUser.uid = user.uid;
+              trimestresData = currentUser.trimestresData || trimestresData;
+              updateProfileDisplay();
+              updateAppPhotos();
+              checkClasse3emeUI();
+              switchPage('view-dashboard');
+              actualiserMoyennesGlobales();
+              showToast("Connexion réussie");
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("❌ [Firebase Auth] Erreur de connexion:", error);
           errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
           errBox.style.display = 'block';
-        }
-      }).catch((error) => {
-        console.error("❌ [Realtime Database] Erreur de vérification:", error);
-        const existingUser = registeredUsers.find(u => 
-          (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
-        );
-        if (existingUser) {
-          currentUser = existingUser;
-          trimestresData = currentUser.trimestresData || trimestresData;
-          updateProfileDisplay();
-          updateAppPhotos();
-          checkClasse3emeUI();
-          switchPage('view-dashboard');
-          actualiserMoyennesGlobales();
-          showToast("Connexion réussie");
-        } else {
-          errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
-          errBox.style.display = 'block';
-        }
-      });
+        });
     }
 
-    // INSCRIPTION ET SAUVEGARDE PERMANENTE
+    // INSCRIPTION ÉLÈVE VIA FIREBASE AUTHENTICATION & DUPLICATION DANS REALTIME DATABASE DÉDIÉE PAR UID
     function actionRegister() {
       const nom = document.getElementById('reg-nom').value.trim();
       const prenom = document.getElementById('reg-prenom').value.trim();
@@ -1954,50 +1934,54 @@
       }
 
       const fullname = (nom + " " + prenom).trim();
-      const duplicate = registeredUsers.find(u => u.fullname && u.fullname.toLowerCase() === fullname.toLowerCase());
+      const generatedEmail = nameToEmail(fullname);
 
-      if (duplicate) {
-        errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
-        errBox.style.display = 'block';
-        setTimeout(() => switchAuthTab('login'), 2000);
-        return;
-      }
+      auth.createUserWithEmailAndPassword(generatedEmail, pass)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          const photoSrc = "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png";
 
-      const photoSrc = "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png";
+          const newUserProfile = {
+            uid: user.uid,
+            nom: nom,
+            prenom: prenom,
+            fullname: fullname,
+            etablissement: document.getElementById('reg-etablissement').value.trim(),
+            ville: document.getElementById('reg-ville').value.trim(),
+            classe: document.getElementById('reg-classe').value,
+            whatsapp: document.getElementById('reg-whatsapp').value.trim(),
+            pays: document.getElementById('reg-pays').value,
+            dateCreation: new Date().toLocaleDateString('fr-FR'),
+            photo: photoSrc,
+            trimestresData: {
+              1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+              2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+              3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+            }
+          };
 
-      const newUser = {
-        nom: nom,
-        prenom: prenom,
-        fullname: fullname,
-        pass: pass,
-        etablissement: document.getElementById('reg-etablissement').value.trim(),
-        ville: document.getElementById('reg-ville').value.trim(),
-        classe: document.getElementById('reg-classe').value,
-        whatsapp: document.getElementById('reg-whatsapp').value.trim(),
-        pays: document.getElementById('reg-pays').value,
-        dateCreation: new Date().toLocaleDateString('fr-FR'),
-        photo: photoSrc,
-        trimestresData: {
-          1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-          2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-          3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
-        }
-      };
+          currentUser = newUserProfile;
+          trimestresData = currentUser.trimestresData;
 
-      registeredUsers.push(newUser);
-      currentUser = newUser;
-      trimestresData = currentUser.trimestresData;
+          syncUserToFirebase(currentUser);
+          updateProfileDisplay();
+          updateAppPhotos();
+          checkClasse3emeUI();
 
-      saveLocal();
-      syncUserToFirebase(currentUser);
-
-      updateProfileDisplay();
-      updateAppPhotos();
-      checkClasse3emeUI();
-
-      switchPage('view-dashboard');
-      actualiserMoyennesGlobales();
-      showToast("Compte créé avec succès");
+          switchPage('view-dashboard');
+          actualiserMoyennesGlobales();
+          showToast("Compte créé avec succès");
+        })
+        .catch((error) => {
+          console.error("❌ [Firebase Auth] Erreur d'inscription:", error);
+          if (error.code === 'auth/email-already-in-use') {
+            errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
+            setTimeout(() => switchAuthTab('login'), 2000);
+          } else {
+            errBox.innerText = "Erreur lors de la création du compte : " + error.message;
+          }
+          errBox.style.display = 'block';
+        });
     }
 
     function updateProfileDisplay() {
@@ -2018,14 +2002,20 @@
       if (document.getElementById('cert-classe')) document.getElementById('cert-classe').innerText = currentUser.classe || "Non spécifiée";
     }
 
+    // DÉCONNEXION VIA FIREBASE AUTHENTICATION
     function actionLogout() {
-      currentUser = null;
-      trimestresData = {
-        1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-        2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-        3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
-      };
-      switchPage('view-auth');
+      auth.signOut().then(() => {
+        currentUser = null;
+        trimestresData = {
+          1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+          2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+          3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+        };
+        switchPage('view-auth');
+        showToast("Déconnecté");
+      }).catch((err) => {
+        console.error("❌ Erreur de déconnexion:", err);
+      });
     }
 
     function openTrimPage(tNum) {
@@ -2103,7 +2093,6 @@
 
       if (currentUser) {
         currentUser.trimestresData = trimestresData;
-        saveLocal();
         syncUserToFirebase(currentUser);
       }
 
@@ -2260,7 +2249,6 @@
         if (currentUser) {
           currentUser.moyenneOrientation = mo;
           currentUser.notesBEPC = { fr: bepcFr, ma: bepcMa, pc: bepcPc, an: bepcAn };
-          saveLocal();
           syncUserToFirebase(currentUser);
         }
       } else {
@@ -2359,7 +2347,7 @@
       }
 
       let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">👤 Liste des Comptes Élèves (${registeredUsers.length})</h3>`;
-      registeredUsers.forEach((u, index) => {
+      registeredUsers.forEach((u) => {
         html += `
           <div class="admin-eleve-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -2369,9 +2357,9 @@
             <div style="font-size:11px; color:var(--text-gray); margin-top:4px;">
               📍 ${u.etablissement || "--"} (${u.ville || "--"}, ${u.pays || "--"})<br/>
               📞 WhatsApp: ${u.whatsapp || "--"}<br/>
-              🔑 Mot de passe: <strong style="color:var(--orange-ztv);">${u.pass || "--"}</strong>
+              🆔 UID Firebase: <strong style="color:var(--orange-ztv); font-size:10px;">${u.uid}</strong>
             </div>
-            <button class="btn-main-green" style="background:#EF4444; box-shadow:none; padding:6px 12px; font-size:11px; margin-top:8px; width:auto;" onclick="actionAdminDeleteUser('${u.fullname}')">🗑️ Supprimer manuellement</button>
+            <button class="btn-main-green" style="background:#EF4444; box-shadow:none; padding:6px 12px; font-size:11px; margin-top:8px; width:auto;" onclick="actionAdminDeleteUser('${u.uid}', '${u.fullname}')">🗑️ Supprimer de la BDD</button>
           </div>
         `;
       });
@@ -2403,56 +2391,19 @@
       const area = document.getElementById('admin-content-area');
       if (!area) return;
 
-      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🔐 Réinitialisation des Mots de Passe</h3>`;
-      registeredUsers.forEach(u => {
-        html += `
-          <div class="admin-eleve-card">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong>
-              <span style="font-size:11px; color:var(--orange-ztv); font-weight:800;">Pass: ${u.pass}</span>
-            </div>
-            <div style="display:flex; gap:8px; margin-top:8px;">
-              <input type="text" class="form-input" id="pass-mod-${u.fullname.replace(/\s+/g, '_')}" placeholder="Nouveau Pass (5 chiffres)" style="padding:6px 10px; font-size:11px;" />
-              <button class="btn-main-green" style="padding:6px 12px; font-size:11px; width:auto;" onclick="actionAdminChangePass('${u.fullname}')">Changer</button>
-            </div>
-          </div>
-        `;
-      });
+      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🔐 Sécurité & Authentification</h3>`;
+      html += `<p style="font-size:11px; color:var(--text-gray); line-height:1.4;">Toutes les identités et mots de passe des élèves sont désormais sécurisés de bout en bout par Firebase Authentication. Aucun mot de passe n'est accessible en clair.</p>`;
       area.innerHTML = html;
     }
 
-    function actionAdminChangePass(fullname) {
-      const safeId = fullname.replace(/\s+/g, '_');
-      const input = document.getElementById('pass-mod-' + safeId);
-      if (!input) return;
-      const newPass = input.value.trim();
-
-      if (!/^\d{5}$/.test(newPass)) {
-        alert("Le mot de passe doit comporter exactement 5 chiffres.");
-        return;
-      }
-
-      const u = registeredUsers.find(user => user.fullname === fullname);
-      if (u) {
-        u.pass = newPass;
-        saveLocal();
-        syncUserToFirebase(u);
-        alert("Mot de passe mis à jour dans Realtime Database avec succès !");
-        renderAdminReset();
-      }
-    }
-
-    function actionAdminDeleteUser(fullname) {
-      if (confirm(`Êtes-vous absolument sûr de vouloir supprimer définitivement le compte de ${fullname} ?`)) {
-        const docId = fullname.toLowerCase().trim().replace(/\s+/g, '_');
-        database.ref('eleves/' + docId).remove().then(() => {
-          registeredUsers = registeredUsers.filter(u => u.fullname !== fullname);
-          saveLocal();
+    function actionAdminDeleteUser(uid, fullname) {
+      if (confirm(`Êtes-vous absolument sûr de vouloir supprimer les données de ${fullname} dans Realtime Database ?`)) {
+        database.ref('eleves/' + uid).remove().then(() => {
           updateAdminStats();
           renderAdminComptes();
-          alert("Compte supprimé de Realtime Database avec succès.");
+          alert("Données supprimées de la base avec succès.");
         }).catch(err => {
-          console.error("❌ [Realtime Database] Erreur de suppression:", err);
+          console.error("❌ Erreur de suppression:", err);
         });
       }
     }
