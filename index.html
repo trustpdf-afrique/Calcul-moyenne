@@ -513,6 +513,15 @@
       font-size: 10px; text-transform: uppercase; letter-spacing: 1px; text-align: center !important; padding: 8px !important;
     }
 
+    .sub-discipline-row td {
+      background: rgba(17, 24, 39, 0.6);
+      font-size: 11px;
+    }
+    .sub-discipline-row td:first-child {
+      padding-left: 24px !important;
+      color: #D1D5DB;
+    }
+
     .inp-coef {
       width: 42px; background: var(--bg-input); border: 1px solid var(--border-light);
       color: #FFF; text-align: center; border-radius: 6px; padding: 6px; font-weight: 700; font-size: 12px;
@@ -627,7 +636,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-content: space-around; align-items: center;
+      display: flex; justify-space-around: align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -1002,34 +1011,56 @@
           </thead>
           <tbody>
             <tr class="section-title-row"><td colspan="4">--- LETTRES ---</td></tr>
-            <tr data-subject="Français">
-              <td>Français</td>
-              <td><input type="number" class="inp-coef" value="3" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
-              <td class="tot-cell">-</td>
+            
+            <!-- BLOC DÉTAILLÉ DU FRANÇAIS -->
+            <tr data-subject="Français" class="main-subject-row">
+              <td><strong>🇫🇷 Français</strong></td>
+              <td><input type="number" class="inp-coef" value="4" id="coef-français" readonly style="background:#1B2133; border-color:#374151; cursor:not-allowed;" /></td>
+              <td id="calc-note-français" style="font-weight:800; color:var(--orange-ztv);">-</td>
+              <td class="tot-cell" id="calc-tot-français">-</td>
             </tr>
+            <tr class="sub-discipline-row" data-sub-parent="Français" data-sub-key="comp_fr">
+              <td>└ Composition française</td>
+              <td><input type="number" class="inp-coef inp-sub-coef" value="2" readonly style="background:#111827; border-color:#374151; cursor:not-allowed;" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note inp-sub-note" /></td>
+              <td class="sub-tot-cell">-</td>
+            </tr>
+            <tr class="sub-discipline-row" data-sub-parent="Français" data-sub-key="expr_orale">
+              <td>└ Expression orale</td>
+              <td><input type="number" class="inp-coef inp-sub-coef" value="1" readonly style="background:#111827; border-color:#374151; cursor:not-allowed;" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note inp-sub-note" /></td>
+              <td class="sub-tot-cell">-</td>
+            </tr>
+            <tr class="sub-discipline-row" data-sub-parent="Français" data-sub-key="orth_gram">
+              <td>└ Orthographe - grammaire</td>
+              <td><input type="number" class="inp-coef inp-sub-coef" value="1" readonly style="background:#111827; border-color:#374151; cursor:not-allowed;" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note inp-sub-note" /></td>
+              <td class="sub-tot-cell">-</td>
+            </tr>
+
+            <!-- AUTRES MATIÈRES -->
             <tr data-subject="Anglais">
               <td>Anglais</td>
               <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Espagnol">
               <td>Espagnol</td>
-              <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Allemand">
               <td>Allemand</td>
-              <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Histoire - Géographie">
               <td>Histoire - Géographie</td>
               <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
@@ -1037,19 +1068,19 @@
             <tr data-subject="Mathématiques">
               <td>Mathématiques</td>
               <td><input type="number" class="inp-coef" value="3" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Physique - Chimie">
               <td>Physique - Chimie</td>
               <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="SVT">
               <td>SVT</td>
               <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
@@ -1057,37 +1088,37 @@
             <tr data-subject="Philosophie">
               <td>Philosophie</td>
               <td><input type="number" class="inp-coef" value="2" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="EDHC">
               <td>EDHC</td>
               <td><input type="number" class="inp-coef" value="1" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="EPS">
               <td>EPS</td>
               <td><input type="number" class="inp-coef" value="1" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Arts plastiques">
               <td>Arts plastiques</td>
               <td><input type="number" class="inp-coef" value="1" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Musique">
               <td>🎵 Musique</td>
               <td><input type="number" class="inp-coef" value="1" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Conduite">
               <td>🚗 Conduite</td>
               <td><input type="number" class="inp-coef" value="1" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
+              <td><input type="number" min="0" max="20" step="0.01" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
@@ -1532,7 +1563,7 @@
       remove 
     } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
-    // CONFIGURATION OFFICIELLE NOUVEAU PROJET FIREBASE ztv--moyenne-a940e
+    // CONFIGURATION OFFICIELLE PROJET FIREBASE ztv--moyenne-a940e
     const firebaseConfig = {
       apiKey: "AIzaSyADG3-if6Wyt8vETrUYov142xgmzu0h5QU",
       authDomain: "ztv--moyenne-a940e.firebaseapp.com",
@@ -1554,9 +1585,9 @@
     let currentUser = null;
 
     let trimestresData = {
-      1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-      2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-      3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+      1: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+      2: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+      3: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} }
     };
 
     function nameToEmail(name) {
@@ -1664,7 +1695,7 @@
       try {
         await update(ref(database, 'eleves/' + user.uid), payload);
         localStorage.setItem('ztv_cache_user_' + user.uid, JSON.stringify(payload));
-        console.log("🔥 [Firebase Realtime DB] Données synchronisées avec succès sous eleves/" + user.uid);
+        console.log("🔥 Données synchronisées avec succès sous eleves/" + user.uid);
       } catch (err) {
         console.error("❌ Erreur de synchronisation Realtime Database:", err);
       }
@@ -1729,9 +1760,9 @@
           dateCreation: new Date().toLocaleDateString('fr-FR'),
           photo: "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png",
           trimestresData: {
-            1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-            2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-            3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+            1: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+            2: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+            3: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} }
           }
         };
 
@@ -1804,9 +1835,9 @@
         await signOut(auth);
         currentUser = null;
         trimestresData = {
-          1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-          2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-          3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+          1: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+          2: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
+          3: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} }
         };
         switchPage('view-auth');
         showToast("Déconnecté");
@@ -1819,12 +1850,30 @@
       activeTrimestre = tNum;
       document.getElementById('trim-entry-title').innerText = "Saisie des Moyennes - " + tNum + (tNum === 1 ? "er" : "e") + " Trimestre";
       
-      const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]');
+      const currentTrim = trimestresData[tNum] || {};
+      const subs = currentTrim.subjects || {};
+      const subSubs = currentTrim.subSubjects || {};
+
+      // Réinitialiser / Charger sous-notes Français
+      document.querySelectorAll('.sub-discipline-row[data-sub-parent="Français"]').forEach(tr => {
+        const key = tr.getAttribute('data-sub-key');
+        const noteInp = tr.querySelector('.inp-sub-note');
+        if (subSubs['Français'] && subSubs['Français'][key] !== undefined) {
+          noteInp.value = subSubs['Français'][key];
+        } else {
+          noteInp.value = "";
+        }
+      });
+
+      // Réinitialiser / Charger les autres matières
+      const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]:not(.main-subject-row)');
       rows.forEach(tr => {
         const subject = tr.getAttribute('data-subject');
         const noteInput = tr.querySelector('.inp-note');
-        if (trimestresData[tNum] && trimestresData[tNum].subjects && trimestresData[tNum].subjects[subject] !== undefined) {
-          noteInput.value = trimestresData[tNum].subjects[subject].note;
+        const coefInput = tr.querySelector('.inp-coef');
+        if (subs[subject] !== undefined) {
+          noteInput.value = subs[subject].note !== null && subs[subject].note !== undefined ? subs[subject].note : "";
+          if (subs[subject].coef) coefInput.value = subs[subject].coef;
         } else {
           noteInput.value = "";
         }
@@ -1835,18 +1884,60 @@
     }
 
     function calculerBulletin() {
-      const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]');
+      // 1. CALCUL DE LA DISCIPLINE FRANÇAIS VIA SES SOUS-MATIÈRES
+      let frCompNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="comp_fr"] .inp-sub-note').value);
+      let frOralNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="expr_orale"] .inp-sub-note').value);
+      let frOrthNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="orth_gram"] .inp-sub-note').value);
+
+      let frCompCoef = 2;
+      let frOralCoef = 1;
+      let frOrthCoef = 1;
+
+      // Calcul sous-total des points Français
+      let frCompTot = !isNaN(frCompNote) ? frCompNote * frCompCoef : null;
+      let frOralTot = !isNaN(frOralNote) ? frOralNote * frOralCoef : null;
+      let frOrthTot = !isNaN(frOrthNote) ? frOrthNote * frOrthCoef : null;
+
+      document.querySelector('.sub-discipline-row[data-sub-key="comp_fr"] .sub-tot-cell').innerText = (frCompTot !== null) ? frCompTot.toFixed(2) : "-";
+      document.querySelector('.sub-discipline-row[data-sub-key="expr_orale"] .sub-tot-cell').innerText = (frOralTot !== null) ? frOralTot.toFixed(2) : "-";
+      document.querySelector('.sub-discipline-row[data-sub-key="orth_gram"] .sub-tot-cell').innerText = (frOrthTot !== null) ? frOrthTot.toFixed(2) : "-";
+
+      let frMoyenneCalculée = null;
+      let frTotalPtsMain = null;
+      let frCoefGeneral = 4;
+
+      if (!isNaN(frCompNote) && !isNaN(frOralNote) && !isNaN(frOrthNote)) {
+        let sumSubPts = frCompTot + frOralTot + frOrthTot; // Ex: 67.53
+        let sumSubCoefs = frCompCoef + frOralCoef + frOrthCoef; // 4
+        
+        // Troncature / Arrondi à 2 décimales pour la note de Français
+        frMoyenneCalculée = Math.round((sumSubPts / sumSubCoefs) * 100) / 100; // Ex: 16.88
+        frTotalPtsMain = Math.round((frMoyenneCalculée * frCoefGeneral) * 100) / 100; // Ex: 67.52
+      }
+
+      document.getElementById('calc-note-français').innerText = (frMoyenneCalculée !== null) ? frMoyenneCalculée.toFixed(2) : "-";
+      document.getElementById('calc-tot-français').innerText = (frTotalPtsMain !== null) ? frTotalPtsMain.toFixed(2) : "-";
+
+      // 2. CALCUL GÉNÉRAL TRIMESTRIEL DES MATIÈRES
       let totPoints = 0;
       let totCoefs = 0;
 
-      rows.forEach(tr => {
+      // Ajouter le Français au total s'il est complet
+      if (frTotalPtsMain !== null) {
+        totPoints += frTotalPtsMain;
+        totCoefs += frCoefGeneral;
+      }
+
+      // Parcourir toutes les autres disciplines
+      const otherRows = document.querySelectorAll('#bulletin tbody tr[data-subject]:not(.main-subject-row)');
+      otherRows.forEach(tr => {
         const coef = parseFloat(tr.querySelector('.inp-coef').value) || 0;
         const noteInput = tr.querySelector('.inp-note');
         const note = parseFloat(noteInput.value);
         const totCell = tr.querySelector('.tot-cell');
 
         if (!isNaN(note) && note >= 0 && note <= 20) {
-          const pt = note * coef;
+          const pt = Math.round((note * coef) * 100) / 100;
           totPoints += pt;
           totCoefs += coef;
           totCell.innerText = pt.toFixed(2);
@@ -1860,12 +1951,42 @@
     }
 
     async function enregistrerPageTrimestre() {
-      const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]');
+      // 1. Récupération des sous-notes Français
+      let frCompNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="comp_fr"] .inp-sub-note').value);
+      let frOralNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="expr_orale"] .inp-sub-note').value);
+      let frOrthNote = parseFloat(document.querySelector('.sub-discipline-row[data-sub-key="orth_gram"] .inp-sub-note').value);
+
+      let subSubs = {
+        'Français': {
+          comp_fr: !isNaN(frCompNote) ? frCompNote : null,
+          expr_orale: !isNaN(frOralNote) ? frOralNote : null,
+          orth_gram: !isNaN(frOrthNote) ? frOrthNote : null
+        }
+      };
+
+      let frCoefGeneral = 4;
+      let frMoyenneCalculée = null;
+      let frTotalPtsMain = null;
+
+      if (!isNaN(frCompNote) && !isNaN(frOralNote) && !isNaN(frOrthNote)) {
+        let sumSubPts = (frCompNote * 2) + (frOralNote * 1) + (frOrthNote * 1);
+        frMoyenneCalculée = Math.round((sumSubPts / 4) * 100) / 100;
+        frTotalPtsMain = Math.round((frMoyenneCalculée * frCoefGeneral) * 100) / 100;
+      }
+
       let totPoints = 0;
       let totCoefs = 0;
       let subs = {};
 
-      rows.forEach(tr => {
+      if (frMoyenneCalculée !== null) {
+        subs['Français'] = { note: frMoyenneCalculée, coef: frCoefGeneral };
+        totPoints += frTotalPtsMain;
+        totCoefs += frCoefGeneral;
+      }
+
+      // 2. Récupération des autres matières
+      const otherRows = document.querySelectorAll('#bulletin tbody tr[data-subject]:not(.main-subject-row)');
+      otherRows.forEach(tr => {
         const subject = tr.getAttribute('data-subject');
         const coef = parseFloat(tr.querySelector('.inp-coef').value) || 0;
         const noteInput = tr.querySelector('.inp-note');
@@ -1873,7 +1994,7 @@
 
         if (!isNaN(note) && note >= 0 && note <= 20) {
           subs[subject] = { note: note, coef: coef };
-          totPoints += (note * coef);
+          totPoints += Math.round((note * coef) * 100) / 100;
           totCoefs += coef;
         }
       });
@@ -1881,11 +2002,13 @@
       if (totCoefs > 0) {
         trimestresData[activeTrimestre].points = totPoints;
         trimestresData[activeTrimestre].coefs = totCoefs;
-        trimestresData[activeTrimestre].moyenne = totPoints / totCoefs;
+        trimestresData[activeTrimestre].moyenne = Math.round((totPoints / totCoefs) * 100) / 100;
         trimestresData[activeTrimestre].subjects = subs;
+        trimestresData[activeTrimestre].subSubjects = subSubs;
       } else {
         trimestresData[activeTrimestre].moyenne = null;
         trimestresData[activeTrimestre].subjects = {};
+        trimestresData[activeTrimestre].subSubjects = {};
       }
 
       if (currentUser) {
