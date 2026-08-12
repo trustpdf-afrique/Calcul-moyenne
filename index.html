@@ -12,9 +12,10 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Firebase Scripts (Compat v9) -->
+  <!-- Firebase SDK Compat v9 (Authentication & Realtime Database) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <style>
     :root {
@@ -1428,7 +1429,7 @@
               <th>Matière</th>
               <th>Moyenne annuelle</th>
               <th>BEPC</th>
-              <th>Note</th>
+              <th>Résultat /40</th>
               <th>Coef.</th>
             </tr>
           </thead>
@@ -1641,28 +1642,29 @@
   </div>
 
   <script>
-    // 1. CONFIGURATION UNIFIEE FIREBASE (PROJET: ztv-moyenne)
+    // 1. CONFIGURATION UNIFIÉE FIREBASE (PROJET: ztv-concours-36a45)
     const firebaseConfig = {
-      apiKey: "VOTRE_API_KEY",
-      authDomain: "ztv-moyenne.firebaseapp.com",
-      projectId: "ztv-moyenne",
-      storageBucket: "ztv-moyenne.firebasestorage.app",
-      messagingSenderId: "VOTRE_SENDER_ID",
-      appId: "VOTRE_APP_ID",
-      measurementId: "VOTRE_MEASUREMENT_ID"
+      apiKey: "AIzaSyCOjhHAb66ZAIVUiwcZsFsv5G2FxNhS_Bg",
+      authDomain: "ztv-concours-36a45.firebaseapp.com",
+      databaseURL: "https://ztv-concours-36a45-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ztv-concours-36a45",
+      storageBucket: "ztv-concours-36a45.appspot.com",
+      messagingSenderId: "1032290609028",
+      appId: "1:1032290609028:web:3018a809ba55c473dc1fd1"
     };
 
-    // Initialisation sécurisée
+    // Initialisation
     try {
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
-        console.log("🔥 [Firebase] Application initialisée avec succès dans le projet: ztv-moyenne");
+        console.log("🔥 [Firebase] Application initialisée avec succès dans le projet: ztv-concours-36a45");
       }
     } catch (err) {
-      console.error("❌ [Firebase] Erreur d'initialisation de la configuration:", err);
+      console.error("❌ [Firebase] Erreur d'initialisation:", err);
     }
 
-    const db = firebase.firestore();
+    const database = firebase.database();
+    const auth = firebase.auth();
 
     let activeTrimestre = 1;
     let registeredUsers = [];
@@ -1690,18 +1692,30 @@
         switchPage('view-admin-login');
       }
 
-      // Récupération locale rapide au cas où la connexion réseau met du temps
+      // Récupération cache local rapide
       const localData = localStorage.getItem('ztv_users_data');
       if (localData) {
         try { registeredUsers = JSON.parse(localData); } catch(e) {}
       }
 
-      // 5. SYNCHRONISATION FIRESTORE TEMPS REEL (onSnapshot avec gestion complète d'erreurs)
-      db.collection("eleves").onSnapshot((snapshot) => {
+      // Surveillance de l'état d'authentification Firebase
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.log("🔑 [Firebase Auth] Utilisateur authentifié:", user.uid);
+        } else {
+          console.log("🔑 [Firebase Auth] Aucun utilisateur authentifié.");
+        }
+      });
+
+      // SYNCHRONISATION REALTIME DATABASE TEMPS REEL
+      database.ref('eleves').on('value', (snapshot) => {
         let firebaseUsers = [];
-        snapshot.forEach(doc => {
-          firebaseUsers.push(doc.data());
-        });
+        const data = snapshot.val();
+        if (data) {
+          Object.keys(data).forEach(key => {
+            firebaseUsers.push(data[key]);
+          });
+        }
         
         registeredUsers = firebaseUsers;
         saveLocal();
@@ -1717,26 +1731,9 @@
             actualiserMoyennesGlobales();
           }
         }
-        console.log("🔥 [Firestore] Synchronisation effectuée avec succès. Nombre d'élèves enregistrés:", registeredUsers.length);
+        console.log("🔥 [Realtime Database] Synchronisation effectuée. Élèves inscrits:", registeredUsers.length);
       }, (error) => {
-        console.error("❌ [Firestore] Erreur d'écoute onSnapshot:", error.code, error.message);
-      });
-
-      // Synchronisation en temps réel des Concours, Questions, Résultats, etc.
-      db.collection("concours").onSnapshot((snapshot) => {
-        let concoursData = [];
-        snapshot.forEach(doc => concoursData.push(doc.data()));
-        console.log("🔥 [Firestore] Concours synchronisés:", concoursData.length);
-      }, (error) => {
-        console.error("❌ [Firestore] Erreur sync concours:", error);
-      });
-
-      db.collection("resultats").onSnapshot((snapshot) => {
-        let resultatsData = [];
-        snapshot.forEach(doc => resultatsData.push(doc.data()));
-        console.log("🔥 [Firestore] Résultats synchronisés:", resultatsData.length);
-      }, (error) => {
-        console.error("❌ [Firestore] Erreur sync résultats:", error);
+        console.error("❌ [Realtime Database] Erreur de lecture temps réel:", error);
       });
     };
 
@@ -1744,7 +1741,7 @@
       localStorage.setItem('ztv_users_data', JSON.stringify(registeredUsers));
     }
 
-    // 3. PERMANENCE FIRESTORE — SYNCHRONISATION DE TOUTES LES DONNEES SANS PERTE
+    // SAUVEGARDE DANS REALTIME DATABASE
     function syncUserToFirebase(user) {
       if (!user || !user.fullname) return;
 
@@ -1776,16 +1773,15 @@
         moyenneOrientation: user.moyenneOrientation || null,
         notesBEPC: user.notesBEPC || null,
         calculsEffectues: totalCalculs,
-        derniereMiseAJour: firebase.firestore.FieldValue.serverTimestamp()
+        derniereMiseAJour: Date.now()
       };
 
-      // Utilisation de { merge: true } pour garantir la non-suppression des données existantes
-      db.collection("eleves").doc(docId).set(payload, { merge: true })
+      database.ref('eleves/' + docId).update(payload)
         .then(() => {
-          console.log("✅ [Firestore] Élève sauvegardé/mis à jour de manière permanente:", docId);
+          console.log("✅ [Realtime Database] Élève mis à jour:", docId);
         })
         .catch((err) => { 
-          console.error("❌ [Firestore] Erreur lors de l'écriture des données de l'élève:", err.code, err.message); 
+          console.error("❌ [Realtime Database] Erreur lors de la sauvegarde:", err); 
         });
     }
 
@@ -1875,7 +1871,7 @@
       return "Excellente / Félicitations";
     }
 
-    // 2. CONNEXION ÉLÈVE DIRECTE DEPUIS FIRESTORE
+    // CONNEXION ÉLÈVE DIRECTE DEPUIS REALTIME DATABASE
     function actionLogin() {
       const loginInput = document.getElementById('login-fullname').value.trim();
       const passInput = document.getElementById('login-pass').value.trim();
@@ -1889,21 +1885,18 @@
         return;
       }
 
-      // Recherche en temps réel sur Cloud Firestore puis secours local
       const docId = loginInput.toLowerCase().replace(/\s+/g, '_');
       
-      db.collection("eleves").doc(docId).get().then((doc) => {
-        let existingUser = null;
-        if (doc.exists && doc.data().pass === passInput) {
-          existingUser = doc.data();
-        } else {
-          // Tentative de recherche dans la liste répertoriée
+      database.ref('eleves/' + docId).once('value').then((snapshot) => {
+        let existingUser = snapshot.val();
+        
+        if (!existingUser || existingUser.pass !== passInput) {
           existingUser = registeredUsers.find(u => 
             (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
           );
         }
 
-        if (existingUser) {
+        if (existingUser && existingUser.pass === passInput) {
           currentUser = existingUser;
           trimestresData = currentUser.trimestresData || trimestresData;
           updateProfileDisplay();
@@ -1918,8 +1911,7 @@
           errBox.style.display = 'block';
         }
       }).catch((error) => {
-        console.error("❌ [Firestore] Erreur lors de la vérification de connexion:", error.code, error.message);
-        // Fallback local en cas de problème réseau
+        console.error("❌ [Realtime Database] Erreur de vérification:", error);
         const existingUser = registeredUsers.find(u => 
           (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
         );
@@ -1939,7 +1931,7 @@
       });
     }
 
-    // INSCRIPTION ET SAUVEGARDE PERMANENTE DANS FIRESTORE
+    // INSCRIPTION ET SAUVEGARDE PERMANENTE
     function actionRegister() {
       const nom = document.getElementById('reg-nom').value.trim();
       const prenom = document.getElementById('reg-prenom').value.trim();
@@ -2273,7 +2265,7 @@
         }
       } else {
         document.getElementById('orient-score-val').innerText = "-- / 20";
-        document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner vos notes BEPC ci-dessus";
+        document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner vos notes BEPC ci-dessous";
       }
     }
 
@@ -2330,7 +2322,7 @@
       openModal("🎯 Objectif de passage", "<p style='font-size:12px; line-height:1.5; color:#D1D5DB;'>Pour passer en classe supérieure, vous devez maintenir une moyenne générale annuelle supérieure ou égale à 10.00/20. Travaillez régulièrement toutes vos disciplines !</p>");
     }
 
-    // 4. ADMINISTRATION & STATISTIQUES (MODIFICATION SANS CASSER L'APP)
+    // ADMINISTRATION & STATISTIQUES
     function actionAdminLogin() {
       const u = document.getElementById('admin-user-input').value.trim();
       const p = document.getElementById('admin-pass-input').value.trim();
@@ -2445,23 +2437,22 @@
         u.pass = newPass;
         saveLocal();
         syncUserToFirebase(u);
-        alert("Mot de passe mis à jour dans Cloud Firestore avec succès !");
+        alert("Mot de passe mis à jour dans Realtime Database avec succès !");
         renderAdminReset();
       }
     }
 
-    // SUPPRESSION MANUELLE STRICTE (UNiQUEMENT SUR ACTION DELIBEREE DE L'ADMIN)
     function actionAdminDeleteUser(fullname) {
       if (confirm(`Êtes-vous absolument sûr de vouloir supprimer définitivement le compte de ${fullname} ?`)) {
         const docId = fullname.toLowerCase().trim().replace(/\s+/g, '_');
-        db.collection("eleves").doc(docId).delete().then(() => {
+        database.ref('eleves/' + docId).remove().then(() => {
           registeredUsers = registeredUsers.filter(u => u.fullname !== fullname);
           saveLocal();
           updateAdminStats();
           renderAdminComptes();
-          alert("Compte supprimé de Cloud Firestore avec succès.");
+          alert("Compte supprimé de Realtime Database avec succès.");
         }).catch(err => {
-          console.error("❌ [Firestore] Erreur lors de la suppression:", err);
+          console.error("❌ [Realtime Database] Erreur de suppression:", err);
         });
       }
     }
