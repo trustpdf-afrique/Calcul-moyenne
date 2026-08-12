@@ -356,7 +356,7 @@
 
     /* ================= DASHBOARD STYLES ================= */
     .dash-header {
-      padding: 20px; display: flex; justify-space-between; align-items: center;
+      padding: 20px; display: flex; justify-content: space-between; align-items: center;
       background: linear-gradient(180deg, rgba(27, 33, 51, 0.8) 0%, rgba(9, 13, 26, 0) 100%);
     }
     .user-profile-info { display: flex; align-items: center; gap: 12px; }
@@ -645,7 +645,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-space-around; align-items: center;
+      display: flex; justify-content: space-around; align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -929,6 +929,7 @@
             <div style="font-size: 15px; font-weight: 800;" id="dash-user-name">Élève ZTV 👋</div>
           </div>
         </div>
+        <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Moyenne Logo" style="height: 36px; width: auto;" />
       </div>
 
       <!-- DISPOSITION EXACTE DES 3 TRIMESTRES -->
@@ -1640,30 +1641,31 @@
   </div>
 
   <script>
-    // CONFIGURATION FIREBASE CLOUD FIRESTORE
+    // 1. CONFIGURATION UNIFIEE FIREBASE (PROJET: ztv-moyenne)
     const firebaseConfig = {
-    apiKey: "AIzaSyBvPivWeJXcOsyxUG1M85mQyCOvnXVZp3A",
-    authDomain: "moyenne-ef188.firebaseapp.com",
-    databaseURL: "https://moyenne-ef188-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "moyenne-ef188",
-    storageBucket: "moyenne-ef188.firebasestorage.app",
-    messagingSenderId: "819779704202",
-    appId: "1:819779704202:web:23c78ccf556842d2972473",
-    measurementId: "G-F2CQ7NE5YQ"
-  };
+      apiKey: "AIzaSyCOjhHAb66ZAIVUiwcZsFsv5G2FxNhS_Bg",
+      authDomain: "ztv-moyenne.firebaseapp.com",
+      projectId: "ztv-moyenne",
+      storageBucket: "ztv-moyenne.firebasestorage.app",
+      messagingSenderId: "1032290609028",
+      appId: "1:1032290609028:web:3018a809ba55c473dc1fd1",
+      measurementId: "G-4DHEE5MRBD"
+    };
 
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+    // Initialisation sécurisée
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+        console.log("🔥 [Firebase] Application initialisée avec succès dans le projet: ztv-moyenne");
+      }
+    } catch (err) {
+      console.error("❌ [Firebase] Erreur d'initialisation de la configuration:", err);
     }
+
     const db = firebase.firestore();
 
     let activeTrimestre = 1;
-
-    // BASE DE DONNÉES LOCALE DES COMPTES
     let registeredUsers = [];
-
-    // COMPTE EN COURS
     let currentUser = null;
 
     let trimestresData = {
@@ -1676,32 +1678,48 @@
       const d = new Date();
       const yr = d.getFullYear();
       const schoolYr = (d.getMonth() >= 8) ? yr + "-" + (yr + 1) : (yr - 1) + "-" + yr;
-      document.getElementById('cert-school-year').innerText = schoolYr;
+      if(document.getElementById('cert-school-year')) {
+        document.getElementById('cert-school-year').innerText = schoolYr;
+      }
 
-      // ROUTAGE INITIAL : LIEN ÉLÈVES DIRECT VIA URL
+      // ROUTAGE INITIAL VIA URL
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('app') === 'eleve') {
         switchPage('view-auth');
       } else {
         switchPage('view-admin-login');
       }
-      
+
+      // Récupération locale rapide au cas où la connexion réseau met du temps
       const localData = localStorage.getItem('ztv_users_data');
-      if(localData) {
+      if (localData) {
         try { registeredUsers = JSON.parse(localData); } catch(e) {}
       }
 
-      // Synchronisation temps réel avec Firebase pour l'Administrateur
-      db.collection("eleves").onSnapshot(snapshot => {
+      // 5. SYNCHRONISATION FIRESTORE TEMPS REEL (onSnapshot avec gestion complète d'erreurs)
+      db.collection("eleves").onSnapshot((snapshot) => {
         let firebaseUsers = [];
         snapshot.forEach(doc => {
           firebaseUsers.push(doc.data());
         });
-        if(firebaseUsers.length > 0) {
-          registeredUsers = firebaseUsers;
-          saveLocal();
-        }
+        
+        registeredUsers = firebaseUsers;
+        saveLocal();
         updateAdminStats();
+        
+        // Si un élève est connecté, réactualiser son profil en direct
+        if (currentUser) {
+          const freshUser = registeredUsers.find(u => u.fullname && currentUser.fullname && u.fullname.toLowerCase() === currentUser.fullname.toLowerCase());
+          if (freshUser) {
+            currentUser = freshUser;
+            trimestresData = currentUser.trimestresData || trimestresData;
+            updateProfileDisplay();
+            actualiserMoyennesGlobales();
+          }
+        }
+        console.log("🔥 [Firestore] Synchronisation effectuée avec succès. Nombre d'élèves enregistrés:", registeredUsers.length);
+      }, (error) => {
+        console.error("❌ [Firestore] Erreur d'écoute onSnapshot:", error.code, error.message);
       });
     };
 
@@ -1709,11 +1727,11 @@
       localStorage.setItem('ztv_users_data', JSON.stringify(registeredUsers));
     }
 
-    // SYNCHRONISATION ÉLÈVE VERS FIREBASE
+    // 3. PERMANENCE FIRESTORE — SYNCHRONISATION DE TOUTES LES DONNEES SANS PERTE
     function syncUserToFirebase(user) {
       if (!user || !user.fullname) return;
 
-      const docId = user.fullname.toLowerCase().replace(/\s+/g, '_');
+      const docId = user.fullname.toLowerCase().trim().replace(/\s+/g, '_');
       
       let totalCalculs = 0;
       if (user.trimestresData) {
@@ -1738,28 +1756,39 @@
         dateCreation: user.dateCreation || new Date().toLocaleDateString('fr-FR'),
         photo: user.photo || "",
         trimestresData: user.trimestresData || trimestresData,
+        moyenneOrientation: user.moyenneOrientation || null,
+        notesBEPC: user.notesBEPC || null,
         calculsEffectues: totalCalculs,
         derniereMiseAJour: firebase.firestore.FieldValue.serverTimestamp()
       };
 
+      // Utilisation de { merge: true } pour garantir la non-suppression des données existantes
       db.collection("eleves").doc(docId).set(payload, { merge: true })
-        .catch((err) => { console.warn("Synchro Firebase:", err); });
+        .then(() => {
+          console.log("✅ [Firestore] Élève sauvegardé/mis à jour de manière permanente:", docId);
+        })
+        .catch((err) => { 
+          console.error("❌ [Firestore] Erreur lors de l'écriture des données de l'élève:", err.code, err.message); 
+        });
     }
 
     function showToast(message) {
       const toast = document.getElementById('ztv-toast');
       const toastText = document.getElementById('toast-text');
-      toastText.innerText = message || "Enregistré";
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2200);
+      if (toastText) toastText.innerText = message || "Enregistré";
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 2200);
+      }
     }
 
     function switchPage(pageId) {
       document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-      if(pageId === 'view-orientation') {
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+      if (pageId === 'view-orientation') {
         preparerPageOrientation();
       }
     }
@@ -1787,7 +1816,7 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          if(currentUser) {
+          if (currentUser) {
             currentUser.photo = e.target.result;
             saveLocal();
             syncUserToFirebase(currentUser);
@@ -1806,15 +1835,17 @@
 
     function updateAppPhotos() {
       const photoSrc = (currentUser && currentUser.photo) ? currentUser.photo : "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png";
-      document.getElementById('dash-avatar-img').src = photoSrc;
-      document.getElementById('profile-avatar-img').src = photoSrc;
-      document.getElementById('cert-photo-img').src = photoSrc;
+      if (document.getElementById('dash-avatar-img')) document.getElementById('dash-avatar-img').src = photoSrc;
+      if (document.getElementById('profile-avatar-img')) document.getElementById('profile-avatar-img').src = photoSrc;
+      if (document.getElementById('cert-photo-img')) document.getElementById('cert-photo-img').src = photoSrc;
     }
 
     function checkClasse3emeUI() {
       const classe = (currentUser && currentUser.classe) ? currentUser.classe : document.getElementById('reg-classe').value;
       const is3eme = (classe === "3ème" || classe === "3e" || classe === "3E");
-      document.getElementById('card-orientation-3eme-wrapper').style.display = is3eme ? "block" : "none";
+      if (document.getElementById('card-orientation-3eme-wrapper')) {
+        document.getElementById('card-orientation-3eme-wrapper').style.display = is3eme ? "block" : "none";
+      }
     }
 
     function meGetMention(moyenne) {
@@ -1827,39 +1858,71 @@
       return "Excellente / Félicitations";
     }
 
+    // 2. CONNEXION ÉLÈVE DIRECTE DEPUIS FIRESTORE
     function actionLogin() {
       const loginInput = document.getElementById('login-fullname').value.trim();
-      const passInput = document.getElementById('login-pass').value;
+      const passInput = document.getElementById('login-pass').value.trim();
       const errBox = document.getElementById('login-error-msg');
 
       errBox.style.display = 'none';
 
-      if(!loginInput || !passInput) {
+      if (!loginInput || !passInput) {
         errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
         errBox.style.display = 'block';
         return;
       }
 
-      const existingUser = registeredUsers.find(u => 
-        (u.fullname.toLowerCase() === loginInput.toLowerCase() || (u.nom && u.nom.toLowerCase() === loginInput.toLowerCase())) && u.pass === passInput
-      );
+      // Recherche en temps réel sur Cloud Firestore puis secours local
+      const docId = loginInput.toLowerCase().replace(/\s+/g, '_');
+      
+      db.collection("eleves").doc(docId).get().then((doc) => {
+        let existingUser = null;
+        if (doc.exists && doc.data().pass === passInput) {
+          existingUser = doc.data();
+        } else {
+          // Tentative de recherche dans la liste répertoriée
+          existingUser = registeredUsers.find(u => 
+            (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
+          );
+        }
 
-      if(existingUser) {
-        currentUser = existingUser;
-        trimestresData = currentUser.trimestresData || trimestresData;
-        updateProfileDisplay();
-        updateAppPhotos();
-        checkClasse3emeUI();
-        switchPage('view-dashboard');
-        actualiserMoyennesGlobales();
-        syncUserToFirebase(currentUser);
-        showToast("Confirmation réussie");
-      } else {
-        errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
-        errBox.style.display = 'block';
-      }
+        if (existingUser) {
+          currentUser = existingUser;
+          trimestresData = currentUser.trimestresData || trimestresData;
+          updateProfileDisplay();
+          updateAppPhotos();
+          checkClasse3emeUI();
+          switchPage('view-dashboard');
+          actualiserMoyennesGlobales();
+          syncUserToFirebase(currentUser);
+          showToast("Connexion réussie");
+        } else {
+          errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
+          errBox.style.display = 'block';
+        }
+      }).catch((error) => {
+        console.error("❌ [Firestore] Erreur lors de la vérification de connexion:", error.code, error.message);
+        // Fallback local en cas de problème réseau
+        const existingUser = registeredUsers.find(u => 
+          (u.fullname && u.fullname.toLowerCase() === loginInput.toLowerCase()) && u.pass === passInput
+        );
+        if (existingUser) {
+          currentUser = existingUser;
+          trimestresData = currentUser.trimestresData || trimestresData;
+          updateProfileDisplay();
+          updateAppPhotos();
+          checkClasse3emeUI();
+          switchPage('view-dashboard');
+          actualiserMoyennesGlobales();
+          showToast("Connexion réussie");
+        } else {
+          errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
+          errBox.style.display = 'block';
+        }
+      });
     }
 
+    // INSCRIPTION ET SAUVEGARDE PERMANENTE DANS FIRESTORE
     function actionRegister() {
       const nom = document.getElementById('reg-nom').value.trim();
       const prenom = document.getElementById('reg-prenom').value.trim();
@@ -1868,7 +1931,7 @@
 
       errBox.style.display = 'none';
 
-      if(!nom || !prenom || !pass) {
+      if (!nom || !prenom || !pass) {
         errBox.innerText = "Veuillez remplir tous les champs obligatoires (Nom, Prénom, Mot de passe).";
         errBox.style.display = 'block';
         return;
@@ -1882,9 +1945,9 @@
       }
 
       const fullname = (nom + " " + prenom).trim();
-      const duplicate = registeredUsers.find(u => u.fullname.toLowerCase() === fullname.toLowerCase());
+      const duplicate = registeredUsers.find(u => u.fullname && u.fullname.toLowerCase() === fullname.toLowerCase());
 
-      if(duplicate) {
+      if (duplicate) {
         errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
         errBox.style.display = 'block';
         setTimeout(() => switchAuthTab('login'), 2000);
@@ -1930,20 +1993,20 @@
 
     function updateProfileDisplay() {
       if(!currentUser) return;
-      document.getElementById('dash-user-name').innerText = currentUser.fullname + " 👋";
-      document.getElementById('prof-disp-fullname').innerText = currentUser.fullname;
-      document.getElementById('prof-nom').innerText = currentUser.nom || "--";
-      document.getElementById('prof-prenom').innerText = currentUser.prenom || "--";
-      document.getElementById('prof-etablissement').innerText = currentUser.etablissement || "--";
-      document.getElementById('prof-classe').innerText = currentUser.classe || "--";
-      document.getElementById('prof-ville').innerText = currentUser.ville || "--";
-      document.getElementById('prof-pays').innerText = currentUser.pays || "Côte d'Ivoire 🇨🇮";
-      document.getElementById('prof-whatsapp').innerText = currentUser.whatsapp || "--";
-      document.getElementById('prof-created-date').innerText = currentUser.dateCreation || "--";
+      if (document.getElementById('dash-user-name')) document.getElementById('dash-user-name').innerText = currentUser.fullname + " 👋";
+      if (document.getElementById('prof-disp-fullname')) document.getElementById('prof-disp-fullname').innerText = currentUser.fullname;
+      if (document.getElementById('prof-nom')) document.getElementById('prof-nom').innerText = currentUser.nom || "--";
+      if (document.getElementById('prof-prenom')) document.getElementById('prof-prenom').innerText = currentUser.prenom || "--";
+      if (document.getElementById('prof-etablissement')) document.getElementById('prof-etablissement').innerText = currentUser.etablissement || "--";
+      if (document.getElementById('prof-classe')) document.getElementById('prof-classe').innerText = currentUser.classe || "--";
+      if (document.getElementById('prof-ville')) document.getElementById('prof-ville').innerText = currentUser.ville || "--";
+      if (document.getElementById('prof-pays')) document.getElementById('prof-pays').innerText = currentUser.pays || "Côte d'Ivoire 🇨🇮";
+      if (document.getElementById('prof-whatsapp')) document.getElementById('prof-whatsapp').innerText = currentUser.whatsapp || "--";
+      if (document.getElementById('prof-created-date')) document.getElementById('prof-created-date').innerText = currentUser.dateCreation || "--";
 
-      document.getElementById('cert-fullname').innerText = currentUser.fullname;
-      document.getElementById('cert-school-name').innerText = currentUser.etablissement || "Établissement Scolaire";
-      document.getElementById('cert-classe').innerText = currentUser.classe || "Non spécifiée";
+      if (document.getElementById('cert-fullname')) document.getElementById('cert-fullname').innerText = currentUser.fullname;
+      if (document.getElementById('cert-school-name')) document.getElementById('cert-school-name').innerText = currentUser.etablissement || "Établissement Scolaire";
+      if (document.getElementById('cert-classe')) document.getElementById('cert-classe').innerText = currentUser.classe || "Non spécifiée";
     }
 
     function actionLogout() {
@@ -1964,7 +2027,7 @@
       rows.forEach(tr => {
         const subject = tr.getAttribute('data-subject');
         const noteInput = tr.querySelector('.inp-note');
-        if(trimestresData[tNum] && trimestresData[tNum].subjects && trimestresData[tNum].subjects[subject] !== undefined) {
+        if (trimestresData[tNum] && trimestresData[tNum].subjects && trimestresData[tNum].subjects[subject] !== undefined) {
           noteInput.value = trimestresData[tNum].subjects[subject].note;
         } else {
           noteInput.value = "";
@@ -1986,7 +2049,7 @@
         const note = parseFloat(noteInput.value);
         const totCell = tr.querySelector('.tot-cell');
 
-        if(!isNaN(note) && note >= 0 && note <= 20) {
+        if (!isNaN(note) && note >= 0 && note <= 20) {
           const pt = note * coef;
           totPoints += pt;
           totCoefs += coef;
@@ -2012,14 +2075,14 @@
         const noteInput = tr.querySelector('.inp-note');
         const note = parseFloat(noteInput.value);
 
-        if(!isNaN(note) && note >= 0 && note <= 20) {
+        if (!isNaN(note) && note >= 0 && note <= 20) {
           subs[subject] = { note: note, coef: coef };
           totPoints += (note * coef);
           totCoefs += coef;
         }
       });
 
-      if(totCoefs > 0) {
+      if (totCoefs > 0) {
         trimestresData[activeTrimestre].points = totPoints;
         trimestresData[activeTrimestre].coefs = totCoefs;
         trimestresData[activeTrimestre].moyenne = totPoints / totCoefs;
@@ -2029,7 +2092,7 @@
         trimestresData[activeTrimestre].subjects = {};
       }
 
-      if(currentUser) {
+      if (currentUser) {
         currentUser.trimestresData = trimestresData;
         saveLocal();
         syncUserToFirebase(currentUser);
@@ -2053,17 +2116,27 @@
       document.getElementById('prof-t2-val').innerText = (t2 !== null) ? t2.toFixed(2) + " /20" : "-- /20";
       document.getElementById('prof-t3-val').innerText = (t3 !== null) ? t3.toFixed(2) + " /20" : "-- /20";
 
-      if(t1 !== null && t2 !== null && t3 !== null) {
-        const moyAnnuelle = (t1 + t2 + t3) / 3;
-        document.getElementById('val-annual').innerText = moyAnnuelle.toFixed(2) + " /20";
-        document.getElementById('prof-annuel-val').innerText = moyAnnuelle.toFixed(2) + " /20";
-        
-        const mention = meGetMention(moyAnnuelle);
-        document.getElementById('val-mention').innerText = mention;
-        document.getElementById('prof-mention-val').innerText = mention;
+      let count = 0;
+      let sum = 0;
+      [t1, t2, t3].forEach(t => {
+        if (t !== null && !isNaN(t)) {
+          sum += t;
+          count++;
+        }
+      });
 
-        const decision = (moyAnnuelle >= 10) ? "Admis(e) 🟢" : "Ajourné(e) 🔴";
-        document.getElementById('val-decision').innerText = decision;
+      let annuel = (count > 0) ? (sum / count) : null;
+
+      if (annuel !== null) {
+        document.getElementById('val-annual').innerText = annuel.toFixed(2) + " /20";
+        document.getElementById('prof-annuel-val').innerText = annuel.toFixed(2) + " /20";
+        
+        const ment = meGetMention(annuel);
+        document.getElementById('val-mention').innerText = ment;
+        document.getElementById('prof-mention-val').innerText = ment;
+
+        const dec = (annuel >= 10) ? "Admis(e)" : "Ajourné(e)";
+        document.getElementById('val-decision').innerText = dec;
       } else {
         document.getElementById('val-annual').innerText = "-- /20";
         document.getElementById('prof-annuel-val').innerText = "-- /20";
@@ -2072,148 +2145,41 @@
         document.getElementById('val-decision').innerText = "--";
       }
 
-      let availableMoyennes = [];
-      if(t1 !== null) availableMoyennes.push(t1);
-      if(t2 !== null) availableMoyennes.push(t2);
-      if(t3 !== null) availableMoyennes.push(t3);
-
-      if(availableMoyennes.length > 0) {
-        const sumMoy = availableMoyennes.reduce((a, b) => a + b, 0);
-        const avgCurrent = sumMoy / availableMoyennes.length;
-        const pctProgression = Math.round((avgCurrent / 20) * 100);
-
-        document.getElementById('circle-pct').innerText = pctProgression + " %";
-        const barFill = document.getElementById('bar-fill');
-        const circlePct = document.getElementById('circle-pct');
-        barFill.style.width = pctProgression + "%";
-
-        let perfText = "Progression faible";
-        let colorCode = "#EF4444"; 
-
-        if(pctProgression >= 80) {
-          perfText = "Excellente performance — Bravo !";
-          colorCode = "#09A63D";
-        } else if(pctProgression >= 70) {
-          perfText = "Très bonne progression — Continue ainsi !";
-          colorCode = "#10B981";
-        } else if(pctProgression >= 55) {
-          perfText = "Bonne progression — Continue tes efforts !";
-          colorCode = "#FF8C00";
-        } else if(pctProgression >= 50) {
-          perfText = "Progression moyenne — Tu peux faire mieux !";
-          colorCode = "#F59E0B";
-        } else {
-          perfText = "Progression faible — Redouble d'efforts !";
-          colorCode = "#EF4444";
-        }
-
-        barFill.style.background = colorCode;
-        circlePct.style.borderColor = colorCode;
-        document.getElementById('prog-desc').innerText = perfText;
-      } else {
-        document.getElementById('circle-pct').innerText = "0 %";
-        document.getElementById('bar-fill').style.width = "0%";
-        document.getElementById('bar-fill').style.background = "#EF4444";
-        document.getElementById('circle-pct').style.borderColor = "#EF4444";
-        document.getElementById('prog-desc').innerText = "Renseignez vos moyennes par trimestre";
-      }
+      // Progression
+      let pct = Math.round((count / 3) * 100);
+      document.getElementById('circle-pct').innerText = pct + " %";
+      document.getElementById('bar-fill').style.width = pct + "%";
+      document.getElementById('prog-desc').innerText = count + " sur 3 trimestre(s) renseigné(s)";
     }
 
-    function openModalObjectif() {
-      openModal("🎯 Objectif de passage", "<p style='font-size:12px; color:#FFF;'>Renseignez vos moyennes trimestrielles pour recevoir des conseils personnalisés.</p>");
-    }
-
-    function openModalCreator() {
-      document.getElementById('modal-creator').classList.add('active');
-    }
-
-    function openModal(title, contentHtml) {
-      document.getElementById('modal-title-text').innerText = title;
-      document.getElementById('modal-body-content').innerHTML = contentHtml;
-      document.getElementById('modal-container').classList.add('active');
-    }
-
-    function closeModal(modalId) {
-      if (modalId) {
-        document.getElementById(modalId).classList.remove('active');
-      } else {
-        document.getElementById('modal-container').classList.remove('active');
-      }
-    }
-
-    function ouvrirTableauHonneurAccueil() {
-      afficherTableauHonneurSeulementAnnuel();
-      switchPage('view-certif');
-    }
-
-    function afficherTableauHonneurSeulementAnnuel() {
-      const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
-      const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
-      const t3 = trimestresData[3] ? trimestresData[3].moyenne : null;
-
-      const certWrapper = document.getElementById('cert-wrapper-content');
-      const notEligibleMsg = document.getElementById('cert-not-eligible-msg');
-      const btnPrint = document.getElementById('btn-print-cert-el');
-
-      if (t1 !== null && t2 !== null && t3 !== null) {
-        const moyAnnuelle = (t1 + t2 + t3) / 3;
-
-        if (moyAnnuelle >= 13.0) {
-          certWrapper.style.display = "block";
-          notEligibleMsg.style.display = "none";
-          btnPrint.style.display = "flex";
-
-          document.getElementById('cert-period-lbl').innerText = "Moyenne Annuelle";
-          document.getElementById('cert-annual-val').innerText = moyAnnuelle.toFixed(2) + " /20";
-          document.getElementById('cert-mention-lbl').innerText = meGetMention(moyAnnuelle);
-        } else {
-          certWrapper.style.display = "none";
-          notEligibleMsg.style.display = "block";
-          btnPrint.style.display = "none";
-
-          document.getElementById('cert-no-access-icon').innerText = "❌";
-          document.getElementById('cert-no-access-title').innerText = "Tableau d'honneur non obtenu";
-          document.getElementById('cert-no-access-desc').innerText = "Votre moyenne annuelle est de " + moyAnnuelle.toFixed(2) + "/20. Pour obtenir le Tableau d'honneur, vous devez avoir une moyenne annuelle d'au moins 13/20.";
-        }
-      } else {
-        certWrapper.style.display = "none";
-        notEligibleMsg.style.display = "block";
-        btnPrint.style.display = "none";
-
-        document.getElementById('cert-no-access-icon').innerText = "⚠️";
-        document.getElementById('cert-no-access-title').innerText = "Saisie incomplète";
-        document.getElementById('cert-no-access-desc').innerText = "Veuillez renseigner vos notes pour les 3 trimestres afin d'obtenir le calcul de votre moyenne annuelle et vérifier votre éligibilité au Tableau d'honneur.";
-      }
-    }
-
+    // ORIENTATION
     function preparerPageOrientation() {
       const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
       const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
       const t3 = trimestresData[3] ? trimestresData[3].moyenne : null;
 
       const warning = document.getElementById('orient-missing-warning');
-
-      if(t1 === null || t2 === null || t3 === null) {
-        warning.style.display = "block";
+      if (t1 === null || t2 === null || t3 === null) {
+        warning.style.display = 'block';
       } else {
-        warning.style.display = "none";
+        warning.style.display = 'none';
       }
 
-      let getSubAvg = (sName) => {
-        let pts = 0, cfs = 0;
+      function getSubAvg(subjName) {
+        let pts = 0, c = 0;
         [1, 2, 3].forEach(t => {
-          if(trimestresData[t] && trimestresData[t].subjects && trimestresData[t].subjects[sName]) {
-            pts += trimestresData[t].subjects[sName].note;
-            cfs += 1;
+          if (trimestresData[t] && trimestresData[t].subjects && trimestresData[t].subjects[subjName]) {
+            pts += trimestresData[t].subjects[subjName].note;
+            c++;
           }
         });
-        return (cfs > 0) ? (pts / cfs) : null;
-      };
+        return (c > 0) ? (pts / c) : null;
+      }
 
-      let maFr = getSubAvg('Français');
-      let maMa = getSubAvg('Mathématiques');
-      let maPc = getSubAvg('Physique - Chimie');
-      let maAn = getSubAvg('Anglais');
+      const maFr = getSubAvg("Français");
+      const maMa = getSubAvg("Mathématiques");
+      const maPc = getSubAvg("Physique - Chimie");
+      const maAn = getSubAvg("Anglais");
 
       document.getElementById('or-ma-fr').innerText = (maFr !== null) ? maFr.toFixed(2) : "--";
       document.getElementById('or-ma-ma').innerText = (maMa !== null) ? maMa.toFixed(2) : "--";
@@ -2229,130 +2195,174 @@
     }
 
     function calculerMoyenneOrientation() {
-      let getSubAvg = (sName) => {
-        let pts = 0, cfs = 0;
-        [1, 2, 3].forEach(t => {
-          if(trimestresData[t] && trimestresData[t].subjects && trimestresData[t].subjects[sName]) {
-            pts += trimestresData[t].subjects[sName].note;
-            cfs += 1;
-          }
-        });
-        return (cfs > 0) ? (pts / cfs) : null;
-      };
+      function parseVal(id) {
+        const v = parseFloat(document.getElementById(id).value);
+        return (!isNaN(v) && v >= 0 && v <= 20) ? v : null;
+      }
 
-      let maFr = getSubAvg('Français');
-      let maMa = getSubAvg('Mathématiques');
-      let maPc = getSubAvg('Physique - Chimie');
-      let maAn = getSubAvg('Anglais');
+      const bepcFr = parseVal('bepc-note-fr');
+      const bepcMa = parseVal('bepc-note-ma');
+      const bepcPc = parseVal('bepc-note-pc');
+      const anEcrit = parseVal('bepc-an-ecrit');
+      const anOral = parseVal('bepc-an-oral');
 
-      let bepcFr = parseFloat(document.getElementById('bepc-note-fr').value);
-      let bepcMa = parseFloat(document.getElementById('bepc-note-ma').value);
-      let bepcPc = parseFloat(document.getElementById('bepc-note-pc').value);
+      let bepcAn = null;
+      if (anEcrit !== null && anOral !== null) bepcAn = (anEcrit + anOral) / 2;
+      else if (anEcrit !== null) bepcAn = anEcrit;
+      else if (anOral !== null) bepcAn = anOral;
 
-      let bepcAnE = parseFloat(document.getElementById('bepc-an-ecrit').value);
-      let bepcAnO = parseFloat(document.getElementById('bepc-an-oral').value);
-      let bepcAn = (!isNaN(bepcAnE) && !isNaN(bepcAnO)) ? ((bepcAnE + bepcAnO) / 2) : null;
-
-      document.getElementById('rec-bepc-fr').innerText = (!isNaN(bepcFr)) ? bepcFr.toFixed(2) : "-";
-      document.getElementById('rec-bepc-ma').innerText = (!isNaN(bepcMa)) ? bepcMa.toFixed(2) : "-";
-      document.getElementById('rec-bepc-pc').innerText = (!isNaN(bepcPc)) ? bepcPc.toFixed(2) : "-";
+      document.getElementById('rec-bepc-fr').innerText = (bepcFr !== null) ? bepcFr.toFixed(2) : "-";
+      document.getElementById('rec-bepc-ma').innerText = (bepcMa !== null) ? bepcMa.toFixed(2) : "-";
+      document.getElementById('rec-bepc-pc').innerText = (bepcPc !== null) ? bepcPc.toFixed(2) : "-";
       document.getElementById('rec-bepc-an').innerText = (bepcAn !== null) ? bepcAn.toFixed(2) : "-";
 
-      let totFr = (maFr !== null && !isNaN(bepcFr)) ? (maFr + bepcFr) : null;
-      let totMa = (maMa !== null && !isNaN(bepcMa)) ? (maMa + bepcMa) : null;
-      let totPc = (maPc !== null && !isNaN(bepcPc)) ? (maPc + bepcPc) : null;
+      function getSubAvg(subjName) {
+        let pts = 0, c = 0;
+        [1, 2, 3].forEach(t => {
+          if (trimestresData[t] && trimestresData[t].subjects && trimestresData[t].subjects[subjName]) {
+            pts += trimestresData[t].subjects[subjName].note;
+            c++;
+          }
+        });
+        return (c > 0) ? (pts / c) : null;
+      }
+
+      const maFr = getSubAvg("Français");
+      const maMa = getSubAvg("Mathématiques");
+      const maPc = getSubAvg("Physique - Chimie");
+      const maAn = getSubAvg("Anglais");
+
+      let totFr = (maFr !== null && bepcFr !== null) ? (maFr + bepcFr) : null;
+      let totMa = (maMa !== null && bepcMa !== null) ? (maMa + bepcMa) : null;
+      let totPc = (maPc !== null && bepcPc !== null) ? (maPc + bepcPc) : null;
       let totAn = (maAn !== null && bepcAn !== null) ? (maAn + bepcAn) : null;
 
-      document.getElementById('rec-tot-fr').innerText = (totFr !== null) ? totFr.toFixed(2) + " /40" : "-";
-      document.getElementById('rec-tot-ma').innerText = (totMa !== null) ? totMa.toFixed(2) + " /40" : "-";
-      document.getElementById('rec-tot-pc').innerText = (totPc !== null) ? totPc.toFixed(2) + " /40" : "-";
-      document.getElementById('rec-tot-an').innerText = (totAn !== null) ? totAn.toFixed(2) + " /40" : "-";
+      document.getElementById('rec-tot-fr').innerText = (totFr !== null) ? totFr.toFixed(2) : "-";
+      document.getElementById('rec-tot-ma').innerText = (totMa !== null) ? totMa.toFixed(2) : "-";
+      document.getElementById('rec-tot-pc').innerText = (totPc !== null) ? totPc.toFixed(2) : "-";
+      document.getElementById('rec-tot-an').innerText = (totAn !== null) ? totAn.toFixed(2) : "-";
 
-      if(totFr !== null && totMa !== null && totPc !== null && totAn !== null) {
-        let scoreFinal = ((totFr * 2) + (totMa * 2) + (totPc * 1) + (totAn * 1)) / 12;
-        document.getElementById('orient-score-val').innerText = scoreFinal.toFixed(2) + " / 20";
+      if (totFr !== null && totMa !== null && totPc !== null && totAn !== null) {
+        let sumPoints = (totFr * 2) + (totMa * 2) + (totPc * 1) + (totAn * 1);
+        let mo = sumPoints / 12;
+        document.getElementById('orient-score-val').innerText = mo.toFixed(2) + " / 20";
+        document.getElementById('orient-appreciation-lbl').innerText = (mo >= 10) ? "Moyenne d'orientation favorable 🎯" : "Moyenne d'orientation faible";
 
-        let app = "Orientation favorable en Seconde Générale";
-        if(scoreFinal < 10) app = "Risque de réorientation / Seconde Technique";
-        else if(scoreFinal >= 14) app = "Excellent dossier d'orientation (Série C / A1 / Sésame)";
-
-        document.getElementById('orient-appreciation-lbl').innerText = app;
-
-        if(currentUser) {
-          currentUser.moyenneOrientation = scoreFinal;
+        if (currentUser) {
+          currentUser.moyenneOrientation = mo;
+          currentUser.notesBEPC = { fr: bepcFr, ma: bepcMa, pc: bepcPc, an: bepcAn };
           saveLocal();
           syncUserToFirebase(currentUser);
         }
       } else {
         document.getElementById('orient-score-val').innerText = "-- / 20";
-        document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner vos notes BEPC ci-dessous";
+        document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner vos notes BEPC ci-dessus";
       }
     }
 
-    // ================= SCRIPT ADMINISTRATEUR ZTV MOYENNE =================
+    // DIPLOME / TABLEAU D'HONNEUR
+    function ouvrirTableauHonneurAccueil() {
+      const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
+      const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
+      const t3 = trimestresData[3] ? trimestresData[3].moyenne : null;
+
+      let count = 0, sum = 0;
+      [t1, t2, t3].forEach(t => { if (t !== null && !isNaN(t)) { sum += t; count++; } });
+      let annuel = (count > 0) ? (sum / count) : null;
+
+      const certContent = document.getElementById('cert-wrapper-content');
+      const certMsg = document.getElementById('cert-not-eligible-msg');
+      const btnPrint = document.getElementById('btn-print-cert-el');
+
+      if (annuel !== null && annuel >= 13) {
+        certContent.style.display = 'block';
+        certMsg.style.display = 'none';
+        btnPrint.style.display = 'flex';
+
+        document.getElementById('cert-annual-val').innerText = annuel.toFixed(2) + " /20";
+        document.getElementById('cert-mention-lbl').innerText = meGetMention(annuel);
+      } else {
+        certContent.style.display = 'none';
+        certMsg.style.display = 'block';
+        btnPrint.style.display = 'none';
+      }
+
+      switchPage('view-certif');
+    }
+
+    // MODALES & UTILITAIRES
+    function openModal(title, contentHtml) {
+      document.getElementById('modal-title-text').innerText = title;
+      document.getElementById('modal-body-content').innerHTML = contentHtml;
+      document.getElementById('modal-container').classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      if (modalId) {
+        document.getElementById(modalId).classList.remove('active');
+      } else {
+        document.getElementById('modal-container').classList.remove('active');
+      }
+    }
+
+    function openModalCreator() {
+      document.getElementById('modal-creator').classList.add('active');
+    }
+
+    function openModalObjectif() {
+      openModal("🎯 Objectif de passage", "<p style='font-size:12px; line-height:1.5; color:#D1D5DB;'>Pour passer en classe supérieure, vous devez maintenir une moyenne générale annuelle supérieure ou égale à 10.00/20. Travaillez régulièrement toutes vos disciplines !</p>");
+    }
+
+    // 4. ADMINISTRATION & STATISTIQUES (MODIFICATION SANS CASSER L'APP)
     function actionAdminLogin() {
       const u = document.getElementById('admin-user-input').value.trim();
       const p = document.getElementById('admin-pass-input').value.trim();
       const err = document.getElementById('admin-login-err');
 
-      if(u === "niampa Zakaria" && p === "55250031") {
+      if (u.toLowerCase() === "zakaria niampa" && p === "12345") {
         err.style.display = 'none';
         switchPage('view-admin-dashboard');
         updateAdminStats();
         renderAdminComptes();
-        showToast("Connexion Admin réussie");
       } else {
-        err.innerText = "Identifiants Administrateur incorrects.";
         err.style.display = 'block';
       }
     }
 
-    function openEleveInterfaceDirect() {
-      const eleveUrl = window.location.origin + window.location.pathname + '?app=eleve';
-      navigator.clipboard.writeText(eleveUrl).then(() => {
-        showToast("Lien Élèves copié !");
-      }).catch(() => {});
-      window.open(eleveUrl, '_blank');
-    }
-
     function updateAdminStats() {
-      const totalComptes = registeredUsers.length;
-      let totalCalculs = 0;
-
+      let totCalc = 0;
       registeredUsers.forEach(u => {
-        if(u.trimestresData) {
-          [1, 2, 3].forEach(t => {
-            if(u.trimestresData[t] && u.trimestresData[t].moyenne !== null) totalCalculs++;
-          });
-        }
-        if(u.moyenneOrientation) totalCalculs++;
+        if (u.calculsEffectues) totCalc += u.calculsEffectues;
       });
 
-      document.getElementById('stat-comptes').innerText = totalComptes;
-      document.getElementById('stat-calculs').innerText = totalCalculs;
-      document.getElementById('stat-participants').innerText = totalComptes;
+      if (document.getElementById('stat-comptes')) document.getElementById('stat-comptes').innerText = registeredUsers.length;
+      if (document.getElementById('stat-calculs')) document.getElementById('stat-calculs').innerText = totCalc;
+      if (document.getElementById('stat-participants')) document.getElementById('stat-participants').innerText = registeredUsers.length;
     }
 
     function renderAdminComptes() {
       const area = document.getElementById('admin-content-area');
-      if(registeredUsers.length === 0) {
-        area.innerHTML = "<p style='font-size:12px; color:var(--text-gray); text-align:center;'>Aucun compte inscrit pour le moment.</p>";
+      if (!area) return;
+
+      if (registeredUsers.length === 0) {
+        area.innerHTML = "<p style='font-size:12px; color:var(--text-gray); text-align:center;'>Aucun compte élève créé pour le moment.</p>";
         return;
       }
 
-      let html = `<h3 style='font-size:13px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;'>👤 COMPTES CRÉÉS (${registeredUsers.length})</h3>`;
-      registeredUsers.forEach(u => {
+      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">👤 Liste des Comptes Élèves (${registeredUsers.length})</h3>`;
+      registeredUsers.forEach((u, index) => {
         html += `
           <div class="admin-eleve-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong>
-              <span style="font-size:10px; color:var(--green-ztv); font-weight:800;">${u.classe || 'N/A'}</span>
+              <strong style="font-size:13px; color:#FFF;">${u.fullname || "Élève"}</strong>
+              <span style="font-size:10px; color:var(--green-ztv); font-weight:800;">${u.classe || "Non précisé"}</span>
             </div>
             <div style="font-size:11px; color:var(--text-gray); margin-top:4px;">
-              📍 ${u.etablissement || 'N/A'} - ${u.ville || ''} (${u.pays || ''})<br/>
-              📞 WhatsApp: ${u.whatsapp || 'N/A'}<br/>
-              🔑 Mot de passe: <strong style="color:var(--orange-ztv);">${u.pass}</strong>
+              📍 ${u.etablissement || "--"} (${u.ville || "--"}, ${u.pays || "--"})<br/>
+              📞 WhatsApp: ${u.whatsapp || "--"}<br/>
+              🔑 Mot de passe: <strong style="color:var(--orange-ztv);">${u.pass || "--"}</strong>
             </div>
+            <button class="btn-main-green" style="background:#EF4444; box-shadow:none; padding:6px 12px; font-size:11px; margin-top:8px; width:auto;" onclick="actionAdminDeleteUser('${u.fullname}')">🗑️ Supprimer manuellement</button>
           </div>
         `;
       });
@@ -2361,36 +2371,19 @@
 
     function renderAdminCalculs() {
       const area = document.getElementById('admin-content-area');
-      let html = `<h3 style='font-size:13px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;'>🧮 CALCULS EFFECTUÉS PAR ÉLÈVE</h3>`;
-      
-      let count = 0;
+      if (!area) return;
+
+      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🧮 Activité des Calculs</h3>`;
       registeredUsers.forEach(u => {
-        let details = [];
-        if(u.trimestresData) {
-          if(u.trimestresData[1] && u.trimestresData[1].moyenne !== null) details.push(`T1: ${u.trimestresData[1].moyenne.toFixed(2)}/20`);
-          if(u.trimestresData[2] && u.trimestresData[2].moyenne !== null) details.push(`T2: ${u.trimestresData[2].moyenne.toFixed(2)}/20`);
-          if(u.trimestresData[3] && u.trimestresData[3].moyenne !== null) details.push(`T3: ${u.trimestresData[3].moyenne.toFixed(2)}/20`);
-        }
-        if(u.moyenneOrientation) details.push(`Orient.: ${u.moyenneOrientation.toFixed(2)}/20`);
-
-        if(details.length > 0) {
-          count++;
-          html += `
-            <div class="admin-eleve-card">
-              <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong> (${u.classe})
-              <div style="font-size:11px; color:var(--orange-ztv); font-weight:700; margin-top:4px;">
-                ${details.join(' | ')}
-              </div>
-            </div>
-          `;
-        }
+        let count = u.calculsEffectues || 0;
+        html += `
+          <div class="admin-eleve-card">
+            <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong>
+            <p style="font-size:11px; color:var(--text-gray); margin-top:4px;">Nombre de calculs enregistrés : <strong style="color:var(--orange-ztv);">${count}</strong></p>
+          </div>
+        `;
       });
-
-      if(count === 0) {
-        area.innerHTML = "<p style='font-size:12px; color:var(--text-gray); text-align:center;'>Aucun calcul enregistré.</p>";
-      } else {
-        area.innerHTML = html;
-      }
+      area.innerHTML = html;
     }
 
     function renderAdminParticipants() {
@@ -2399,38 +2392,69 @@
 
     function renderAdminReset() {
       const area = document.getElementById('admin-content-area');
-      let html = `<h3 style='font-size:13px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;'>🔐 GESTION DES ACCÈS / MOTS DE PASSE</h3>`;
-      
-      registeredUsers.forEach((u, idx) => {
+      if (!area) return;
+
+      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🔐 Réinitialisation des Mots de Passe</h3>`;
+      registeredUsers.forEach(u => {
         html += `
           <div class="admin-eleve-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong>
               <span style="font-size:11px; color:var(--orange-ztv); font-weight:800;">Pass: ${u.pass}</span>
             </div>
-            <div style="margin-top:8px; display:flex; gap:8px;">
-              <input type="text" id="reset-pass-${idx}" placeholder="Nouveau mot de passe (5 chiffres)" class="form-input" style="padding:6px 10px; font-size:11px;" />
-              <button class="btn-main-green" style="padding:6px 12px; font-size:11px; width:auto;" onclick="saveNewPassword(${idx})">Modifier</button>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <input type="text" class="form-input" id="pass-mod-${u.fullname.replace(/\s+/g, '_')}" placeholder="Nouveau Pass (5 chiffres)" style="padding:6px 10px; font-size:11px;" />
+              <button class="btn-main-green" style="padding:6px 12px; font-size:11px; width:auto;" onclick="actionAdminChangePass('${u.fullname}')">Changer</button>
             </div>
           </div>
         `;
       });
-
       area.innerHTML = html;
     }
 
-    function saveNewPassword(idx) {
-      const input = document.getElementById(`reset-pass-${idx}`);
-      const val = input.value.trim();
-      if(/^\d{5}$/.test(val)) {
-        registeredUsers[idx].pass = val;
-        saveLocal();
-        syncUserToFirebase(registeredUsers[idx]);
-        showToast("Mot de passe modifié !");
-        renderAdminReset();
-      } else {
+    function actionAdminChangePass(fullname) {
+      const safeId = fullname.replace(/\s+/g, '_');
+      const input = document.getElementById('pass-mod-' + safeId);
+      if (!input) return;
+      const newPass = input.value.trim();
+
+      if (!/^\d{5}$/.test(newPass)) {
         alert("Le mot de passe doit comporter exactement 5 chiffres.");
+        return;
       }
+
+      const u = registeredUsers.find(user => user.fullname === fullname);
+      if (u) {
+        u.pass = newPass;
+        saveLocal();
+        syncUserToFirebase(u);
+        alert("Mot de passe mis à jour dans Cloud Firestore avec succès !");
+        renderAdminReset();
+      }
+    }
+
+    // SUPPRESSION MANUELLE STRICTE (UNiQUEMENT SUR ACTION DELIBEREE DE L'ADMIN)
+    function actionAdminDeleteUser(fullname) {
+      if (confirm(`Êtes-vous absolument sûr de vouloir supprimer définitivement le compte de ${fullname} ?`)) {
+        const docId = fullname.toLowerCase().trim().replace(/\s+/g, '_');
+        db.collection("eleves").doc(docId).delete().then(() => {
+          registeredUsers = registeredUsers.filter(u => u.fullname !== fullname);
+          saveLocal();
+          updateAdminStats();
+          renderAdminComptes();
+          alert("Compte supprimé de Cloud Firestore avec succès.");
+        }).catch(err => {
+          console.error("❌ [Firestore] Erreur lors de la suppression:", err);
+        });
+      }
+    }
+
+    function openEleveInterfaceDirect() {
+      const url = window.location.origin + window.location.pathname + "?app=eleve";
+      navigator.clipboard.writeText(url).then(() => {
+        showToast("Lien copié !");
+      }).catch(() => {});
+      window.open(url, '_blank');
     }
   </script>
 </body>
