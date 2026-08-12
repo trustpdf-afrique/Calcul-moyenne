@@ -645,7 +645,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-content: space-around; align-items: center;
+      display: flex; justify-space-around; align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -929,7 +929,6 @@
             <div style="font-size: 15px; font-weight: 800;" id="dash-user-name">Élève ZTV 👋</div>
           </div>
         </div>
-        <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Moyenne Logo" style="height: 36px; width: auto;" />
       </div>
 
       <!-- DISPOSITION EXACTE DES 3 TRIMESTRES -->
@@ -1642,15 +1641,15 @@
 
   <script>
     // CONFIGURATION FIREBASE CLOUD FIRESTORE
-const firebaseConfig = {
-  apiKey: "AIzaSyCOjhHAb66ZAIVUiwcZsFsv5G2FxNhS_Bg",
-  authDomain: "ztv-moyenne.firebaseapp.com",
-  projectId: "ztv-moyenne",
-  storageBucket: "ztv-moyenne.firebasestorage.app",
-  messagingSenderId: "1032290609028",
-  appId: "1:1032290609028:web:3018a809ba55c473dc1fd1",
-  measurementId: "G-4DHEE5MRBD"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOjhHAb66ZAIVUiwcZsFsv5G2FxNhS_Bg",
+      authDomain: "ztv-moyenne.firebaseapp.com",
+      projectId: "ztv-moyenne",
+      storageBucket: "ztv-moyenne.firebasestorage.app",
+      messagingSenderId: "1032290609028",
+      appId: "1:1032290609028:web:3018a809ba55c473dc1fd1",
+      measurementId: "G-4DHEE5MRBD"
+    };
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
