@@ -776,7 +776,7 @@
           </div>
 
           <div class="form-group">
-            <input type="password" class="form-input" id="login-pass" placeholder="Mot de passe (5 chiffres)" />
+            <input type="password" class="form-input" id="login-pass" placeholder="Mot de passe (6 chiffres min.)" />
           </div>
 
           <button class="btn-main-green" id="btn-login-action">
@@ -841,7 +841,7 @@
           </div>
 
           <div class="form-group">
-            <input type="password" class="form-input" id="reg-pass" placeholder="Mot de passe (5 chiffres)" maxlength="5" />
+            <input type="password" class="form-input" id="reg-pass" placeholder="Mot de passe (6 chiffres min.)" />
           </div>
 
           <button class="btn-main-green" id="btn-register-action">
@@ -1703,8 +1703,8 @@
         return;
       }
 
-      if (!/^\d{5}$/.test(pass)) {
-        errBox.innerText = "⚠️ Le mot de passe doit être composé de exactement 5 chiffres.";
+      if (!/^\d{6,}$/.test(pass)) {
+        errBox.innerText = "⚠️ Le mot de passe doit être composé d'au moins 6 chiffres.";
         errBox.style.display = 'block';
         return;
       }
@@ -1750,6 +1750,8 @@
         if (error.code === 'auth/email-already-in-use') {
           errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
           setTimeout(() => switchAuthTab('login'), 2000);
+        } else if (error.code === 'auth/weak-password') {
+          errBox.innerText = "Le mot de passe est trop faible. Veuillez saisir au moins 6 chiffres.";
         } else {
           errBox.innerText = "Erreur lors de la création du compte : " + error.message;
         }
