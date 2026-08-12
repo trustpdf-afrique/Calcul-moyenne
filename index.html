@@ -12,11 +12,6 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Firebase SDK Compat v9 (Authentication & Realtime Database) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
   <style>
     :root {
       --bg-main: #090D1A;
@@ -550,20 +545,6 @@
     .profile-field-value { font-size: 13px; color: #FFF; font-weight: 800; }
 
     /* ================= TABLEAU D'HONNEUR - DIPLÔME ================= */
-    .certif-selector-bar {
-      display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 16px;
-      scrollbar-width: none;
-    }
-    .certif-selector-bar::-webkit-scrollbar { display: none; }
-    .certif-tab-btn {
-      background: var(--bg-card); border: 1px solid var(--border-light);
-      color: var(--white); padding: 10px 16px; border-radius: var(--radius-pill);
-      font-size: 11px; font-weight: 800; whitespace: nowrap; cursor: pointer; transition: var(--transition);
-    }
-    .certif-tab-btn.active {
-      background: var(--orange-ztv); color: #000; border-color: #FFF; box-shadow: var(--glow-orange);
-    }
-
     .portrait-cert-wrapper { padding: 0 16px; width: 100%; }
 
     .certificate-portrait-frame {
@@ -646,7 +627,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-space-around; align-items: center;
+      display: flex; justify-content: space-around; align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -674,60 +655,29 @@
 
     /* STYLES ADMINISTRATEUR ZTV MOYENNE */
     .admin-stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 16px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px;
     }
     .admin-stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      text-align: center;
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg); padding: 16px; text-align: center;
     }
-    .admin-stat-num {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--orange-ztv);
-      margin-top: 4px;
-    }
-    .admin-stat-lbl {
-      font-size: 11px;
-      color: var(--text-gray);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+    .admin-stat-num { font-size: 24px; font-weight: 900; color: var(--orange-ztv); margin-top: 4px; }
+    .admin-stat-lbl { font-size: 11px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; }
 
     .admin-nav-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 0 16px 16px 16px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 16px 16px 16px;
     }
     .admin-nav-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      color: #FFF;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      transition: var(--transition);
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg); padding: 14px; color: #FFF; font-size: 12px;
+      font-weight: 800; cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; gap: 6px; transition: var(--transition);
     }
     .admin-nav-btn:active { transform: scale(0.96); }
 
     .admin-eleve-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      margin-bottom: 12px;
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg); padding: 14px; margin-bottom: 12px;
     }
 
     @media print {
@@ -736,7 +686,7 @@
       .app-frame { max-width: 100% !important; height: auto !important; max-height: none !important; box-shadow: none !important; border: none !important; background: #FFF !important; }
       .page-view { display: none !important; }
       #view-certif { display: block !important; padding: 0 !important; }
-      .certif-selector-bar, .btn-print-cert, .btn-back-link, .dash-header, .whatsapp-float-btn { display: none !important; }
+      .btn-print-cert, .btn-back-link, .dash-header, .whatsapp-float-btn { display: none !important; }
       .portrait-cert-wrapper { padding: 0 !important; width: 100% !important; }
       .certificate-portrait-frame { width: 100% !important; max-width: none !important; box-shadow: none !important; border-width: 8px !important; page-break-inside: avoid; }
     }
@@ -753,9 +703,7 @@
     .modal-card {
       background: var(--bg-card); border: 1.5px solid var(--border-light);
       border-radius: var(--radius-xl); padding: 22px; width: 100%; max-width: 360px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-      max-height: 80vh;
-      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8); max-height: 80vh; overflow-y: auto;
     }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
     .modal-title { font-size: 15px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 8px; }
@@ -765,7 +713,7 @@
       display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer;
     }
 
-    /* MODALE SPECIFIQUE CREATION (MODAL-CREATOR) */
+    /* MODALE CREATOR */
     .modal {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(3, 6, 13, 0.88); backdrop-filter: blur(8px);
@@ -774,22 +722,12 @@
     }
     .modal.active { display: flex; }
     .modal-content {
-      background: var(--bg-card);
-      border-radius: var(--radius-xl);
-      padding: 22px;
-      width: 100%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-      max-height: 85vh;
-      overflow-y: auto;
+      background: var(--bg-card); border-radius: var(--radius-xl);
+      padding: 22px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      max-height: 85vh; overflow-y: auto;
     }
     .btn { cursor: pointer; border: none; border-radius: 6px; }
     .btn-secondary { background: var(--bg-input); color: var(--white); border: 1px solid var(--border-light); }
-
-    .creator-photo-ring {
-      width: 90px; height: 90px; border-radius: 50%;
-      border: 3px solid var(--orange-ztv); box-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
-      object-fit: cover; margin: 0 auto 12px auto; display: block;
-    }
   </style>
 </head>
 <body>
@@ -805,11 +743,10 @@
 
     <!-- ================= 1. PAGE D'AUTHENTIFICATION ZTV MOYENNE (ÉLÈVES) ================= -->
     <div id="view-auth" class="page-view">
-      
       <div class="auth-header">
         <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Moyenne Logo" class="ztv-logo-brand" />
         <div style="display:flex; gap:6px;">
-          <button class="btn-creator-top" onclick="openModalCreator()">
+          <button class="btn-creator-top" id="btn-open-creator">
             <span style="color:var(--orange-ztv); font-size:14px;">👑</span>
             <span>Créateur</span>
           </button>
@@ -828,8 +765,8 @@
 
       <div class="auth-card">
         <div class="auth-tabs">
-          <button class="tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">Se connecter</button>
-          <button class="tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')">S'inscrire</button>
+          <button class="tab-btn active" id="tab-login-btn">Se connecter</button>
+          <button class="tab-btn" id="tab-register-btn">S'inscrire</button>
         </div>
 
         <!-- FORMULAIRE SE CONNECTER -->
@@ -842,7 +779,7 @@
             <input type="password" class="form-input" id="login-pass" placeholder="Mot de passe (5 chiffres)" />
           </div>
 
-          <button class="btn-main-green" onclick="actionLogin()">
+          <button class="btn-main-green" id="btn-login-action">
             <span>Accéder à mon espace</span>
             <span>➔</span>
           </button>
@@ -851,7 +788,7 @@
             Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.
           </div>
 
-          <a href="#" class="forgot-link" onclick="openModal('Mot de passe', '<p style=\'font-size:12px; color:#9CA3AF;\'>Veuillez contacter l\'administration ou le support WhatsApp pour réinitialiser vos accès.</p>')">Mot de passe oublié ?</a>
+          <a href="#" class="forgot-link" id="link-forgot-pass">Mot de passe oublié ?</a>
         </div>
 
         <!-- FORMULAIRE S'INSCRIRE -->
@@ -878,7 +815,7 @@
           </div>
 
           <div class="form-group">
-            <select class="form-input" id="reg-classe" onchange="checkClasse3emeUI()">
+            <select class="form-input" id="reg-classe">
               <option value="">Sélectionnez votre classe...</option>
               <option value="6ème">6ème</option>
               <option value="5ème">5ème</option>
@@ -899,7 +836,7 @@
             <label for="reg-photo-file" class="btn-photo-gallery">
               <span>📷 Ajouter ma photo depuis la galerie</span>
             </label>
-            <input type="file" id="reg-photo-file" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)" />
+            <input type="file" id="reg-photo-file" accept="image/*" style="display:none;" />
             <div id="photo-preview-msg" style="font-size:11px; color:var(--green-ztv); margin-top:6px; text-align:center; font-weight:700;"></div>
           </div>
 
@@ -907,7 +844,7 @@
             <input type="password" class="form-input" id="reg-pass" placeholder="Mot de passe (5 chiffres)" maxlength="5" />
           </div>
 
-          <button class="btn-main-green" onclick="actionRegister()">
+          <button class="btn-main-green" id="btn-register-action">
             <span>Créer mon compte</span>
             <span>✓</span>
           </button>
@@ -917,7 +854,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- ================= 2. TABLEAU DE BORD (DASHBOARD) ================= -->
@@ -933,11 +869,9 @@
         <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Moyenne Logo" style="height: 36px; width: auto;" />
       </div>
 
-      <!-- DISPOSITION EXACTE DES 3 TRIMESTRES -->
       <div class="trimestres-section">
         <div class="trimestres-row-top">
-          <!-- 1er TRIMESTRE -->
-          <div class="trim-card trim-card-1" onclick="openTrimPage(1)">
+          <div class="trim-card trim-card-1" id="btn-trim-1">
             <div class="trim-header-flex">
               <div class="trim-title-box">
                 <span style="font-size:15px;">📚</span>
@@ -949,8 +883,7 @@
             <div class="trim-val" id="val-t1">-- /20</div>
           </div>
 
-          <!-- 2e TRIMESTRE -->
-          <div class="trim-card trim-card-2" onclick="openTrimPage(2)">
+          <div class="trim-card trim-card-2" id="btn-trim-2">
             <div class="trim-header-flex">
               <div class="trim-title-box">
                 <span style="font-size:15px;">📚</span>
@@ -963,9 +896,8 @@
           </div>
         </div>
 
-        <!-- 3e TRIMESTRE -->
         <div class="trimestres-row-bottom">
-          <div class="trim-card trim-card-3" onclick="openTrimPage(3)">
+          <div class="trim-card trim-card-3" id="btn-trim-3">
             <div class="trim-header-flex">
               <div class="trim-title-box">
                 <span style="font-size:15px;">📚</span>
@@ -979,9 +911,8 @@
         </div>
       </div>
 
-      <!-- CARTE MOYENNE D'ORIENTATION (CLASSE DE 3EME) -->
       <div id="card-orientation-3eme-wrapper" style="display:none;">
-        <div class="orientation-card-3eme" onclick="switchPage('view-orientation')">
+        <div class="orientation-card-3eme" id="btn-open-orientation">
           <div style="display:flex; align-items:center; gap:12px;">
             <span style="font-size:28px;">🎯</span>
             <div>
@@ -993,7 +924,6 @@
         </div>
       </div>
 
-      <!-- Moyenne Annuelle -->
       <div class="annual-card-ztv">
         <div class="annual-top-title">🎓 Moyenne Annuelle</div>
         <div class="annual-stats-grid">
@@ -1012,7 +942,6 @@
         </div>
       </div>
 
-      <!-- Progression Générale en Pourcentage -->
       <div class="progression-card-ztv">
         <div class="prog-circle" id="circle-pct">0 %</div>
         <div style="flex:1;">
@@ -1022,8 +951,7 @@
         </div>
       </div>
 
-      <!-- Objectif Passer en classe supérieure -->
-      <div class="objective-banner" onclick="openModalObjectif()">
+      <div class="objective-banner" id="btn-open-objectif">
         <div>
           <div style="font-size: 11px; font-weight: 800; text-transform: uppercase;">🎯 Objectif : Passer en classe supérieure</div>
           <div style="font-size: 9px; opacity: 0.9;">Voir les détails et conseils personnalisés</div>
@@ -1031,9 +959,8 @@
         <div style="font-size:14px;">➔</div>
       </div>
 
-      <!-- BOUTONS PASTILLES MON PROFIL PUIS TABLEAU D'HONNEUR -->
       <div class="bottom-dual-btns">
-        <div class="btn-pill-premium btn-pill-premium-green" onclick="switchPage('view-profile')">
+        <div class="btn-pill-premium btn-pill-premium-green" id="btn-nav-profile">
           <div class="pill-icon-circle" style="color:var(--green-ztv);">👤</div>
           <div>
             <div style="font-size:12px; font-weight:900; color:#10B981;">MON PROFIL</div>
@@ -1041,7 +968,7 @@
           </div>
         </div>
 
-        <div class="btn-pill-premium" onclick="ouvrirTableauHonneurAccueil()">
+        <div class="btn-pill-premium" id="btn-nav-certif">
           <div class="pill-icon-circle">🏆</div>
           <div>
             <div style="font-size:12px; font-weight:900; color:#F59E0B;">TABLEAU D'HONNEUR</div>
@@ -1049,14 +976,13 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- ================= 3. PAGE SAISIE DE TRIMESTRE ================= -->
     <div id="view-trim-entry" class="page-view">
       <div class="bulletin-container">
         <div class="bulletin-header-top">
-          <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour au tableau de bord</button>
+          <button class="btn-back-link btn-back-dash">⬅️ Retour au tableau de bord</button>
           <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" style="height:32px;" />
         </div>
 
@@ -1075,100 +1001,96 @@
             </tr>
           </thead>
           <tbody>
-            <!-- LETTRES -->
             <tr class="section-title-row"><td colspan="4">--- LETTRES ---</td></tr>
             <tr data-subject="Français">
               <td>Français</td>
-              <td><input type="number" class="inp-coef" value="3" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="3" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Anglais">
               <td>Anglais</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Espagnol">
               <td>Espagnol</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Allemand">
               <td>Allemand</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Histoire - Géographie">
               <td>Histoire - Géographie</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
-            <!-- SCIENCES -->
             <tr class="section-title-row"><td colspan="4">--- SCIENCES ---</td></tr>
             <tr data-subject="Mathématiques">
               <td>Mathématiques</td>
-              <td><input type="number" class="inp-coef" value="3" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="3" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Physique - Chimie">
               <td>Physique - Chimie</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="SVT">
               <td>SVT</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
-            <!-- AUTRES MATIÈRES -->
             <tr class="section-title-row"><td colspan="4">--- AUTRES MATIÈRES ---</td></tr>
             <tr data-subject="Philosophie">
               <td>Philosophie</td>
-              <td><input type="number" class="inp-coef" value="2" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="2" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="EDHC">
               <td>EDHC</td>
-              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="EPS">
               <td>EPS</td>
-              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Arts plastiques">
               <td>Arts plastiques</td>
-              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Musique">
               <td>🎵 Musique</td>
-              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
             <tr data-subject="Conduite">
               <td>🚗 Conduite</td>
-              <td><input type="number" class="inp-coef" value="1" oninput="calculerBulletin()" /></td>
-              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" oninput="calculerBulletin()" /></td>
+              <td><input type="number" class="inp-coef" value="1" /></td>
+              <td><input type="number" min="0" max="20" step="0.25" class="inp-note" /></td>
               <td class="tot-cell">-</td>
             </tr>
 
-            <!-- SUMMARY -->
             <tr class="summary-row">
               <td colspan="2">Total Général</td>
               <td id="total-coefs">0</td>
@@ -1177,15 +1099,15 @@
           </tbody>
         </table>
 
-        <button class="btn-main-green" onclick="enregistrerPageTrimestre()">💾 ENREGISTRER ET REVENIR</button>
+        <button class="btn-main-green" id="btn-save-trim">💾 ENREGISTRER ET REVENIR</button>
       </div>
     </div>
 
     <!-- ================= 4. PAGE MON PROFIL ================= -->
     <div id="view-profile" class="page-view">
       <div style="padding:16px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
-        <button class="btn-back-link" style="border-color:var(--orange-ztv); color:var(--orange-ztv);" onclick="openModalCreator()">👑 Créateur</button>
+        <button class="btn-back-link btn-back-dash">⬅️ Retour</button>
+        <button class="btn-back-link btn-creator-top" style="border-color:var(--orange-ztv); color:var(--orange-ztv);">👑 Créateur</button>
       </div>
 
       <div style="text-align:center;">
@@ -1260,8 +1182,8 @@
         </div>
 
         <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
-          <button class="btn-photo-gallery" onclick="triggerPhotoChange()">📷 Modifier ma photo</button>
-          <button class="btn-main-green" style="background:#EF4444; box-shadow:none;" onclick="actionLogout()">🔒 Se déconnecter</button>
+          <button class="btn-photo-gallery" id="btn-change-photo-prof">📷 Modifier ma photo</button>
+          <button class="btn-main-green" style="background:#EF4444; box-shadow:none;" id="btn-logout">🔒 Se déconnecter</button>
         </div>
       </div>
     </div>
@@ -1269,11 +1191,10 @@
     <!-- ================= 5. PAGE CERTIFICAT TABLEAU D'HONNEUR ================= -->
     <div id="view-certif" class="page-view">
       <div style="padding:16px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
+        <button class="btn-back-link btn-back-dash">⬅️ Retour</button>
         <span style="font-size:12px; font-weight:800; color:var(--orange-ztv);">🎓 TABLEAU D'HONNEUR</span>
       </div>
 
-      <!-- CERTIFICAT FORMAT VERTICAL PORTRAIT PREMIUM (ANNUEL UNIQUEMENT SI MOYENNE ANNUELLE >= 13/20) -->
       <div class="portrait-cert-wrapper" id="cert-wrapper-content">
         <div class="certificate-portrait-frame">
           <div class="cert-inner-border">
@@ -1330,12 +1251,11 @@
         </div>
       </div>
 
-      <!-- MESSAGE EN CAS DE NON ELIGIBILITE OU TRIMESTRES INCOMPLETS -->
       <div id="cert-not-eligible-msg" style="display:none; padding: 20px; text-align: center;">
         <div style="background: var(--bg-card); border: 1.5px solid var(--border-light); border-radius: var(--radius-xl); padding: 24px 18px; box-shadow: var(--shadow-card);">
-          <div style="font-size: 40px; margin-bottom: 12px;" id="cert-no-access-icon">❌</div>
-          <h3 style="font-size: 16px; font-weight: 800; color: #FFF; margin-bottom: 8px;" id="cert-no-access-title">Tableau d'honneur non obtenu</h3>
-          <p style="font-size: 12px; color: var(--text-gray); line-height: 1.5;" id="cert-no-access-desc">
+          <div style="font-size: 40px; margin-bottom: 12px;">❌</div>
+          <h3 style="font-size: 16px; font-weight: 800; color: #FFF; margin-bottom: 8px;">Tableau d'honneur non obtenu</h3>
+          <p style="font-size: 12px; color: var(--text-gray); line-height: 1.5;">
             Pour obtenir le Tableau d'honneur, vous devez avoir une moyenne annuelle d'au moins 13/20.
           </p>
         </div>
@@ -1344,13 +1264,12 @@
       <button class="btn-print-cert" id="btn-print-cert-el" onclick="window.print()">
         <span>🖨️ Imprimer le Tableau d'honneur</span>
       </button>
-
     </div>
 
     <!-- ================= 6. PAGE MOYENNE D'ORIENTATION (CLASSE DE 3E) ================= -->
     <div id="view-orientation" class="page-view">
       <div style="padding:16px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="btn-back-link" onclick="switchPage('view-dashboard')">⬅️ Retour</button>
+        <button class="btn-back-link btn-back-dash">⬅️ Retour</button>
         <span style="font-size:12px; font-weight:800; color:#818CF8;">🎯 ORIENTATION BEPC</span>
       </div>
 
@@ -1362,7 +1281,6 @@
           </p>
         </div>
 
-        <!-- RESULTAT MO FINAL -->
         <div id="orient-result-card" style="background:#111827; border:2px solid var(--orange-ztv); border-radius:var(--radius-xl); padding:20px; text-align:center; margin-bottom:18px;">
           <div style="font-size:11px; font-weight:800; color:var(--text-gray); text-transform:uppercase;">🎯 Note d'Orientation Finale</div>
           <div style="font-size:32px; font-weight:900; color:var(--orange-ztv); margin:6px 0;" id="orient-score-val">-- / 20</div>
@@ -1373,55 +1291,49 @@
           ⚠️ <strong>Calcul impossible pour le moment :</strong> Les trois trimestres doivent être renseignés dans l'application pour calculer la note d'orientation.
         </div>
 
-        <!-- FORMULAIRE SAISIE NOTES BEPC -->
         <h3 style="font-size:13px; font-weight:800; color:#FFF; margin-bottom:12px;">📝 Saisie des notes du BEPC</h3>
 
         <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-          <!-- FRANCAIS -->
           <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">🇫🇷 Français (Coef. 2)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center;">
               <div style="font-size:10px; color:var(--text-gray);">Moy. Annuelle: <strong id="or-ma-fr" style="color:#FFF;">--</strong></div>
               <div>
-                <input type="number" min="0" max="20" step="0.25" class="form-input" id="bepc-note-fr" placeholder="Note BEPC /20" oninput="calculerMoyenneOrientation()" />
+                <input type="number" min="0" max="20" step="0.25" class="form-input inp-bepc" id="bepc-note-fr" placeholder="Note BEPC /20" />
               </div>
             </div>
           </div>
 
-          <!-- MATHS -->
           <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">➗ Mathématiques (Coef. 2)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center;">
               <div style="font-size:10px; color:var(--text-gray);">Moy. Annuelle: <strong id="or-ma-ma" style="color:#FFF;">--</strong></div>
               <div>
-                <input type="number" min="0" max="20" step="0.25" class="form-input" id="bepc-note-ma" placeholder="Note BEPC /20" oninput="calculerMoyenneOrientation()" />
+                <input type="number" min="0" max="20" step="0.25" class="form-input inp-bepc" id="bepc-note-ma" placeholder="Note BEPC /20" />
               </div>
             </div>
           </div>
 
-          <!-- PHYSIQUE CHIMIE -->
           <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">⚛️ Physique-Chimie (Coef. 1)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center;">
               <div style="font-size:10px; color:var(--text-gray);">Moy. Annuelle: <strong id="or-ma-pc" style="color:#FFF;">--</strong></div>
               <div>
-                <input type="number" min="0" max="20" step="0.25" class="form-input" id="bepc-note-pc" placeholder="Note BEPC /20" oninput="calculerMoyenneOrientation()" />
+                <input type="number" min="0" max="20" step="0.25" class="form-input inp-bepc" id="bepc-note-pc" placeholder="Note BEPC /20" />
               </div>
             </div>
           </div>
 
-          <!-- ANGLAIS PARTICULIER (ECRIT + ORAL / 2) -->
           <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:4px;">🇬🇧 Anglais (Coef. 1)</div>
             <div style="font-size:10px; color:var(--text-gray); margin-bottom:8px;">Moy. Annuelle: <strong id="or-ma-an" style="color:#FFF;">--</strong></div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-              <input type="number" min="0" max="20" step="0.25" class="form-input" id="bepc-an-ecrit" placeholder="Note Écrit /20" oninput="calculerMoyenneOrientation()" />
-              <input type="number" min="0" max="20" step="0.25" class="form-input" id="bepc-an-oral" placeholder="Note Oral /20" oninput="calculerMoyenneOrientation()" />
+              <input type="number" min="0" max="20" step="0.25" class="form-input inp-bepc" id="bepc-an-ecrit" placeholder="Note Écrit /20" />
+              <input type="number" min="0" max="20" step="0.25" class="form-input inp-bepc" id="bepc-an-oral" placeholder="Note Oral /20" />
             </div>
           </div>
         </div>
 
-        <!-- RECAPITULATIF TABLEAU DES 4 MATIERES -->
         <h3 style="font-size:13px; font-weight:800; color:#FFF; margin-bottom:10px;">📋 Récapitulatif des 4 Matières</h3>
         <table class="bulletin-table" style="margin-bottom:30px;">
           <thead>
@@ -1467,7 +1379,7 @@
       </div>
     </div>
 
-    <!-- ================= 7. ESPACE CONNEXION ADMINISTRATEUR (PAGE DE DÉPART PAR DÉFAUT) ================= -->
+    <!-- ================= 7. ESPACE CONNEXION ADMINISTRATEUR ================= -->
     <div id="view-admin-login" class="page-view active">
       <div style="padding: 16px; display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 12px; font-weight: 800; color: var(--orange-ztv);">🔐 ESPACE SÉCURISÉ</span>
@@ -1486,7 +1398,7 @@
         <div class="form-group">
           <input type="password" class="form-input" id="admin-pass-input" placeholder="Mot de passe" />
         </div>
-        <button class="btn-main-green" onclick="actionAdminLogin()">
+        <button class="btn-main-green" id="btn-admin-login">
           <span>Connexion Administrateur</span>
           <span>➔</span>
         </button>
@@ -1503,20 +1415,18 @@
           <div style="font-size: 11px; color: var(--orange-ztv); font-weight: 800;">PANNEAU D'ADMINISTRATION</div>
           <div style="font-size: 15px; font-weight: 900;">ZTV Admin 👑</div>
         </div>
-        <button class="btn-back-link" style="padding: 6px 12px;" onclick="switchPage('view-admin-login')">Déconnexion</button>
+        <button class="btn-back-link" style="padding: 6px 12px;" id="btn-admin-logout">Déconnexion</button>
       </div>
 
-      <!-- LIEN VERS L'APPLICATION ELEVES -->
       <div style="margin: 0 16px 16px 16px; background: linear-gradient(135deg, #1B2133 0%, #111827 100%); border: 1.5px solid var(--orange-ztv); border-radius: var(--radius-xl); padding: 16px;">
         <div style="font-size: 12px; font-weight: 800; color: var(--orange-ztv); text-transform: uppercase;">🔗 Gestion du lien Application Élèves</div>
         <p style="font-size: 10.5px; color: var(--text-gray); margin-top: 4px;">Utilisez ou partagez ce lien unique destinées aux élèves.</p>
-        <button class="btn-main-green" style="margin-top: 12px; font-size: 13px; padding: 12px;" onclick="openEleveInterfaceDirect()">
+        <button class="btn-main-green" style="margin-top: 12px; font-size: 13px; padding: 12px;" id="btn-open-eleve-link">
           <span>📱 Copier/Ouvrir le lien Élèves</span>
           <span>➔</span>
         </button>
       </div>
 
-      <!-- STATISTIQUES DYNAMIQUES -->
       <div class="admin-stats-grid">
         <div class="admin-stat-card">
           <div class="admin-stat-lbl">👤 Comptes créés</div>
@@ -1532,139 +1442,112 @@
         </div>
       </div>
 
-      <!-- NAVIGATION SECTION ADMIN -->
       <div class="admin-nav-grid">
-        <button class="admin-nav-btn" onclick="renderAdminComptes()">
+        <button class="admin-nav-btn" id="btn-admin-view-comptes">
           <span style="font-size:20px;">👤</span>
           <span>Comptes créés</span>
         </button>
-        <button class="admin-nav-btn" onclick="renderAdminCalculs()">
+        <button class="admin-nav-btn" id="btn-admin-view-calculs">
           <span style="font-size:20px;">🧮</span>
           <span>Calculs effectués</span>
         </button>
-        <button class="admin-nav-btn" onclick="renderAdminParticipants()">
+        <button class="admin-nav-btn" id="btn-admin-view-participants">
           <span style="font-size:20px;">👥</span>
           <span>Tous les participants</span>
         </button>
-        <button class="admin-nav-btn" onclick="renderAdminReset()">
+        <button class="admin-nav-btn" id="btn-admin-view-security">
           <span style="font-size:20px;">🔐</span>
           <span>Comptes Réseau</span>
         </button>
       </div>
 
-      <!-- ZONE DE CONTENU DYNAMIQUE ADMIN -->
-      <div style="padding: 0 16px;" id="admin-content-area">
-        <!-- Rendu JS -->
-      </div>
+      <div style="padding: 0 16px;" id="admin-content-area"></div>
     </div>
 
-    <!-- ================= 9. MODALE POPUP DYNAMIQUE ================= -->
+    <!-- ================= 9. MODALES ================= -->
     <div class="modal-overlay" id="modal-container">
       <div class="modal-card">
         <div class="modal-header">
           <div class="modal-title" id="modal-title-text">Titre Modale</div>
-          <div class="modal-close-btn" onclick="closeModal()">✕</div>
+          <div class="modal-close-btn" id="btn-close-modal">✕</div>
         </div>
-        <div id="modal-body-content">
-          <!-- Contenu dynamique -->
-        </div>
+        <div id="modal-body-content"></div>
       </div>
     </div>
 
-    <!-- Modale Créateur de l'application (ZTV) -->
     <div class="modal" id="modal-creator">
         <div class="modal-content" style="max-width: 480px; text-align: center; border: 2px solid var(--civ-orange);">
             <div style="display: flex; justify-content: flex-end;">
-                <button class="btn btn-secondary" style="padding: 2px 8px;" onclick="closeModal('modal-creator')">
+                <button class="btn btn-secondary" style="padding: 2px 8px;" id="btn-close-modal-creator">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
             <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 1rem; align-items: center;">
-                <img src="https://i.postimg.cc/rwHDL8ZX/FB-IMG-1747729710808.jpg"
-                     alt="Niampa Zakaria"
-                     style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--civ-orange); box-shadow: 0 0 15px rgba(255, 130, 0, 0.5);">
-
-                <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png"
-                     alt="ZTV Logo"
-                     style="width: 80px; height: 80px; border-radius: 16px; object-fit: cover; border: 2px solid var(--civ-green);">
+                <img src="https://i.postimg.cc/rwHDL8ZX/FB-IMG-1747729710808.jpg" alt="Niampa Zakaria" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--civ-orange); box-shadow: 0 0 15px rgba(255, 130, 0, 0.5);">
+                <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Logo" style="width: 80px; height: 80px; border-radius: 16px; object-fit: cover; border: 2px solid var(--civ-green);">
             </div>
 
             <h2 style="color: var(--civ-orange); font-size: 1.4rem;">Niampa Zakaria</h2>
-
-            <p style="color: var(--civ-green); font-weight: 800; font-size: 0.9rem; margin-top: 2px;">
-                Créateur de ZTV
-            </p>
+            <p style="color: var(--civ-green); font-weight: 800; font-size: 0.9rem; margin-top: 2px;">Créateur de ZTV</p>
 
             <div style="background: var(--card-alt); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin: 1rem 0; text-align: left; font-size: 0.88rem; line-height: 1.6;">
-                <p>
-                    <i class="fa-solid fa-user-graduate" style="color:var(--civ-orange);"></i>
-                    <strong>Statut :</strong> Élève en classe de 3e
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-school" style="color:var(--civ-orange);"></i>
-                    <strong>Établissement :</strong> Lycée Moderne de Bangolo ( CÔTE D'IVOIRE 🇨🇮 )
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-cake-candles" style="color:var(--civ-orange);"></i>
-                    <strong>Âge :</strong> 15 ans
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-video" style="color:var(--civ-orange);"></i>
-                    <strong>Activité :</strong> Créateur de contenus sur les phénomènes mystérieux
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-tv" style="color:var(--civ-orange);"></i>
-                    <strong>Nom de marque :</strong> ZTV
-                </p>
-
-                <p>
-                    <i class="fa-brands fa-tiktok" style="color:var(--civ-orange);"></i>
-                    <strong>Compte TikTok :</strong> zakaria tv
-                </p>
+                <p><i class="fa-solid fa-user-graduate" style="color:var(--civ-orange);"></i> <strong>Statut :</strong> Élève en classe de 3e</p>
+                <p><i class="fa-solid fa-school" style="color:var(--civ-orange);"></i> <strong>Établissement :</strong> Lycée Moderne de Bangolo ( CÔTE D'IVOIRE 🇨🇮 )</p>
+                <p><i class="fa-solid fa-cake-candles" style="color:var(--civ-orange);"></i> <strong>Âge :</strong> 15 ans</p>
+                <p><i class="fa-solid fa-video" style="color:var(--civ-orange);"></i> <strong>Activité :</strong> Créateur de contenus sur les phénomènes mystérieux</p>
+                <p><i class="fa-solid fa-tv" style="color:var(--civ-orange);"></i> <strong>Nom de marque :</strong> ZTV</p>
+                <p><i class="fa-brands fa-tiktok" style="color:var(--civ-orange);"></i> <strong>Compte TikTok :</strong> zakaria tv</p>
             </div>
 
-            <p style="font-size: 0.8rem; color: var(--text-sub); font-style: italic;">
-                « Plateforme éducative conçue pour le calcul de vos moyennes »
-            </p>
+            <p style="font-size: 0.8rem; color: var(--text-sub); font-style: italic;">« Plateforme éducative conçue pour le calcul de vos moyennes »</p>
         </div>
     </div>
 
-    <!-- ================= 10. BOUTON WHATSAPP / ASSISTANT FLOTTANT ================= -->
+    <!-- ================= 10. BOUTON WHATSAPP / ASSISTANT ================= -->
     <a href="https://wa.me/2250799591024" target="_blank" class="whatsapp-float-btn" title="Nous contacter sur WhatsApp">
       <img src="https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png" alt="Assistant" />
     </a>
 
   </div>
 
-  <script>
-    // 1. CONFIGURATION UNIFIÉE FIREBASE (PROJET: ztv-concours-36a45)
+  <!-- FIREBASE SDK V12 MODULAR IMPLEMENTATION -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword, 
+      signOut, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    import { 
+      getDatabase, 
+      ref, 
+      set, 
+      update, 
+      get, 
+      onValue, 
+      remove 
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+    // CONFIGURATION OFFICIELLE NOUVEAU PROJET FIREBASE ztv--moyenne-a940e
     const firebaseConfig = {
-      apiKey: "AIzaSyCOjhHAb66ZAIVUiwcZsFsv5G2FxNhS_Bg",
-      authDomain: "ztv-concours-36a45.firebaseapp.com",
-      databaseURL: "https://ztv-concours-36a45-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "ztv-concours-36a45",
-      storageBucket: "ztv-concours-36a45.appspot.com",
-      messagingSenderId: "1032290609028",
-      appId: "1:1032290609028:web:3018a809ba55c473dc1fd1"
+      apiKey: "AIzaSyADG3-if6Wyt8vETrUYov142xgmzu0h5QU",
+      authDomain: "ztv--moyenne-a940e.firebaseapp.com",
+      databaseURL: "https://ztv--moyenne-a940e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ztv--moyenne-a940e",
+      storageBucket: "ztv--moyenne-a940e.firebasestorage.app",
+      messagingSenderId: "541098812183",
+      appId: "1:541098812183:web:c38a3ab65a0a28db5c8d52",
+      measurementId: "G-3VSE4XG62K"
     };
 
-    // Initialisation
-    try {
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-        console.log("🔥 [Firebase] Application initialisée avec succès dans le projet: ztv-concours-36a45");
-      }
-    } catch (err) {
-      console.error("❌ [Firebase] Erreur d'initialisation:", err);
-    }
-
-    const database = firebase.database();
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
     let activeTrimestre = 1;
     let registeredUsers = [];
@@ -1679,110 +1562,6 @@
     function nameToEmail(name) {
       const clean = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
       return clean + "@ztv-moyenne.app";
-    }
-
-    window.onload = function() {
-      const d = new Date();
-      const yr = d.getFullYear();
-      const schoolYr = (d.getMonth() >= 8) ? yr + "-" + (yr + 1) : (yr - 1) + "-" + yr;
-      if(document.getElementById('cert-school-year')) {
-        document.getElementById('cert-school-year').innerText = schoolYr;
-      }
-
-      // ROUTAGE INITIAL VIA URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const isEleveRoute = (urlParams.get('app') === 'eleve');
-      
-      if (isEleveRoute) {
-        switchPage('view-auth');
-      } else {
-        switchPage('view-admin-login');
-      }
-
-      // SURVEILLANCE PERSISTANTE AUTHENTIFICATION FIREBASE
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          console.log("🔑 [Firebase Auth] Utilisateur connecté (uid):", user.uid);
-          database.ref('eleves/' + user.uid).on('value', (snapshot) => {
-            const profile = snapshot.val();
-            if (profile) {
-              currentUser = profile;
-              currentUser.uid = user.uid;
-              trimestresData = currentUser.trimestresData || trimestresData;
-              updateProfileDisplay();
-              updateAppPhotos();
-              checkClasse3emeUI();
-              actualiserMoyennesGlobales();
-              if (isEleveRoute && !document.getElementById('view-dashboard').classList.contains('active') && !document.getElementById('view-trim-entry').classList.contains('active') && !document.getElementById('view-profile').classList.contains('active') && !document.getElementById('view-certif').classList.contains('active') && !document.getElementById('view-orientation').classList.contains('active')) {
-                switchPage('view-dashboard');
-              }
-            }
-          });
-        } else {
-          console.log("🔑 [Firebase Auth] Aucun utilisateur connecté.");
-          currentUser = null;
-          if (isEleveRoute) {
-            switchPage('view-auth');
-          }
-        }
-      });
-
-      // SYNCHRONISATION REALTIME DATABASE POUR LE PANNEAU D'ADMINISTRATION
-      database.ref('eleves').on('value', (snapshot) => {
-        let firebaseUsers = [];
-        const data = snapshot.val();
-        if (data) {
-          Object.keys(data).forEach(key => {
-            let u = data[key];
-            u.uid = key;
-            firebaseUsers.push(u);
-          });
-        }
-        registeredUsers = firebaseUsers;
-        updateAdminStats();
-      });
-    };
-
-    // SAUVEGARDE DANS REALTIME DATABASE VIA UID FIREBASE
-    function syncUserToFirebase(user) {
-      if (!user || !user.uid) return;
-
-      let totalCalculs = 0;
-      if (user.trimestresData) {
-        [1, 2, 3].forEach(t => {
-          if (user.trimestresData[t] && user.trimestresData[t].moyenne !== null) {
-            totalCalculs++;
-          }
-        });
-      }
-      if (user.moyenneOrientation) totalCalculs++;
-
-      const payload = {
-        uid: user.uid,
-        nom: user.nom || "",
-        prenom: user.prenom || "",
-        fullname: user.fullname || "",
-        etablissement: user.etablissement || "",
-        classe: user.classe || "",
-        ville: user.ville || "",
-        pays: user.pays || "Côte d'Ivoire 🇨🇮",
-        whatsapp: user.whatsapp || "",
-        dateCreation: user.dateCreation || new Date().toLocaleDateString('fr-FR'),
-        photo: user.photo || "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png",
-        trimestresData: user.trimestresData || trimestresData,
-        moyenneOrientation: user.moyenneOrientation || null,
-        notesBEPC: user.notesBEPC || null,
-        calculsEffectues: totalCalculs,
-        derniereMiseAJour: Date.now()
-      };
-
-      database.ref('eleves/' + user.uid).update(payload)
-        .then(() => {
-          console.log("✅ [Realtime Database] Élève mis à jour pour l'UID :", user.uid);
-        })
-        .catch((err) => { 
-          console.error("❌ [Realtime Database] Erreur lors de la sauvegarde :", err); 
-        });
     }
 
     function showToast(message) {
@@ -1815,34 +1594,13 @@
       document.getElementById('login-error-msg').style.display = 'none';
       document.getElementById('reg-error-msg').style.display = 'none';
 
-      if(tab === 'login') {
+      if (tab === 'login') {
         loginBtn.classList.add('active'); regBtn.classList.remove('active');
         loginForm.style.display = 'block'; regForm.style.display = 'none';
       } else {
         regBtn.classList.add('active'); loginBtn.classList.remove('active');
         loginForm.style.display = 'none'; regForm.style.display = 'block';
       }
-    }
-
-    function handlePhotoSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          if (currentUser) {
-            currentUser.photo = e.target.result;
-            syncUserToFirebase(currentUser);
-          }
-          document.getElementById('photo-preview-msg').innerText = "✓ Photo sélectionnée : " + file.name;
-          updateAppPhotos();
-          showToast("Photo mise à jour");
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function triggerPhotoChange() {
-      document.getElementById('reg-photo-file').click();
     }
 
     function updateAppPhotos() {
@@ -1861,131 +1619,59 @@
     }
 
     function meGetMention(moyenne) {
-      if(moyenne === null || isNaN(moyenne)) return "--";
-      if(moyenne < 10) return "Ajourné / Insuffisant";
-      if(moyenne < 12) return "Passable";
-      if(moyenne < 14) return "Assez Bien";
-      if(moyenne < 16) return "Bien";
-      if(moyenne < 18) return "Très Bien";
+      if (moyenne === null || isNaN(moyenne)) return "--";
+      if (moyenne < 10) return "Ajourné / Insuffisant";
+      if (moyenne < 12) return "Passable";
+      if (moyenne < 14) return "Assez Bien";
+      if (moyenne < 16) return "Bien";
+      if (moyenne < 18) return "Très Bien";
       return "Excellente / Félicitations";
     }
 
-    // CONNEXION ÉLÈVE VIA FIREBASE AUTHENTICATION
-    function actionLogin() {
-      const loginInput = document.getElementById('login-fullname').value.trim();
-      const passInput = document.getElementById('login-pass').value.trim();
-      const errBox = document.getElementById('login-error-msg');
+    // SAUVEGARDE EN LIGNE SUR REALTIME DATABASE ELEVES/{UID}
+    async function syncUserToFirebase(user) {
+      if (!user || !user.uid) return;
 
-      errBox.style.display = 'none';
-
-      if (!loginInput || !passInput) {
-        errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
-        errBox.style.display = 'block';
-        return;
-      }
-
-      const generatedEmail = nameToEmail(loginInput);
-
-      auth.signInWithEmailAndPassword(generatedEmail, passInput)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          database.ref('eleves/' + user.uid).once('value').then((snapshot) => {
-            const profile = snapshot.val();
-            if (profile) {
-              currentUser = profile;
-              currentUser.uid = user.uid;
-              trimestresData = currentUser.trimestresData || trimestresData;
-              updateProfileDisplay();
-              updateAppPhotos();
-              checkClasse3emeUI();
-              switchPage('view-dashboard');
-              actualiserMoyennesGlobales();
-              showToast("Connexion réussie");
-            }
-          });
-        })
-        .catch((error) => {
-          console.error("❌ [Firebase Auth] Erreur de connexion:", error);
-          errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
-          errBox.style.display = 'block';
-        });
-    }
-
-    // INSCRIPTION ÉLÈVE VIA FIREBASE AUTHENTICATION & DUPLICATION DANS REALTIME DATABASE DÉDIÉE PAR UID
-    function actionRegister() {
-      const nom = document.getElementById('reg-nom').value.trim();
-      const prenom = document.getElementById('reg-prenom').value.trim();
-      const pass = document.getElementById('reg-pass').value.trim();
-      const errBox = document.getElementById('reg-error-msg');
-
-      errBox.style.display = 'none';
-
-      if (!nom || !prenom || !pass) {
-        errBox.innerText = "Veuillez remplir tous les champs obligatoires (Nom, Prénom, Mot de passe).";
-        errBox.style.display = 'block';
-        return;
-      }
-
-      const passRegex = /^\d{5}$/;
-      if (!passRegex.test(pass)) {
-        errBox.innerText = "⚠️ Le mot de passe doit être composé de exactement 5 chiffres (ex: 12345).";
-        errBox.style.display = 'block';
-        return;
-      }
-
-      const fullname = (nom + " " + prenom).trim();
-      const generatedEmail = nameToEmail(fullname);
-
-      auth.createUserWithEmailAndPassword(generatedEmail, pass)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          const photoSrc = "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png";
-
-          const newUserProfile = {
-            uid: user.uid,
-            nom: nom,
-            prenom: prenom,
-            fullname: fullname,
-            etablissement: document.getElementById('reg-etablissement').value.trim(),
-            ville: document.getElementById('reg-ville').value.trim(),
-            classe: document.getElementById('reg-classe').value,
-            whatsapp: document.getElementById('reg-whatsapp').value.trim(),
-            pays: document.getElementById('reg-pays').value,
-            dateCreation: new Date().toLocaleDateString('fr-FR'),
-            photo: photoSrc,
-            trimestresData: {
-              1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-              2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
-              3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
-            }
-          };
-
-          currentUser = newUserProfile;
-          trimestresData = currentUser.trimestresData;
-
-          syncUserToFirebase(currentUser);
-          updateProfileDisplay();
-          updateAppPhotos();
-          checkClasse3emeUI();
-
-          switchPage('view-dashboard');
-          actualiserMoyennesGlobales();
-          showToast("Compte créé avec succès");
-        })
-        .catch((error) => {
-          console.error("❌ [Firebase Auth] Erreur d'inscription:", error);
-          if (error.code === 'auth/email-already-in-use') {
-            errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
-            setTimeout(() => switchAuthTab('login'), 2000);
-          } else {
-            errBox.innerText = "Erreur lors de la création du compte : " + error.message;
+      let totalCalculs = 0;
+      if (user.trimestresData) {
+        [1, 2, 3].forEach(t => {
+          if (user.trimestresData[t] && user.trimestresData[t].moyenne !== null) {
+            totalCalculs++;
           }
-          errBox.style.display = 'block';
         });
+      }
+      if (user.moyenneOrientation) totalCalculs++;
+
+      const payload = {
+        uid: user.uid,
+        nom: user.nom || "",
+        prenom: user.prenom || "",
+        fullname: user.fullname || "",
+        etablissement: user.etablissement || "",
+        classe: user.classe || "",
+        ville: user.ville || "",
+        pays: user.pays || "Côte d'Ivoire 🇨🇮",
+        whatsapp: user.whatsapp || "",
+        dateCreation: user.dateCreation || new Date().toLocaleDateString('fr-FR'),
+        photo: user.photo || "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png",
+        trimestresData: user.trimestresData || trimestresData,
+        moyenneOrientation: user.moyenneOrientation || null,
+        notesBEPC: user.notesBEPC || null,
+        calculsEffectues: totalCalculs,
+        derniereMiseAJour: Date.now()
+      };
+
+      try {
+        await update(ref(database, 'eleves/' + user.uid), payload);
+        localStorage.setItem('ztv_cache_user_' + user.uid, JSON.stringify(payload));
+        console.log("🔥 [Firebase Realtime DB] Données synchronisées avec succès sous eleves/" + user.uid);
+      } catch (err) {
+        console.error("❌ Erreur de synchronisation Realtime Database:", err);
+      }
     }
 
     function updateProfileDisplay() {
-      if(!currentUser) return;
+      if (!currentUser) return;
       if (document.getElementById('dash-user-name')) document.getElementById('dash-user-name').innerText = currentUser.fullname + " 👋";
       if (document.getElementById('prof-disp-fullname')) document.getElementById('prof-disp-fullname').innerText = currentUser.fullname;
       if (document.getElementById('prof-nom')) document.getElementById('prof-nom').innerText = currentUser.nom || "--";
@@ -2002,9 +1688,118 @@
       if (document.getElementById('cert-classe')) document.getElementById('cert-classe').innerText = currentUser.classe || "Non spécifiée";
     }
 
-    // DÉCONNEXION VIA FIREBASE AUTHENTICATION
-    function actionLogout() {
-      auth.signOut().then(() => {
+    // INSCRIPTION VIA FIREBASE AUTH
+    async function actionRegister() {
+      const nom = document.getElementById('reg-nom').value.trim();
+      const prenom = document.getElementById('reg-prenom').value.trim();
+      const pass = document.getElementById('reg-pass').value.trim();
+      const errBox = document.getElementById('reg-error-msg');
+
+      errBox.style.display = 'none';
+
+      if (!nom || !prenom || !pass) {
+        errBox.innerText = "Veuillez remplir tous les champs obligatoires (Nom, Prénom, Mot de passe).";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      if (!/^\d{5}$/.test(pass)) {
+        errBox.innerText = "⚠️ Le mot de passe doit être composé de exactement 5 chiffres.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      const fullname = (nom + " " + prenom).trim();
+      const email = nameToEmail(fullname);
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+
+        const profileData = {
+          uid: user.uid,
+          nom: nom,
+          prenom: prenom,
+          fullname: fullname,
+          etablissement: document.getElementById('reg-etablissement').value.trim(),
+          ville: document.getElementById('reg-ville').value.trim(),
+          classe: document.getElementById('reg-classe').value,
+          whatsapp: document.getElementById('reg-whatsapp').value.trim(),
+          pays: document.getElementById('reg-pays').value,
+          dateCreation: new Date().toLocaleDateString('fr-FR'),
+          photo: "https://i.postimg.cc/Z5t6ctQQ/file-000000008a6081f9a7552dfe57d5c70d.png",
+          trimestresData: {
+            1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+            2: { points: 0, coefs: 0, moyenne: null, subjects: {} },
+            3: { points: 0, coefs: 0, moyenne: null, subjects: {} }
+          }
+        };
+
+        currentUser = profileData;
+        trimestresData = currentUser.trimestresData;
+
+        await syncUserToFirebase(currentUser);
+        updateProfileDisplay();
+        updateAppPhotos();
+        checkClasse3emeUI();
+        switchPage('view-dashboard');
+        actualiserMoyennesGlobales();
+        showToast("Compte créé avec succès");
+      } catch (error) {
+        console.error("❌ Erreur d'inscription:", error);
+        if (error.code === 'auth/email-already-in-use') {
+          errBox.innerText = "Ces informations ont déjà un compte actif. Veuillez vous connecter.";
+          setTimeout(() => switchAuthTab('login'), 2000);
+        } else {
+          errBox.innerText = "Erreur lors de la création du compte : " + error.message;
+        }
+        errBox.style.display = 'block';
+      }
+    }
+
+    // CONNEXION VIA FIREBASE AUTH
+    async function actionLogin() {
+      const loginInput = document.getElementById('login-fullname').value.trim();
+      const passInput = document.getElementById('login-pass').value.trim();
+      const errBox = document.getElementById('login-error-msg');
+
+      errBox.style.display = 'none';
+
+      if (!loginInput || !passInput) {
+        errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      const email = nameToEmail(loginInput);
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, passInput);
+        const user = userCredential.user;
+
+        const snapshot = await get(ref(database, 'eleves/' + user.uid));
+        if (snapshot.exists()) {
+          currentUser = snapshot.val();
+          currentUser.uid = user.uid;
+          trimestresData = currentUser.trimestresData || trimestresData;
+          updateProfileDisplay();
+          updateAppPhotos();
+          checkClasse3emeUI();
+          switchPage('view-dashboard');
+          actualiserMoyennesGlobales();
+          showToast("Connexion réussie");
+        }
+      } catch (error) {
+        console.error("❌ Erreur de connexion:", error);
+        errBox.innerText = "Vos informations sont incorrectes. Veuillez vérifier vos informations et réessayer.";
+        errBox.style.display = 'block';
+      }
+    }
+
+    // DÉCONNEXION
+    async function actionLogout() {
+      try {
+        await signOut(auth);
         currentUser = null;
         trimestresData = {
           1: { points: 0, coefs: 0, moyenne: null, subjects: {} },
@@ -2013,9 +1808,9 @@
         };
         switchPage('view-auth');
         showToast("Déconnecté");
-      }).catch((err) => {
+      } catch (err) {
         console.error("❌ Erreur de déconnexion:", err);
-      });
+      }
     }
 
     function openTrimPage(tNum) {
@@ -2062,7 +1857,7 @@
       document.getElementById('total-points').innerText = totPoints.toFixed(2);
     }
 
-    function enregistrerPageTrimestre() {
+    async function enregistrerPageTrimestre() {
       const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]');
       let totPoints = 0;
       let totCoefs = 0;
@@ -2093,12 +1888,12 @@
 
       if (currentUser) {
         currentUser.trimestresData = trimestresData;
-        syncUserToFirebase(currentUser);
+        await syncUserToFirebase(currentUser);
       }
 
       actualiserMoyennesGlobales();
       switchPage('view-dashboard');
-      showToast("Enregistré");
+      showToast("Enregistré dans Firebase");
     }
 
     function actualiserMoyennesGlobales() {
@@ -2143,14 +1938,12 @@
         document.getElementById('val-decision').innerText = "--";
       }
 
-      // Progression
       let pct = Math.round((count / 3) * 100);
       document.getElementById('circle-pct').innerText = pct + " %";
       document.getElementById('bar-fill').style.width = pct + "%";
       document.getElementById('prog-desc').innerText = count + " sur 3 trimestre(s) renseigné(s)";
     }
 
-    // ORIENTATION
     function preparerPageOrientation() {
       const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
       const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
@@ -2192,7 +1985,7 @@
       calculerMoyenneOrientation();
     }
 
-    function calculerMoyenneOrientation() {
+    async function calculerMoyenneOrientation() {
       function parseVal(id) {
         const v = parseFloat(document.getElementById(id).value);
         return (!isNaN(v) && v >= 0 && v <= 20) ? v : null;
@@ -2249,7 +2042,7 @@
         if (currentUser) {
           currentUser.moyenneOrientation = mo;
           currentUser.notesBEPC = { fr: bepcFr, ma: bepcMa, pc: bepcPc, an: bepcAn };
-          syncUserToFirebase(currentUser);
+          await syncUserToFirebase(currentUser);
         }
       } else {
         document.getElementById('orient-score-val').innerText = "-- / 20";
@@ -2257,7 +2050,6 @@
       }
     }
 
-    // DIPLOME / TABLEAU D'HONNEUR
     function ouvrirTableauHonneurAccueil() {
       const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
       const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
@@ -2287,7 +2079,6 @@
       switchPage('view-certif');
     }
 
-    // MODALES & UTILITAIRES
     function openModal(title, contentHtml) {
       document.getElementById('modal-title-text').innerText = title;
       document.getElementById('modal-body-content').innerHTML = contentHtml;
@@ -2302,36 +2093,158 @@
       }
     }
 
-    function openModalCreator() {
-      document.getElementById('modal-creator').classList.add('active');
-    }
-
-    function openModalObjectif() {
-      openModal("🎯 Objectif de passage", "<p style='font-size:12px; line-height:1.5; color:#D1D5DB;'>Pour passer en classe supérieure, vous devez maintenir une moyenne générale annuelle supérieure ou égale à 10.00/20. Travaillez régulièrement toutes vos disciplines !</p>");
-    }
-
-    // ADMINISTRATION & STATISTIQUES
-    function actionAdminLogin() {
-      const u = document.getElementById('admin-user-input').value.trim();
-      const p = document.getElementById('admin-pass-input').value.trim();
-      const err = document.getElementById('admin-login-err');
-
-      if (u.toLowerCase() === "zakaria niampa" && p === "12345") {
-        err.style.display = 'none';
-        switchPage('view-admin-dashboard');
-        updateAdminStats();
-        renderAdminComptes();
+    // INITIALISATION & SURVEILLANCE TEMPS RÉEL FIREBASE
+    window.addEventListener('DOMContentLoaded', () => {
+      const isEleveRoute = (new URLSearchParams(window.location.search).get('app') === 'eleve');
+      
+      if (isEleveRoute) {
+        switchPage('view-auth');
       } else {
-        err.style.display = 'block';
+        switchPage('view-admin-login');
       }
-    }
+
+      // 1. SURVEILLANCE DU STATUT AUTHENTIFICATION FIREBASE
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          console.log("🔑 [Firebase Auth] Connecté avec succès UID:", user.uid);
+          
+          // Récupération initiale Firebase
+          const userRef = ref(database, 'eleves/' + user.uid);
+          onValue(userRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+              currentUser = data;
+              currentUser.uid = user.uid;
+              trimestresData = currentUser.trimestresData || trimestresData;
+              updateProfileDisplay();
+              updateAppPhotos();
+              checkClasse3emeUI();
+              actualiserMoyennesGlobales();
+
+              if (isEleveRoute && document.getElementById('view-auth').classList.contains('active')) {
+                switchPage('view-dashboard');
+              }
+            }
+          });
+        } else {
+          console.log("🔑 [Firebase Auth] Aucun utilisateur connecté.");
+          currentUser = null;
+          if (isEleveRoute) {
+            switchPage('view-auth');
+          }
+        }
+      });
+
+      // 2. SYNCHRONISATION EN TEMPS RÉEL DE LA BASE ELEVES POUR L'ADMIN
+      onValue(ref(database, 'eleves'), (snapshot) => {
+        let list = [];
+        const data = snapshot.val();
+        if (data) {
+          Object.keys(data).forEach(k => {
+            let u = data[k];
+            u.uid = k;
+            list.push(u);
+          });
+        }
+        registeredUsers = list;
+        updateAdminStats();
+      });
+
+      // GESTIONNAIRES D'ÉVÉNEMENTS
+      document.getElementById('tab-login-btn').onclick = () => switchAuthTab('login');
+      document.getElementById('tab-register-btn').onclick = () => switchAuthTab('register');
+      document.getElementById('btn-login-action').onclick = actionLogin;
+      document.getElementById('btn-register-action').onclick = actionRegister;
+      document.getElementById('btn-logout').onclick = actionLogout;
+      document.getElementById('btn-save-trim').onclick = enregistrerPageTrimestre;
+
+      document.getElementById('btn-trim-1').onclick = () => openTrimPage(1);
+      document.getElementById('btn-trim-2').onclick = () => openTrimPage(2);
+      document.getElementById('btn-trim-3').onclick = () => openTrimPage(3);
+
+      document.getElementById('btn-open-orientation').onclick = () => switchPage('view-orientation');
+      document.getElementById('btn-nav-profile').onclick = () => switchPage('view-profile');
+      document.getElementById('btn-nav-certif').onclick = ouvrirTableauHonneurAccueil;
+
+      document.querySelectorAll('.btn-back-dash').forEach(b => {
+        b.onclick = () => switchPage('view-dashboard');
+      });
+
+      document.getElementById('btn-open-creator').onclick = () => document.getElementById('modal-creator').classList.add('active');
+      document.getElementById('btn-close-modal-creator').onclick = () => document.getElementById('modal-creator').classList.remove('active');
+      document.getElementById('btn-close-modal').onclick = () => closeModal();
+
+      document.getElementById('btn-open-objectif').onclick = () => {
+        openModal("🎯 Objectif de passage", "<p style='font-size:12px; line-height:1.5; color:#D1D5DB;'>Pour passer en classe supérieure, vous devez maintenir une moyenne générale annuelle supérieure ou égale à 10.00/20. Travaillez régulièrement toutes vos disciplines !</p>");
+      };
+
+      document.getElementById('link-forgot-pass').onclick = (e) => {
+        e.preventDefault();
+        openModal("Mot de passe", "<p style='font-size:12px; color:#9CA3AF;'>Veuillez contacter l'administration ou le support WhatsApp pour réinitialiser vos accès.</p>");
+      };
+
+      document.getElementById('reg-photo-file').onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = async function(evt) {
+            if (currentUser) {
+              currentUser.photo = evt.target.result;
+              await syncUserToFirebase(currentUser);
+            }
+            document.getElementById('photo-preview-msg').innerText = "✓ Photo sélectionnée : " + file.name;
+            updateAppPhotos();
+            showToast("Photo mise à jour");
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+
+      document.getElementById('btn-change-photo-prof').onclick = () => {
+        document.getElementById('reg-photo-file').click();
+      };
+
+      document.querySelectorAll('.inp-bepc').forEach(inp => {
+        inp.oninput = calculerMoyenneOrientation;
+      });
+
+      document.querySelectorAll('#bulletin input').forEach(inp => {
+        inp.oninput = calculerBulletin;
+      });
+
+      // ADMIN ACTIONS
+      document.getElementById('btn-admin-login').onclick = () => {
+        const u = document.getElementById('admin-user-input').value.trim();
+        const p = document.getElementById('admin-pass-input').value.trim();
+        if (u.toLowerCase() === "zakaria niampa" && p === "12345") {
+          document.getElementById('admin-login-err').style.display = 'none';
+          switchPage('view-admin-dashboard');
+          updateAdminStats();
+          renderAdminComptes();
+        } else {
+          document.getElementById('admin-login-err').style.display = 'block';
+        }
+      };
+
+      document.getElementById('btn-admin-logout').onclick = () => switchPage('view-admin-login');
+      document.getElementById('btn-admin-view-comptes').onclick = renderAdminComptes;
+      document.getElementById('btn-admin-view-calculs').onclick = renderAdminCalculs;
+      document.getElementById('btn-admin-view-participants').onclick = renderAdminComptes;
+      document.getElementById('btn-admin-view-security').onclick = () => {
+        document.getElementById('admin-content-area').innerHTML = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🔐 Sécurité Projet ztv--moyenne-a940e</h3><p style="font-size:11px; color:var(--text-gray);">Toutes les connexions et notes sont entièrement synchronisées sous eleves/{uid}.</p>`;
+      };
+
+      document.getElementById('btn-open-eleve-link').onclick = () => {
+        const url = window.location.origin + window.location.pathname + "?app=eleve";
+        navigator.clipboard.writeText(url);
+        showToast("Lien copié !");
+        window.open(url, '_blank');
+      };
+    });
 
     function updateAdminStats() {
       let totCalc = 0;
-      registeredUsers.forEach(u => {
-        if (u.calculsEffectues) totCalc += u.calculsEffectues;
-      });
-
+      registeredUsers.forEach(u => { if (u.calculsEffectues) totCalc += u.calculsEffectues; });
       if (document.getElementById('stat-comptes')) document.getElementById('stat-comptes').innerText = registeredUsers.length;
       if (document.getElementById('stat-calculs')) document.getElementById('stat-calculs').innerText = totCalc;
       if (document.getElementById('stat-participants')) document.getElementById('stat-participants').innerText = registeredUsers.length;
@@ -2342,28 +2255,39 @@
       if (!area) return;
 
       if (registeredUsers.length === 0) {
-        area.innerHTML = "<p style='font-size:12px; color:var(--text-gray); text-align:center;'>Aucun compte élève créé pour le moment.</p>";
+        area.innerHTML = "<p style='font-size:12px; color:var(--text-gray); text-align:center;'>Aucun compte élève enregistré dans Firebase.</p>";
         return;
       }
 
-      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">👤 Liste des Comptes Élèves (${registeredUsers.length})</h3>`;
+      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">👤 Liste des Comptes (${registeredUsers.length})</h3>`;
       registeredUsers.forEach((u) => {
         html += `
           <div class="admin-eleve-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <strong style="font-size:13px; color:#FFF;">${u.fullname || "Élève"}</strong>
-              <span style="font-size:10px; color:var(--green-ztv); font-weight:800;">${u.classe || "Non précisé"}</span>
+              <span style="font-size:10px; color:var(--green-ztv); font-weight:800;">${u.classe || "--"}</span>
             </div>
             <div style="font-size:11px; color:var(--text-gray); margin-top:4px;">
-              📍 ${u.etablissement || "--"} (${u.ville || "--"}, ${u.pays || "--"})<br/>
+              📍 ${u.etablissement || "--"} (${u.ville || "--"})<br/>
               📞 WhatsApp: ${u.whatsapp || "--"}<br/>
-              🆔 UID Firebase: <strong style="color:var(--orange-ztv); font-size:10px;">${u.uid}</strong>
+              🆔 UID: <strong style="color:var(--orange-ztv); font-size:10px;">${u.uid}</strong>
             </div>
-            <button class="btn-main-green" style="background:#EF4444; box-shadow:none; padding:6px 12px; font-size:11px; margin-top:8px; width:auto;" onclick="actionAdminDeleteUser('${u.uid}', '${u.fullname}')">🗑️ Supprimer de la BDD</button>
+            <button class="btn-main-green btn-delete-user" data-uid="${u.uid}" data-name="${u.fullname}" style="background:#EF4444; box-shadow:none; padding:6px 12px; font-size:11px; margin-top:8px; width:auto;">🗑️ Supprimer</button>
           </div>
         `;
       });
       area.innerHTML = html;
+
+      document.querySelectorAll('.btn-delete-user').forEach(btn => {
+        btn.onclick = async (e) => {
+          const uid = e.target.getAttribute('data-uid');
+          const name = e.target.getAttribute('data-name');
+          if (confirm(`Voulez-vous supprimer l'élève ${name} de Realtime Database ?`)) {
+            await remove(ref(database, 'eleves/' + uid));
+            showToast("Supprimé");
+          }
+        };
+      });
     }
 
     function renderAdminCalculs() {
@@ -2372,48 +2296,14 @@
 
       let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🧮 Activité des Calculs</h3>`;
       registeredUsers.forEach(u => {
-        let count = u.calculsEffectues || 0;
         html += `
           <div class="admin-eleve-card">
             <strong style="font-size:13px; color:#FFF;">${u.fullname}</strong>
-            <p style="font-size:11px; color:var(--text-gray); margin-top:4px;">Nombre de calculs enregistrés : <strong style="color:var(--orange-ztv);">${count}</strong></p>
+            <p style="font-size:11px; color:var(--text-gray); margin-top:4px;">Nombre de calculs enregistrés : <strong style="color:var(--orange-ztv);">${u.calculsEffectues || 0}</strong></p>
           </div>
         `;
       });
       area.innerHTML = html;
-    }
-
-    function renderAdminParticipants() {
-      renderAdminComptes();
-    }
-
-    function renderAdminReset() {
-      const area = document.getElementById('admin-content-area');
-      if (!area) return;
-
-      let html = `<h3 style="font-size:14px; font-weight:800; color:var(--orange-ztv); margin-bottom:12px;">🔐 Sécurité & Authentification</h3>`;
-      html += `<p style="font-size:11px; color:var(--text-gray); line-height:1.4;">Toutes les identités et mots de passe des élèves sont désormais sécurisés de bout en bout par Firebase Authentication. Aucun mot de passe n'est accessible en clair.</p>`;
-      area.innerHTML = html;
-    }
-
-    function actionAdminDeleteUser(uid, fullname) {
-      if (confirm(`Êtes-vous absolument sûr de vouloir supprimer les données de ${fullname} dans Realtime Database ?`)) {
-        database.ref('eleves/' + uid).remove().then(() => {
-          updateAdminStats();
-          renderAdminComptes();
-          alert("Données supprimées de la base avec succès.");
-        }).catch(err => {
-          console.error("❌ Erreur de suppression:", err);
-        });
-      }
-    }
-
-    function openEleveInterfaceDirect() {
-      const url = window.location.origin + window.location.pathname + "?app=eleve";
-      navigator.clipboard.writeText(url).then(() => {
-        showToast("Lien copié !");
-      }).catch(() => {});
-      window.open(url, '_blank');
     }
   </script>
 </body>
