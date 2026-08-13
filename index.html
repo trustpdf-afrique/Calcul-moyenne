@@ -522,7 +522,7 @@
       color: #D1D5DB;
     }
 
-    /* COEFFICIENTS MODIFIABLES */
+    /* COEFFICIENTS DÉSORMAIS TOUS ENTIÈREMENT MODIFIABLES */
     .inp-coef {
       width: 46px; background: var(--bg-input); border: 1.5px solid var(--orange-ztv);
       color: #FFF; text-align: center; border-radius: 6px; padding: 6px; font-weight: 700; font-size: 12px;
@@ -637,7 +637,7 @@
     .cert-badge-box {
       background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
       border: 1.5px solid #F59E0B; border-radius: 12px; padding: 10px;
-      display: flex; justify-content: space-around; align-items: center;
+      display: flex; justify-space-around: align-items: center;
       margin: 14px 0; width: 100%;
     }
 
@@ -921,7 +921,7 @@
         </div>
       </div>
 
-      <!-- BOUTON MOYENNE D'ORIENTATION -->
+      <!-- BOUTON MOYENNE D'ORIENTATION (RÉSOLU) -->
       <div id="card-orientation-3eme-wrapper" style="display:none;">
         <div class="orientation-card-3eme" id="btn-open-orientation">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -1014,7 +1014,7 @@
           <tbody>
             <tr class="section-title-row"><td colspan="4">--- LETTRES ---</td></tr>
             
-            <!-- BLOC DÉTAILLÉ DU FRANÇAIS -->
+            <!-- BLOC DÉTAILLÉ DU FRANÇAIS (RÉSOLU : COEFFICIENT MODIFIABLE) -->
             <tr data-subject="Français" class="main-subject-row">
               <td><strong>🇫🇷 Français</strong></td>
               <td><input type="number" min="0" step="0.5" class="inp-coef" value="4" id="coef-français" /></td>
@@ -1040,7 +1040,7 @@
               <td class="sub-tot-cell">-</td>
             </tr>
 
-            <!-- AUTRES MATIÈRES -->
+            <!-- AUTRES MATIÈRES (TOUTES AVEC COEFFICIENTS MODIFIABLES) -->
             <tr data-subject="Anglais">
               <td>Anglais</td>
               <td><input type="number" min="0" step="0.5" class="inp-coef" value="2" /></td>
@@ -1334,7 +1334,7 @@
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">🇫🇷 Composition Française (Coef. 2)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
               <div>
-                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne annuelle en classe /20, 3e trimestre</label>
+                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne Classe /20</label>
                 <input type="number" min="0" max="20" step="0.01" class="form-input inp-bepc" id="orient-mc-fr" placeholder="Classe /20" />
               </div>
               <div>
@@ -1349,7 +1349,7 @@
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">➗ Mathématiques (Coef. 2)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
               <div>
-                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne annuelle en classe /20, 3e trimestre</label>
+                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne Classe /20</label>
                 <input type="number" min="0" max="20" step="0.01" class="form-input inp-bepc" id="orient-mc-ma" placeholder="Classe /20" />
               </div>
               <div>
@@ -1364,7 +1364,7 @@
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:8px;">⚛️ Physique-Chimie (Coef. 1)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
               <div>
-                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne annuelle en classe /20, 3e trimestre</label>
+                <label style="font-size:9.5px; color:var(--text-gray);">Moyenne Classe /20</label>
                 <input type="number" min="0" max="20" step="0.01" class="form-input inp-bepc" id="orient-mc-pc" placeholder="Classe /20" />
               </div>
               <div>
@@ -1378,7 +1378,7 @@
           <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
             <div style="font-size:12px; font-weight:800; color:#FFF; margin-bottom:4px;">🇬🇧 Anglais (Coef. 1)</div>
             <div style="margin-bottom:8px;">
-              <label style="font-size:9.5px; color:var(--text-gray);">Moyenne annuelle en classe /20, 3e trimestre</label>
+              <label style="font-size:9.5px; color:var(--text-gray);">Moyenne Classe /20</label>
               <input type="number" min="0" max="20" step="0.01" class="form-input inp-bepc" id="orient-mc-an" placeholder="Classe /20" />
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
@@ -1791,9 +1791,7 @@
             1: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
             2: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
             3: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} }
-          },
-          moyenneOrientation: null,
-          notesBEPC: null
+          }
         };
 
         currentUser = profileData;
@@ -2069,7 +2067,7 @@
       showToast("Enregistré dans Firebase");
     }
 
-    // MOYENNE ANNUELLE PONDÉRÉE (1, 2, 2)
+    // MODIFICATION 1 : MOYENNE ANNUELLE PONDÉRÉE (1, 2, 2)
     function actualiserMoyennesGlobales() {
       const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
       const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
@@ -2117,7 +2115,7 @@
       document.getElementById('prog-desc').innerText = count + " sur 3 trimestre(s) renseigné(s)";
     }
 
-    // RÉCUPÉRATION AUTOMATIQUE DU 3E TRIMESTRE POUR L'ORIENTATION
+    // MODIFICATION 4 : RÉCUPÉRATION DU 3E TRIMESTRE
     function recupererMoyennesT3Orientation() {
       const t3 = trimestresData[3];
       if (!t3 || !t3.subjects) {
@@ -2151,36 +2149,18 @@
       }
     }
 
-    // CHARGEMENT DE LA PAGE ORIENTATION & RESTAURATION DES NOTES SAUVEGARDÉES
     function preparerPageOrientation() {
-      if (currentUser && currentUser.notesBEPC) {
-        const b = currentUser.notesBEPC;
-        if (b.mcFr !== undefined && b.mcFr !== null) document.getElementById('orient-mc-fr').value = b.mcFr;
-        if (b.mcMa !== undefined && b.mcMa !== null) document.getElementById('orient-mc-ma').value = b.mcMa;
-        if (b.mcPc !== undefined && b.mcPc !== null) document.getElementById('orient-mc-pc').value = b.mcPc;
-        if (b.mcAn !== undefined && b.mcAn !== null) document.getElementById('orient-mc-an').value = b.mcAn;
-
-        if (b.fr !== undefined && b.fr !== null) document.getElementById('bepc-note-fr').value = b.fr;
-        if (b.ma !== undefined && b.ma !== null) document.getElementById('bepc-note-ma').value = b.ma;
-        if (b.pc !== undefined && b.pc !== null) document.getElementById('bepc-note-pc').value = b.pc;
-        if (b.anEcrit !== undefined && b.anEcrit !== null) document.getElementById('bepc-an-ecrit').value = b.anEcrit;
-        if (b.anOral !== undefined && b.anOral !== null) document.getElementById('bepc-an-oral').value = b.anOral;
-      }
       calculerMoyenneOrientation();
     }
 
-    // CALCUL DE LA MOYENNE D'ORIENTATION & SAUVEGARDE PERMANENTE AUTOMATIQUE
+    // MODIFICATION 2 : CALCUL DE LA MOYENNE D'ORIENTATION (FORMULE EXACTE)
     async function calculerMoyenneOrientation() {
       function parseVal(id) {
-        const inputEl = document.getElementById(id);
-        if (!inputEl) return null;
-        const rawStr = inputEl.value.trim();
-        if (rawStr === "") return null;
-        const v = parseFloat(rawStr);
+        const v = parseFloat(document.getElementById(id).value);
         return (!isNaN(v) && v >= 0 && v <= 20) ? v : null;
       }
 
-      // Moyennes de classe (3e Trimestre)
+      // Moyennes de classe
       const mcFr = parseVal('orient-mc-fr');
       const mcMa = parseVal('orient-mc-ma');
       const mcPc = parseVal('orient-mc-pc');
@@ -2221,37 +2201,24 @@
       document.getElementById('rec-tot-an').innerText = (totAn !== null) ? totAn.toFixed(2) : "-";
 
       // Étape 2 & 3 : Formule globale / 12
-      let mo = null;
       if (totFr !== null && totMa !== null && totPc !== null && totAn !== null) {
         let sumPoints = (totFr * 2) + (totMa * 2) + (totPc * 1) + (totAn * 1);
-        mo = sumPoints / 12;
+        let mo = sumPoints / 12;
         document.getElementById('orient-score-val').innerText = mo.toFixed(2) + " / 20";
         document.getElementById('orient-appreciation-lbl').innerText = (mo >= 10) ? "✅ Moyenne d'orientation favorable (≥ 10/20)" : "❌ Moyenne inférieure au seuil de 10/20";
+
+        if (currentUser) {
+          currentUser.moyenneOrientation = mo;
+          currentUser.notesBEPC = { fr: bepcFr, ma: bepcMa, pc: bepcPc, an: bepcAn, mcFr, mcMa, mcPc, mcAn };
+          await syncUserToFirebase(currentUser);
+        }
       } else {
         document.getElementById('orient-score-val').innerText = "-- / 20";
         document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner toutes les moyennes et notes BEPC";
       }
-
-      // SAUVEGARDE AUTOMATIQUE DANS L'OBJET UTILISATEUR ET FIREBASE
-      if (currentUser) {
-        currentUser.moyenneOrientation = mo;
-        currentUser.notesBEPC = {
-          mcFr: mcFr,
-          mcMa: mcMa,
-          mcPc: mcPc,
-          mcAn: mcAn,
-          fr: bepcFr,
-          ma: bepcMa,
-          pc: bepcPc,
-          anEcrit: anEcrit,
-          anOral: anOral,
-          bepcAn: bepcAn
-        };
-        await syncUserToFirebase(currentUser);
-      }
     }
 
-    // OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE (EXACT ET AUTOMATIQUE)
+    // MODIFICATION 5, 6, 7 : OBJECTIF POUR PASSER EN CLASSE SUPÉRIEURE (EXACT ET AUTOMATIQUE)
     function analyserObjectifPassage() {
       const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
       const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
@@ -2274,9 +2241,14 @@
 
       // Cas A : T1 et T2 disponibles, T3 non renseigné (Calcul de l'objectif T3)
       if (t1 !== null && t2 !== null && t3 === null) {
+        // Formule Annuelle : (T1*1 + T2*2 + T3*2) / 5 >= 10.00
+        // T1 + 2*T2 + 2*T3 >= 50
+        // 2*T3 >= 50 - T1 - 2*T2
+        // T3 requis = (50 - T1 - 2*T2) / 2
         let t3Requis = (50 - t1 - (2 * t2)) / 2;
 
         if (t3Requis <= 0) {
+          // L'élève a déjà accumulé 50 points ou plus avec T1 et T2 ! Passage mathématiquement garanti.
           htmlContent = `
             <div style="background:rgba(16, 185, 129, 0.15); border:1.5px solid #10B981; border-radius:14px; padding:14px; margin-bottom:14px;">
               <div style="font-size:14px; font-weight:900; color:#10B981;">🎉 Excellent travail ! Passage déjà sécurisé</div>
@@ -2289,6 +2261,7 @@
             </p>
           `;
         } else if (t3Requis > 20) {
+          // Même avec 20/20 au T3, le total ne fait pas 50 points
           let maxAtteignable = (t1 + (2 * t2) + (2 * 20)) / 5;
           htmlContent = `
             <div style="background:rgba(239, 68, 68, 0.15); border:1.5px solid #EF4444; border-radius:14px; padding:14px; margin-bottom:14px;">
@@ -2299,6 +2272,7 @@
             </div>
           `;
         } else {
+          // Cas standard : T3 requis entre 0.01 et 20.00
           htmlContent = `
             <div style="background:rgba(255, 140, 0, 0.15); border:1.5px solid var(--orange-ztv); border-radius:14px; padding:14px; margin-bottom:14px;">
               <div style="font-size:11px; font-weight:800; color:var(--orange-ztv); text-transform:uppercase;">Objectif calculé du 3e trimestre</div>
@@ -2456,10 +2430,6 @@
               updateAppPhotos();
               checkClasse3emeUI();
               actualiserMoyennesGlobales();
-
-              if (document.getElementById('view-orientation').classList.contains('active')) {
-                preparerPageOrientation();
-              }
 
               if (isEleveRoute && document.getElementById('view-auth').classList.contains('active')) {
                 switchPage('view-dashboard');
