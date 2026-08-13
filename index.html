@@ -752,7 +752,7 @@
     </div>
 
     <!-- ================= 1. PAGE D'AUTHENTIFICATION ZTV MOYENNE (ÉLÈVES) ================= -->
-    <div id="view-auth" class="page-view">
+    <div id="view-auth" class="page-view active">
       <div class="auth-header">
         <img src="https://i.postimg.cc/Gh1PZj8d/file-00000000fccc81f48328834e4f23b593.png" alt="ZTV Moyenne Logo" class="ztv-logo-brand" />
         <div style="display:flex; gap:6px;">
@@ -921,7 +921,7 @@
         </div>
       </div>
 
-      <!-- BOUTON MOYENNE D'ORIENTATION (RÉSOLU) -->
+      <!-- BOUTON MOYENNE D'ORIENTATION -->
       <div id="card-orientation-3eme-wrapper" style="display:none;">
         <div class="orientation-card-3eme" id="btn-open-orientation">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -1014,7 +1014,7 @@
           <tbody>
             <tr class="section-title-row"><td colspan="4">--- LETTRES ---</td></tr>
             
-            <!-- BLOC DÉTAILLÉ DU FRANÇAIS (RÉSOLU : COEFFICIENT MODIFIABLE) -->
+            <!-- BLOC DÉTAILLÉ DU FRANÇAIS -->
             <tr data-subject="Français" class="main-subject-row">
               <td><strong>🇫🇷 Français</strong></td>
               <td><input type="number" min="0" step="0.5" class="inp-coef" value="4" id="coef-français" /></td>
@@ -1040,7 +1040,7 @@
               <td class="sub-tot-cell">-</td>
             </tr>
 
-            <!-- AUTRES MATIÈRES (TOUTES AVEC COEFFICIENTS MODIFIABLES) -->
+            <!-- AUTRES MATIÈRES -->
             <tr data-subject="Anglais">
               <td>Anglais</td>
               <td><input type="number" min="0" step="0.5" class="inp-coef" value="2" /></td>
@@ -1440,7 +1440,7 @@
     </div>
 
     <!-- ================= 7. ESPACE CONNEXION ADMINISTRATEUR ================= -->
-    <div id="view-admin-login" class="page-view active">
+    <div id="view-admin-login" class="page-view">
       <div style="padding: 16px; display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 12px; font-weight: 800; color: var(--orange-ztv);">🔐 ESPACE SÉCURISÉ</span>
       </div>
@@ -1610,7 +1610,6 @@
     const database = getDatabase(app);
 
     let activeTrimestre = 1;
-    let registeredUsers = [];
     let currentUser = null;
 
     let trimestresData = {
@@ -1791,7 +1790,8 @@
             1: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
             2: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} },
             3: { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} }
-          }
+          },
+          notesBEPC: null
         };
 
         currentUser = profileData;
@@ -1882,7 +1882,6 @@
       const subs = currentTrim.subjects || {};
       const subSubs = currentTrim.subSubjects || {};
 
-      // Réinitialiser / Charger sous-notes Français & Coefs
       document.querySelectorAll('.sub-discipline-row[data-sub-parent="Français"]').forEach(tr => {
         const key = tr.getAttribute('data-sub-key');
         const noteInp = tr.querySelector('.inp-sub-note');
@@ -1895,7 +1894,6 @@
         }
       });
 
-      // Réinitialiser / Charger les autres matières & Coefs modifiables
       const rows = document.querySelectorAll('#bulletin tbody tr[data-subject]');
       rows.forEach(tr => {
         const subject = tr.getAttribute('data-subject');
@@ -1920,7 +1918,6 @@
     }
 
     function calculerBulletin() {
-      // 1. CALCUL FRANÇAIS AVEC COEFFICIENTS ENTIÈREMENT DYNAMIQUES
       let frCompRow = document.querySelector('.sub-discipline-row[data-sub-key="comp_fr"]');
       let frOralRow = document.querySelector('.sub-discipline-row[data-sub-key="expr_orale"]');
       let frOrthRow = document.querySelector('.sub-discipline-row[data-sub-key="orth_gram"]');
@@ -1957,7 +1954,6 @@
       document.getElementById('calc-note-français').innerText = (frMoyenneCalculée !== null) ? frMoyenneCalculée.toFixed(2) : "-";
       document.getElementById('calc-tot-français').innerText = (frTotalPtsMain !== null) ? frTotalPtsMain.toFixed(2) : "-";
 
-      // 2. CALCUL GÉNÉRAL TRIMESTRIEL
       let totPoints = 0;
       let totCoefs = 0;
 
@@ -1970,14 +1966,14 @@
       otherRows.forEach(tr => {
         const coef = parseFloat(tr.querySelector('.inp-coef').value) || 0;
         const noteInput = tr.querySelector('.inp-note');
-        const note = parseFloat(noteInput.value);
+        const noteVal = parseFloat(noteInput.value);
         const totCell = tr.querySelector('.tot-cell');
 
-        if (!isNaN(note) && note >= 0 && note <= 20) {
-          const pt = Math.round((note * coef) * 100) / 100;
-          totPoints += pt;
+        if (!isNaN(noteVal)) {
+          const rowTot = noteVal * coef;
+          totCell.innerText = rowTot.toFixed(2);
+          totPoints += rowTot;
           totCoefs += coef;
-          totCell.innerText = pt.toFixed(2);
         } else {
           totCell.innerText = "-";
         }
@@ -1987,234 +1983,179 @@
       document.getElementById('total-points').innerText = totPoints.toFixed(2);
     }
 
-    async function saveTrimestreData() {
-      const currentTrim = { points: 0, coefs: 0, moyenne: null, subjects: {}, subSubjects: {} };
+    function enregistrerTrimestre() {
+      const subs = {};
+      const subSubs = { 'Français': {} };
 
-      // Sauvegarde Français
       let frCompRow = document.querySelector('.sub-discipline-row[data-sub-key="comp_fr"]');
       let frOralRow = document.querySelector('.sub-discipline-row[data-sub-key="expr_orale"]');
       let frOrthRow = document.querySelector('.sub-discipline-row[data-sub-key="orth_gram"]');
 
-      let frCompNote = parseFloat(frCompRow.querySelector('.inp-sub-note').value);
-      let frOralNote = parseFloat(frOralRow.querySelector('.inp-sub-note').value);
-      let frOrthNote = parseFloat(frOrthRow.querySelector('.inp-sub-note').value);
+      subSubs['Français']['comp_fr'] = { note: parseFloat(frCompRow.querySelector('.inp-sub-note').value) || null, coef: parseFloat(frCompRow.querySelector('.inp-sub-coef').value) || 2 };
+      subSubs['Français']['expr_orale'] = { note: parseFloat(frOralRow.querySelector('.inp-sub-note').value) || null, coef: parseFloat(frOralRow.querySelector('.inp-sub-coef').value) || 1 };
+      subSubs['Français']['orth_gram'] = { note: parseFloat(frOrthRow.querySelector('.inp-sub-note').value) || null, coef: parseFloat(frOrthRow.querySelector('.inp-sub-coef').value) || 1 };
 
-      let frCompCoef = parseFloat(frCompRow.querySelector('.inp-sub-coef').value) || 0;
-      let frOralCoef = parseFloat(frOralRow.querySelector('.inp-sub-coef').value) || 0;
-      let frOrthCoef = parseFloat(frOrthRow.querySelector('.inp-sub-coef').value) || 0;
-
-      currentTrim.subSubjects['Français'] = {
-        comp_fr: { note: !isNaN(frCompNote) ? frCompNote : null, coef: frCompCoef },
-        expr_orale: { note: !isNaN(frOralNote) ? frOralNote : null, coef: frOralCoef },
-        orth_gram: { note: !isNaN(frOrthNote) ? frOrthNote : null, coef: frOrthCoef }
+      const frNoteCalc = parseFloat(document.getElementById('calc-note-français').innerText);
+      subs['Français'] = {
+        note: !isNaN(frNoteCalc) ? frNoteCalc : null,
+        coef: parseFloat(document.getElementById('coef-français').value) || 4
       };
 
-      let frCoefGeneral = parseFloat(document.getElementById('coef-français').value) || 0;
-      let frCalcNoteText = document.getElementById('calc-note-français').innerText;
-      let frCalcNoteVal = parseFloat(frCalcNoteText);
-
-      currentTrim.subjects['Français'] = {
-        note: !isNaN(frCalcNoteVal) ? frCalcNoteVal : null,
-        coef: frCoefGeneral
-      };
-
-      // Sauvegarde des autres matières
       const otherRows = document.querySelectorAll('#bulletin tbody tr[data-subject]:not(.main-subject-row)');
       otherRows.forEach(tr => {
         const subject = tr.getAttribute('data-subject');
-        const coef = parseFloat(tr.querySelector('.inp-coef').value) || 0;
         const noteVal = parseFloat(tr.querySelector('.inp-note').value);
-
-        currentTrim.subjects[subject] = {
-          note: (!isNaN(noteVal) && noteVal >= 0 && noteVal <= 20) ? noteVal : null,
-          coef: coef
+        const coefVal = parseFloat(tr.querySelector('.inp-coef').value) || 0;
+        subs[subject] = {
+          note: !isNaN(noteVal) ? noteVal : null,
+          coef: coefVal
         };
       });
 
       const totCoefs = parseFloat(document.getElementById('total-coefs').innerText) || 0;
       const totPoints = parseFloat(document.getElementById('total-points').innerText) || 0;
+      const moy = totCoefs > 0 ? Math.round((totPoints / totCoefs) * 100) / 100 : null;
 
-      if (totCoefs > 0 && totPoints > 0) {
-        currentTrim.coefs = totCoefs;
-        currentTrim.points = totPoints;
-        currentTrim.moyenne = Math.round((totPoints / totCoefs) * 100) / 100;
-      } else {
-        currentTrim.coefs = 0;
-        currentTrim.points = 0;
-        currentTrim.moyenne = null;
-      }
+      trimestresData[activeTrimestre] = {
+        points: totPoints,
+        coefs: totCoefs,
+        moyenne: moy,
+        subjects: subs,
+        subSubjects: subSubs
+      };
 
-      trimestresData[activeTrimestre] = currentTrim;
       if (currentUser) {
         currentUser.trimestresData = trimestresData;
-        await syncUserToFirebase(currentUser);
+        syncUserToFirebase(currentUser);
       }
 
       actualiserMoyennesGlobales();
       switchPage('view-dashboard');
-      showToast("Moyenne enregistrée");
+      showToast("Moyennes du " + activeTrimestre + (activeTrimestre === 1 ? "er" : "e") + " trimestre enregistrées");
     }
 
     function actualiserMoyennesGlobales() {
-      const t1 = trimestresData[1] ? trimestresData[1].moyenne : null;
-      const t2 = trimestresData[2] ? trimestresData[2].moyenne : null;
-      const t3 = trimestresData[3] ? trimestresData[3].moyenne : null;
+      const m1 = trimestresData[1].moyenne;
+      const m2 = trimestresData[2].moyenne;
+      const m3 = trimestresData[3].moyenne;
 
-      document.getElementById('val-t1').innerText = (t1 !== null && !isNaN(t1)) ? t1.toFixed(2) + " /20" : "-- /20";
-      document.getElementById('val-t2').innerText = (t2 !== null && !isNaN(t2)) ? t2.toFixed(2) + " /20" : "-- /20";
-      document.getElementById('val-t3').innerText = (t3 !== null && !isNaN(t3)) ? t3.toFixed(2) + " /20" : "-- /20";
+      document.getElementById('val-t1').innerText = (m1 !== null) ? m1.toFixed(2) + " /20" : "-- /20";
+      document.getElementById('val-t2').innerText = (m2 !== null) ? m2.toFixed(2) + " /20" : "-- /20";
+      document.getElementById('val-t3').innerText = (m3 !== null) ? m3.toFixed(2) + " /20" : "-- /20";
 
-      if (document.getElementById('prof-t1-val')) document.getElementById('prof-t1-val').innerText = (t1 !== null && !isNaN(t1)) ? t1.toFixed(2) + " /20" : "-- /20";
-      if (document.getElementById('prof-t2-val')) document.getElementById('prof-t2-val').innerText = (t2 !== null && !isNaN(t2)) ? t2.toFixed(2) + " /20" : "-- /20";
-      if (document.getElementById('prof-t3-val')) document.getElementById('prof-t3-val').innerText = (t3 !== null && !isNaN(t3)) ? t3.toFixed(2) + " /20" : "-- /20";
+      if (document.getElementById('prof-t1-val')) document.getElementById('prof-t1-val').innerText = (m1 !== null) ? m1.toFixed(2) + " /20" : "-- /20";
+      if (document.getElementById('prof-t2-val')) document.getElementById('prof-t2-val').innerText = (m2 !== null) ? m2.toFixed(2) + " /20" : "-- /20";
+      if (document.getElementById('prof-t3-val')) document.getElementById('prof-t3-val').innerText = (m3 !== null) ? m3.toFixed(2) + " /20" : "-- /20";
 
-      let annual = null;
-      let coefTotalAnnual = 0;
-      let pointsTotalAnnual = 0;
+      let coefTot = 0;
+      let ptsTot = 0;
+      let filledCount = 0;
 
-      if (t1 !== null && !isNaN(t1)) { pointsTotalAnnual += t1 * 1; coefTotalAnnual += 1; }
-      if (t2 !== null && !isNaN(t2)) { pointsTotalAnnual += t2 * 2; coefTotalAnnual += 2; }
-      if (t3 !== null && !isNaN(t3)) { pointsTotalAnnual += t3 * 2; coefTotalAnnual += 2; }
+      if (m1 !== null) { coefTot += 1; ptsTot += m1 * 1; filledCount++; }
+      if (m2 !== null) { coefTot += 2; ptsTot += m2 * 2; filledCount++; }
+      if (m3 !== null) { coefTot += 2; ptsTot += m3 * 2; filledCount++; }
 
-      if (coefTotalAnnual > 0) {
-        annual = Math.round((pointsTotalAnnual / coefTotalAnnual) * 100) / 100;
+      let ann = coefTot > 0 ? Math.round((ptsTot / coefTot) * 100) / 100 : null;
+
+      document.getElementById('val-annual').innerText = (ann !== null) ? ann.toFixed(2) + " /20" : "-- /20";
+      if (document.getElementById('prof-annuel-val')) document.getElementById('prof-annuel-val').innerText = (ann !== null) ? ann.toFixed(2) + " /20" : "-- /20";
+
+      const mention = meGetMention(ann);
+      document.getElementById('val-mention').innerText = mention;
+      if (document.getElementById('prof-mention-val')) document.getElementById('prof-mention-val').innerText = mention;
+
+      let dec = "--";
+      if (ann !== null) {
+        dec = (ann >= 10) ? "Admis(e) 🎉" : "Ajourné(e)";
       }
+      document.getElementById('val-decision').innerText = dec;
 
-      const annualElem = document.getElementById('val-annual');
-      const mentionElem = document.getElementById('val-mention');
-      const decisionElem = document.getElementById('val-decision');
-
-      if (annual !== null && !isNaN(annual)) {
-        annualElem.innerText = annual.toFixed(2) + " /20";
-        if (document.getElementById('prof-annuel-val')) document.getElementById('prof-annuel-val').innerText = annual.toFixed(2) + " /20";
-
-        const mention = meGetMention(annual);
-        mentionElem.innerText = mention;
-        if (document.getElementById('prof-mention-val')) document.getElementById('prof-mention-val').innerText = mention;
-
-        if (annual >= 10) {
-          decisionElem.innerText = "Admis(e)";
-          decisionElem.style.color = "var(--green-ztv)";
-        } else {
-          decisionElem.innerText = "Ajourné(e)";
-          decisionElem.style.color = "#EF4444";
-        }
-      } else {
-        annualElem.innerText = "-- /20";
-        mentionElem.innerText = "--";
-        decisionElem.innerText = "--";
-        if (document.getElementById('prof-annuel-val')) document.getElementById('prof-annuel-val').innerText = "-- /20";
-        if (document.getElementById('prof-mention-val')) document.getElementById('prof-mention-val').innerText = "--";
-      }
-
-      // Progression & Certificat
-      let filledTrims = 0;
-      if (t1 !== null) filledTrims++;
-      if (t2 !== null) filledTrims++;
-      if (t3 !== null) filledTrims++;
-
-      let pct = Math.round((filledTrims / 3) * 100);
-      document.getElementById('circle-pct').innerText = pct + "%";
+      let pct = Math.round((filledCount / 3) * 100);
+      document.getElementById('circle-pct').innerText = pct + " %";
       document.getElementById('bar-fill').style.width = pct + "%";
-
-      if (annual !== null) {
-        document.getElementById('cert-annual-val').innerText = annual.toFixed(2) + " /20";
-        document.getElementById('cert-mention-lbl').innerText = meGetMention(annual);
-        if (annual >= 13) {
-          document.getElementById('cert-wrapper-content').style.display = "block";
-          document.getElementById('cert-not-eligible-msg').style.display = "none";
-          document.getElementById('btn-print-cert-el').style.display = "flex";
-        } else {
-          document.getElementById('cert-wrapper-content').style.display = "none";
-          document.getElementById('cert-not-eligible-msg').style.display = "block";
-          document.getElementById('btn-print-cert-el').style.display = "none";
-        }
+      if (filledCount === 3) {
+        document.getElementById('prog-desc').innerText = "Toutes vos moyennes sont renseignées !";
       } else {
-        document.getElementById('cert-wrapper-content').style.display = "none";
-        document.getElementById('cert-not-eligible-msg').style.display = "block";
-        document.getElementById('btn-print-cert-el').style.display = "none";
+        document.getElementById('prog-desc').innerText = "Renseignez vos moyennes par trimestre";
+      }
+
+      // TABLEAU D'HONNEUR (CRITÈRE >= 13/20)
+      if (ann !== null && ann >= 13) {
+        document.getElementById('cert-wrapper-content').style.display = 'block';
+        document.getElementById('btn-print-cert-el').style.display = 'flex';
+        document.getElementById('cert-not-eligible-msg').style.display = 'none';
+        document.getElementById('cert-annual-val').innerText = ann.toFixed(2) + " /20";
+        document.getElementById('cert-mention-lbl').innerText = mention;
+      } else {
+        document.getElementById('cert-wrapper-content').style.display = 'none';
+        document.getElementById('btn-print-cert-el').style.display = 'none';
+        document.getElementById('cert-not-eligible-msg').style.display = 'block';
       }
     }
 
+    // GESTION & SAUVEGARDE PERMANENTE MOYENNE D'ORIENTATION
     function preparerPageOrientation() {
-      // Charger les données sauvegardées si elles existent
       if (currentUser && currentUser.notesBEPC) {
         const b = currentUser.notesBEPC;
-        if (b.orient_mc_fr !== undefined) document.getElementById('orient-mc-fr').value = b.orient_mc_fr;
-        if (b.bepc_note_fr !== undefined) document.getElementById('bepc-note-fr').value = b.bepc_note_fr;
-        
-        if (b.orient_mc_ma !== undefined) document.getElementById('orient-mc-ma').value = b.orient_mc_ma;
-        if (b.bepc_note_ma !== undefined) document.getElementById('bepc-note-ma').value = b.bepc_note_ma;
-
-        if (b.orient_mc_pc !== undefined) document.getElementById('orient-mc-pc').value = b.orient_mc_pc;
-        if (b.bepc_note_pc !== undefined) document.getElementById('bepc-note-pc').value = b.bepc_note_pc;
-
-        if (b.orient_mc_an !== undefined) document.getElementById('orient-mc-an').value = b.orient_mc_an;
-        if (b.bepc_an_ecrit !== undefined) document.getElementById('bepc-an-ecrit').value = b.bepc_an_ecrit;
-        if (b.bepc_an_oral !== undefined) document.getElementById('bepc-an-oral').value = b.bepc_an_oral;
+        if (b.mc_fr !== undefined) document.getElementById('orient-mc-fr').value = b.mc_fr;
+        if (b.bepc_fr !== undefined) document.getElementById('bepc-note-fr').value = b.bepc_fr;
+        if (b.mc_ma !== undefined) document.getElementById('orient-mc-ma').value = b.mc_ma;
+        if (b.bepc_ma !== undefined) document.getElementById('bepc-note-ma').value = b.bepc_ma;
+        if (b.mc_pc !== undefined) document.getElementById('orient-mc-pc').value = b.mc_pc;
+        if (b.bepc_pc !== undefined) document.getElementById('bepc-note-pc').value = b.bepc_pc;
+        if (b.mc_an !== undefined) document.getElementById('orient-mc-an').value = b.mc_an;
+        if (b.an_ecrit !== undefined) document.getElementById('bepc-an-ecrit').value = b.an_ecrit;
+        if (b.an_oral !== undefined) document.getElementById('bepc-an-oral').value = b.an_oral;
       }
-      calculerMoyenneOrientation();
+      calculerOrientation();
     }
 
-    function autoRemplirTrimestre3Orientation() {
-      if (!trimestresData[3] || !trimestresData[3].subjects) {
-        alert("Veuillez d'abord saisir vos notes dans la rubrique 3e Trimestre.");
-        return;
-      }
-      const s = trimestresData[3].subjects;
-      if (s["Français"] && s["Français"].note !== null) document.getElementById('orient-mc-fr').value = s["Français"].note;
-      if (s["Mathématiques"] && s["Mathématiques"].note !== null) document.getElementById('orient-mc-ma').value = s["Mathématiques"].note;
-      if (s["Physique - Chimie"] && s["Physique - Chimie"].note !== null) document.getElementById('orient-mc-pc').value = s["Physique - Chimie"].note;
-      if (s["Anglais"] && s["Anglais"].note !== null) document.getElementById('orient-mc-an').value = s["Anglais"].note;
-
-      calculerMoyenneOrientation();
-      showToast("Données du 3e trimestre récupérées");
+    function autoRemplirOrientation3e() {
+      const subs3 = trimestresData[3] ? trimestresData[3].subjects : {};
+      if (subs3['Français'] && subs3['Français'].note !== null) document.getElementById('orient-mc-fr').value = subs3['Français'].note;
+      if (subs3['Mathématiques'] && subs3['Mathématiques'].note !== null) document.getElementById('orient-mc-ma').value = subs3['Mathématiques'].note;
+      if (subs3['Physique - Chimie'] && subs3['Physique - Chimie'].note !== null) document.getElementById('orient-mc-pc').value = subs3['Physique - Chimie'].note;
+      if (subs3['Anglais'] && subs3['Anglais'].note !== null) document.getElementById('orient-mc-an').value = subs3['Anglais'].note;
+      calculerOrientation();
+      showToast("Moyennes de classe chargées");
     }
 
-    function calculerMoyenneOrientation() {
-      let mcFr = parseFloat(document.getElementById('orient-mc-fr').value);
-      let bepcFr = parseFloat(document.getElementById('bepc-note-fr').value);
+    function calculerOrientation() {
+      const mcFr = parseFloat(document.getElementById('orient-mc-fr').value);
+      const bepcFr = parseFloat(document.getElementById('bepc-note-fr').value);
+      const mcMa = parseFloat(document.getElementById('orient-mc-ma').value);
+      const bepcMa = parseFloat(document.getElementById('bepc-note-ma').value);
+      const mcPc = parseFloat(document.getElementById('orient-mc-pc').value);
+      const bepcPc = parseFloat(document.getElementById('bepc-note-pc').value);
+      const mcAn = parseFloat(document.getElementById('orient-mc-an').value);
+      const anEcrit = parseFloat(document.getElementById('bepc-an-ecrit').value);
+      const anOral = parseFloat(document.getElementById('bepc-an-oral').value);
 
-      let mcMa = parseFloat(document.getElementById('orient-mc-ma').value);
-      let bepcMa = parseFloat(document.getElementById('bepc-note-ma').value);
-
-      let mcPc = parseFloat(document.getElementById('orient-mc-pc').value);
-      let bepcPc = parseFloat(document.getElementById('bepc-note-pc').value);
-
-      let mcAn = parseFloat(document.getElementById('orient-mc-an').value);
-      let bepcAnEcrit = parseFloat(document.getElementById('bepc-an-ecrit').value);
-      let bepcAnOral = parseFloat(document.getElementById('bepc-an-oral').value);
-
-      // Enregistrer/Conserver la saisie pour la persistance
+      // SAUVEGARDE PERMANENTE AUTOMATIQUE DES NOTES D'ORIENTATION
       if (currentUser) {
         currentUser.notesBEPC = {
-          orient_mc_fr: document.getElementById('orient-mc-fr').value,
-          bepc_note_fr: document.getElementById('bepc-note-fr').value,
-          orient_mc_ma: document.getElementById('orient-mc-ma').value,
-          bepc_note_ma: document.getElementById('bepc-note-ma').value,
-          orient_mc_pc: document.getElementById('orient-mc-pc').value,
-          bepc_note_pc: document.getElementById('bepc-note-pc').value,
-          orient_mc_an: document.getElementById('orient-mc-an').value,
-          bepc_an_ecrit: document.getElementById('bepc-an-ecrit').value,
-          bepc_an_oral: document.getElementById('bepc-an-oral').value
+          mc_fr: !isNaN(mcFr) ? mcFr : "",
+          bepc_fr: !isNaN(bepcFr) ? bepcFr : "",
+          mc_ma: !isNaN(mcMa) ? mcMa : "",
+          bepc_ma: !isNaN(bepcMa) ? bepcMa : "",
+          mc_pc: !isNaN(mcPc) ? mcPc : "",
+          bepc_pc: !isNaN(bepcPc) ? bepcPc : "",
+          mc_an: !isNaN(mcAn) ? mcAn : "",
+          an_ecrit: !isNaN(anEcrit) ? anEcrit : "",
+          an_oral: !isNaN(anOral) ? anOral : ""
         };
       }
 
-      // Moyenne Anglais BEPC
-      let bepcAnMoy = null;
-      if (!isNaN(bepcAnEcrit) && !isNaN(bepcAnOral)) {
-        bepcAnMoy = (bepcAnEcrit + bepcAnOral) / 2;
-      } else if (!isNaN(bepcAnEcrit)) {
-        bepcAnMoy = bepcAnEcrit;
+      let bepcAnTot = null;
+      if (!isNaN(anEcrit) && !isNaN(anOral)) {
+        bepcAnTot = (anEcrit + anOral) / 2;
       }
 
-      // Calculs individuels par matière
       let totFr = (!isNaN(mcFr) && !isNaN(bepcFr)) ? (mcFr + bepcFr) : null;
       let totMa = (!isNaN(mcMa) && !isNaN(bepcMa)) ? (mcMa + bepcMa) : null;
       let totPc = (!isNaN(mcPc) && !isNaN(bepcPc)) ? (mcPc + bepcPc) : null;
-      let totAn = (!isNaN(mcAn) && bepcAnMoy !== null) ? (mcAn + bepcAnMoy) : null;
+      let totAn = (!isNaN(mcAn) && bepcAnTot !== null) ? (mcAn + bepcAnTot) : null;
 
-      // Mise à jour du tableau récapitulatif
       document.getElementById('rec-ma-fr').innerText = !isNaN(mcFr) ? mcFr.toFixed(2) : "-";
       document.getElementById('rec-bepc-fr').innerText = !isNaN(bepcFr) ? bepcFr.toFixed(2) : "-";
       document.getElementById('rec-tot-fr').innerText = totFr !== null ? totFr.toFixed(2) : "-";
@@ -2228,190 +2169,94 @@
       document.getElementById('rec-tot-pc').innerText = totPc !== null ? totPc.toFixed(2) : "-";
 
       document.getElementById('rec-ma-an').innerText = !isNaN(mcAn) ? mcAn.toFixed(2) : "-";
-      document.getElementById('rec-bepc-an').innerText = bepcAnMoy !== null ? bepcAnMoy.toFixed(2) : "-";
+      document.getElementById('rec-bepc-an').innerText = bepcAnTot !== null ? bepcAnTot.toFixed(2) : "-";
       document.getElementById('rec-tot-an').innerText = totAn !== null ? totAn.toFixed(2) : "-";
 
-      let scoreValElem = document.getElementById('orient-score-val');
-      let appLblElem = document.getElementById('orient-appreciation-lbl');
-
       if (totFr !== null && totMa !== null && totPc !== null && totAn !== null) {
-        let grandTotal = (totFr * 2) + (totMa * 2) + (totPc * 1) + (totAn * 1);
-        let moyOrient = Math.round((grandTotal / 12) * 100) / 100;
+        const sumPoints = (totFr * 2) + (totMa * 2) + (totPc * 1) + (totAn * 1);
+        const orientFinal = Math.round((sumPoints / 12) * 100) / 100;
+        document.getElementById('orient-score-val').innerText = orientFinal.toFixed(2) + " / 20";
 
-        scoreValElem.innerText = moyOrient.toFixed(2) + " / 20";
+        if (orientFinal >= 10) {
+          document.getElementById('orient-appreciation-lbl').innerText = "Félicitations ! Vous êtes éligible pour une orientation en Lycée Public 🎉";
+          document.getElementById('orient-appreciation-lbl').style.color = "var(--green-ztv)";
+        } else {
+          document.getElementById('orient-appreciation-lbl').innerText = "Moyenne inférieure au seuil de 10/20 requise pour le public.";
+          document.getElementById('orient-appreciation-lbl').style.color = "#EF4444";
+        }
+
         if (currentUser) {
-          currentUser.moyenneOrientation = moyOrient;
+          currentUser.moyenneOrientation = orientFinal;
           syncUserToFirebase(currentUser);
         }
-
-        if (moyOrient >= 10) {
-          appLblElem.innerText = "🎉 Félicitations ! Vous êtes orientable en seconde de lycée public.";
-          appLblElem.style.color = "#10B981";
-        } else {
-          appLblElem.innerText = "⚠️ Moyenne insuffisante pour l'orientation en lycée public (< 10/20).";
-          appLblElem.style.color = "#EF4444";
-        }
       } else {
-        scoreValElem.innerText = "-- / 20";
-        appLblElem.innerText = "Veuillez renseigner toutes vos moyennes et vos notes du BEPC";
-        appLblElem.style.color = "#A5B4FC";
-      }
-    }
-
-    // GESTION DU PANNEAU D'ADMINISTRATION
-    function actionAdminLogin() {
-      const u = document.getElementById('admin-user-input').value.trim();
-      const p = document.getElementById('admin-pass-input').value.trim();
-      const err = document.getElementById('admin-login-err');
-
-      if (u === "ztvadmin" && p === "ztv2026") {
-        err.style.display = 'none';
-        switchPage('view-admin-dashboard');
-        loadAdminStats();
-      } else {
-        err.innerText = "Identifiants Administrateur incorrects.";
-        err.style.display = 'block';
-      }
-    }
-
-    function loadAdminStats() {
-      onValue(ref(database, 'eleves'), (snapshot) => {
-        const data = snapshot.val();
-        if (!data) {
-          document.getElementById('stat-comptes').innerText = "0";
-          document.getElementById('stat-calculs').innerText = "0";
-          document.getElementById('stat-participants').innerText = "0";
-          registeredUsers = [];
-          return;
+        document.getElementById('orient-score-val').innerText = "-- / 20";
+        document.getElementById('orient-appreciation-lbl').innerText = "Veuillez renseigner toutes vos moyennes et notes BEPC";
+        document.getElementById('orient-appreciation-lbl').style.color = "#A5B4FC";
+        if (currentUser) {
+          syncUserToFirebase(currentUser);
         }
-
-        registeredUsers = Object.values(data);
-        const totalComptes = registeredUsers.length;
-        let totalCalculs = 0;
-
-        registeredUsers.forEach(u => {
-          if (u.calculsEffectues) totalCalculs += u.calculsEffectues;
-        });
-
-        document.getElementById('stat-comptes').innerText = totalComptes;
-        document.getElementById('stat-calculs').innerText = totalCalculs;
-        document.getElementById('stat-participants').innerText = totalComptes;
-
-        renderAdminUserList(registeredUsers);
-      });
-    }
-
-    function renderAdminUserList(list) {
-      const area = document.getElementById('admin-content-area');
-      if (!area) return;
-
-      if (!list || list.length === 0) {
-        area.innerHTML = "<p style='text-align:center; color:var(--text-gray); font-size:12px; margin-top:20px;'>Aucun compte élève enregistré pour le moment.</p>";
-        return;
-      }
-
-      let html = `<h3 style="font-size:14px; font-weight:800; margin-bottom:12px; color:var(--orange-ztv);">📋 LISTE DES ÉLÈVES REGISTERED (${list.length})</h3>`;
-      list.forEach(u => {
-        html += `
-          <div class="admin-eleve-card">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px; color:#FFF;">${u.fullname || u.nom + ' ' + u.prenom}</strong>
-              <span style="font-size:10px; background:var(--bg-input); padding:4px 8px; border-radius:10px; color:var(--green-ztv); font-weight:700;">${u.classe || 'N/A'}</span>
-            </div>
-            <div style="font-size:11px; color:var(--text-gray); margin-top:6px;">
-              📍 ${u.etablissement || 'N/A'} - ${u.ville || 'N/A'} (${u.pays || "Côte d'Ivoire"})<br/>
-              📱 WhatsApp: ${u.whatsapp || 'Non renseigné'}<br/>
-              📅 Inscrit le : ${u.dateCreation || 'N/A'}
-            </div>
-          </div>
-        `;
-      });
-
-      area.innerHTML = html;
-    }
-
-    // MODALE DU CRÉATEUR NIAMPA ZAKARIA
-    function setupCreatorModal() {
-      const openBtn = document.getElementById('btn-open-creator');
-      const closeBtn = document.getElementById('btn-close-modal-creator');
-      const modal = document.getElementById('modal-creator');
-
-      if (openBtn && modal) {
-        openBtn.addEventListener('click', () => modal.classList.add('active'));
-      }
-      if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
       }
     }
 
-    // INITIALISATION DES EVENTS
-    document.addEventListener('DOMContentLoaded', () => {
-      // Navigation Onglets Authentification
+    // ÉCOUTEURS D'ÉVÉNEMENTS & INITIALISATION
+    window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('tab-login-btn').addEventListener('click', () => switchAuthTab('login'));
       document.getElementById('tab-register-btn').addEventListener('click', () => switchAuthTab('register'));
-
-      // Actions Auth
-      document.getElementById('btn-register-action').addEventListener('click', actionRegister);
       document.getElementById('btn-login-action').addEventListener('click', actionLogin);
+      document.getElementById('btn-register-action').addEventListener('click', actionRegister);
       document.getElementById('btn-logout').addEventListener('click', actionLogout);
 
-      // Saisie photo de profil
+      document.getElementById('btn-trim-1').addEventListener('click', () => openTrimPage(1));
+      document.getElementById('btn-trim-2').addEventListener('click', () => openTrimPage(2));
+      document.getElementById('btn-trim-3').addEventListener('click', () => openTrimPage(3));
+
+      document.querySelectorAll('.btn-back-dash').forEach(btn => {
+        btn.addEventListener('click', () => switchPage('view-dashboard'));
+      });
+
+      document.getElementById('btn-nav-profile').addEventListener('click', () => switchPage('view-profile'));
+      document.getElementById('btn-nav-certif').addEventListener('click', () => switchPage('view-certif'));
+      document.getElementById('btn-open-orientation').addEventListener('click', () => switchPage('view-orientation'));
+      document.getElementById('btn-auto-fill-orientation').addEventListener('click', autoRemplirOrientation3e);
+
+      document.getElementById('bulletin').addEventListener('input', calculerBulletin);
+      document.getElementById('btn-save-trim').addEventListener('click', enregistrerTrimestre);
+
+      document.querySelectorAll('.inp-bepc').forEach(inp => {
+        inp.addEventListener('input', calculerOrientation);
+      });
+
+      document.querySelectorAll('.btn-creator-top').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById('modal-creator').classList.add('active');
+        });
+      });
+      document.getElementById('btn-close-modal-creator').addEventListener('click', () => {
+        document.getElementById('modal-creator').classList.remove('active');
+      });
+
+      // GESTION UPLOAD PHOTO
       document.getElementById('reg-photo-file').addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = function(evt) {
-            if (currentUser) currentUser.photo = evt.target.result;
+          reader.onload = (evt) => {
+            if (currentUser) {
+              currentUser.photo = evt.target.result;
+              updateAppPhotos();
+              syncUserToFirebase(currentUser);
+            }
             document.getElementById('photo-preview-msg').innerText = "✓ Photo sélectionnée avec succès";
           };
           reader.readAsDataURL(file);
         }
       });
 
-      if (document.getElementById('btn-change-photo-prof')) {
-        document.getElementById('btn-change-photo-prof').addEventListener('click', () => {
-          document.getElementById('reg-photo-file').click();
-        });
-      }
-
-      // Navigation Trimestres
-      document.getElementById('btn-trim-1').addEventListener('click', () => openTrimPage(1));
-      document.getElementById('btn-trim-2').addEventListener('click', () => openTrimPage(2));
-      document.getElementById('btn-trim-3').addEventListener('click', () => openTrimPage(3));
-
-      // Saisie dynamique dans le bulletin
-      document.getElementById('bulletin').addEventListener('input', calculerBulletin);
-      document.getElementById('btn-save-trim').addEventListener('click', saveTrimestreData);
-
-      // Boutons retours dashboard
-      document.querySelectorAll('.btn-back-dash').forEach(btn => {
-        btn.addEventListener('click', () => switchPage('view-dashboard'));
+      document.getElementById('btn-change-photo-prof').addEventListener('click', () => {
+        document.getElementById('reg-photo-file').click();
       });
 
-      // Navigation Pastilles Profil & Certificat
-      document.getElementById('btn-nav-profile').addEventListener('click', () => switchPage('view-profile'));
-      document.getElementById('btn-nav-certif').addEventListener('click', () => switchPage('view-certif'));
-
-      // Orientation 3e
-      document.getElementById('btn-open-orientation').addEventListener('click', () => switchPage('view-orientation'));
-      document.getElementById('btn-auto-fill-orientation').addEventListener('click', autoRemplirTrimestre3Orientation);
-      document.querySelectorAll('.inp-bepc').forEach(inp => {
-        inp.addEventListener('input', calculerMoyenneOrientation);
-      });
-
-      // Espace Admin
-      document.getElementById('btn-admin-login').addEventListener('click', actionAdminLogin);
-      document.getElementById('btn-admin-logout').addEventListener('click', () => switchPage('view-admin-login'));
-
-      document.getElementById('btn-open-eleve-link').addEventListener('click', () => {
-        const eleveUrl = window.location.origin + window.location.pathname;
-        navigator.clipboard.writeText(eleveUrl);
-        showToast("Lien Élèves copié dans le presse-papier");
-      });
-
-      setupCreatorModal();
-
-      // Écouteur Auth Firebase State
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const snapshot = await get(ref(database, 'eleves/' + user.uid));
